@@ -18,10 +18,10 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
   return (
     <div className="mt-10">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Related products</h2>
+        <h2 className="text-lg font-semibold text-primary">Related products</h2>
         <Link
           href="/stock"
-          className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/60 hover:text-foreground"
+          className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/70 hover:text-primary"
         >
           View all
         </Link>
@@ -48,7 +48,7 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Part No.{" "}
-                  <span className="font-semibold text-foreground">
+                  <span className="font-semibold text-primary">
                     {item.partNumber}
                   </span>
                 </p>
