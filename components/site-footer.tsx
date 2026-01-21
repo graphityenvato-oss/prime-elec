@@ -67,7 +67,7 @@ export function SiteFooter() {
       </div>
 
       <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border/60 pt-6 text-xs text-muted-foreground sm:flex-row">
-        <span>Copyright © EVCS2024</span>
+        <span>Copyright © Prime Elec 2026</span>
         <div className="flex items-center gap-3">
           {socials.map((social) => (
             <a

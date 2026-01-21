@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, Moon, Search, ShoppingCart, Sun, X } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const THEME_KEY = "theme";
 
@@ -31,11 +31,12 @@ type NavLinkProps = {
   href: string;
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 };
 
-function NavLink({ href, children, className }: NavLinkProps) {
+function NavLink({ href, children, className, onClick }: NavLinkProps) {
   return (
-    <Link href={href} className={className ?? ""}>
+    <Link href={href} className={className ?? ""} onClick={onClick}>
       <motion.span
         className="relative inline-flex"
         whileHover="hover"
@@ -70,20 +71,24 @@ export function SiteNav() {
     setTheme(next);
   };
 
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
     <div className="w-full">
       <div className="fixed inset-x-0 top-0 z-50">
         <nav className="border border-primary bg-primary text-primary-foreground shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
           <div className="mx-auto flex h-16 w-full max-w-7xl items-center px-6">
             <div className="hidden w-40 items-center md:flex">
-              <Image
-                src="/images/logo/prime-elec-logo.png"
-                alt="Prime Elec"
-                width={140}
-                height={36}
-                className="h-12 w-auto brightness-0 invert"
-                priority
-              />
+              <Link href="/" aria-label="Prime Elec home">
+                <Image
+                  src="/images/logo/prime-elec-logo.png"
+                  alt="Prime Elec"
+                  width={140}
+                  height={36}
+                  className="h-12 w-auto brightness-0 invert"
+                  priority
+                />
+              </Link>
             </div>
 
             <div className="hidden flex-1 items-center justify-center gap-6 text-md md:flex">
@@ -116,14 +121,15 @@ export function SiteNav() {
               >
                 <Search className="size-4" />
               </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-                aria-label="Cart"
-              >
-                <ShoppingCart className="size-4" />
-              </Button>
+              <Link href="/cart" aria-label="Cart">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                >
+                  <ShoppingCart className="size-4" />
+                </Button>
+              </Link>
               <Button
                 variant="ghost"
                 size="icon"
@@ -141,14 +147,16 @@ export function SiteNav() {
 
         <div className="flex w-full items-center justify-between md:hidden">
           <div className="flex items-center">
-            <Image
-              src="/images/logo/prime-elec-logo.png"
-              alt="Prime Elec"
-              width={120}
-              height={32}
-              className="h-8 w-auto brightness-0 invert"
-              priority
-            />
+            <Link href="/" aria-label="Prime Elec home" onClick={closeMenu}>
+              <Image
+                src="/images/logo/prime-elec-logo.png"
+                alt="Prime Elec"
+                width={120}
+                height={32}
+                className="h-8 w-auto brightness-0 invert"
+                priority
+              />
+            </Link>
           </div>
           <div className="flex items-center gap-2">
             <Button
@@ -159,14 +167,15 @@ export function SiteNav() {
             >
               <Search className="size-4" />
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              aria-label="Cart"
-            >
-              <ShoppingCart className="size-4" />
-            </Button>
+            <Link href="/cart" aria-label="Cart">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+              >
+                <ShoppingCart className="size-4" />
+              </Button>
+            </Link>
             <Button
               variant="ghost"
               size="icon"
@@ -196,46 +205,71 @@ export function SiteNav() {
         </nav>
         <div className="h-px w-full bg-white/60" />
 
-        <div
-          className={`mt-3 overflow-hidden rounded-2xl border border-primary bg-primary text-sm text-primary-foreground shadow-[0_20px_60px_rgba(0,0,0,0.2)] transition-all duration-200 md:hidden ${
-            isMenuOpen
-              ? "max-h-96 translate-y-0 opacity-100"
-              : "max-h-0 -translate-y-2 opacity-0 pointer-events-none"
-          }`}
-        >
-          <div className="p-4">
-            <div className="grid gap-2">
-              <NavLink className="text-primary-foreground" href="/">
-                Home
-              </NavLink>
-              <NavLink className="text-primary-foreground/80 hover:text-primary-foreground" href="/about">
-                About Us
-              </NavLink>
-              <NavLink className="text-primary-foreground/80 hover:text-primary-foreground" href="/stock">
-                Stock
-              </NavLink>
-              <NavLink className="text-primary-foreground/80 hover:text-primary-foreground" href="/brands">
-                Brands
-              </NavLink>
-              <NavLink className="text-primary-foreground/80 hover:text-primary-foreground" href="#">
-                Industries
-              </NavLink>
-              <NavLink className="text-primary-foreground/80 hover:text-primary-foreground" href="/projects">
-                Projects
-              </NavLink>
-              <NavLink className="text-primary-foreground/80 hover:text-primary-foreground" href="/contact">
-                Contact
-              </NavLink>
-            </div>
-            <div className="mt-4 flex items-center">
-              <Button className="rounded-full bg-primary-foreground px-4 py-2 text-sm font-semibold text-primary hover:bg-primary-foreground/90">
-                Upload BOQ
-              </Button>
-            </div>
-          </div>
-        </div>
+        <AnimatePresence>
+          {isMenuOpen ? (
+            <motion.div
+              className="mx-3 mt-3 origin-top overflow-hidden rounded-2xl border border-primary bg-primary text-sm text-primary-foreground shadow-[0_20px_60px_rgba(0,0,0,0.2)] sm:mx-6 md:hidden"
+              initial={{ opacity: 0, y: -8, height: 0 }}
+              animate={{ opacity: 1, y: 0, height: "auto" }}
+              exit={{ opacity: 0, y: -8, height: 0 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+            >
+              <div className="p-4">
+                <div className="grid gap-2">
+                  <NavLink
+                    className="text-primary-foreground"
+                    href="/"
+                    onClick={closeMenu}
+                  >
+                    Home
+                  </NavLink>
+                  <NavLink
+                    className="text-primary-foreground/80 hover:text-primary-foreground"
+                    href="/about"
+                    onClick={closeMenu}
+                  >
+                    About Us
+                  </NavLink>
+                  <NavLink
+                    className="text-primary-foreground/80 hover:text-primary-foreground"
+                    href="/stock"
+                    onClick={closeMenu}
+                  >
+                    Stock
+                  </NavLink>
+                  <NavLink
+                    className="text-primary-foreground/80 hover:text-primary-foreground"
+                    href="/categories"
+                    onClick={closeMenu}
+                  >
+                    Categories
+                  </NavLink>
+                  <NavLink
+                    className="text-primary-foreground/80 hover:text-primary-foreground"
+                    href="/brands"
+                    onClick={closeMenu}
+                  >
+                    Brands
+                  </NavLink>
+                  <NavLink
+                    className="text-primary-foreground/80 hover:text-primary-foreground"
+                    href="#"
+                    onClick={closeMenu}
+                  >
+                    Industries
+                  </NavLink>
+                </div>
+                <div className="mt-4 flex items-center">
+                  <Button className="rounded-full bg-primary-foreground px-4 py-2 text-sm font-semibold text-primary hover:bg-primary-foreground/90">
+                    Upload BOQ
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
       </div>
-      <div className="h-16.25" />
+      <div className="h-[4.25rem]" />
     </div>
   );
 }

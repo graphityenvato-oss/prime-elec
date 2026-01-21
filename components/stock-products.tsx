@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { ProductCard } from "@/components/product-card";
 import { Reveal } from "@/components/reveal";
+import type { Product } from "@/lib/products";
 import {
   Pagination,
   PaginationContent,
@@ -13,13 +14,10 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-type StockProduct = {
-  image: string;
-  title: string;
-  partNumber: string;
-  description: string;
-  inStock: boolean;
-};
+type StockProduct = Pick<
+  Product,
+  "id" | "image" | "title" | "partNumber" | "description" | "inStock"
+>;
 
 type StockProductsProps = {
   products: StockProduct[];
@@ -45,6 +43,7 @@ export function StockProducts({ products, perPage = 12 }: StockProductsProps) {
         {visible.map((product, index) => (
           <Reveal key={product.partNumber} delay={index * 0.06}>
             <ProductCard
+              href={`/products/${product.id}`}
               image={product.image}
               title={product.title}
               partNumber={product.partNumber}
