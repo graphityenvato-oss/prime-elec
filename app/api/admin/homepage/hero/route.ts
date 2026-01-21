@@ -24,7 +24,7 @@ export async function GET() {
   if (error) {
     return NextResponse.json(
       { message: "Failed to load hero content." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -58,7 +58,7 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return NextResponse.json(
       { message: "Invalid hero content payload." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -80,7 +80,7 @@ export async function POST(request: Request) {
   if (error) {
     return NextResponse.json(
       { message: "Failed to save hero content." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 

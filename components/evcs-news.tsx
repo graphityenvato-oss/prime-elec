@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { PrimeCard } from "@/components/ui/prime-card";
+import { supabaseServer } from "@/lib/supabase/server";
 
 const posts = [
   {
@@ -26,17 +27,39 @@ const posts = [
   },
 ];
 
-export function EvcsNews() {
+export async function EvcsNews() {
+  const { data } = await supabaseServer
+    .from("home_news")
+    .select("*")
+    .order("id", { ascending: true })
+    .limit(1)
+    .maybeSingle();
+
+  const content = data
+    ? {
+        title: data.title,
+        buttonLabel: data.button_label,
+        buttonHref: data.button_href,
+      }
+    : {
+        title: "Prime Blogs",
+        buttonLabel: "All Blog Posts",
+        buttonHref: "#",
+      };
+
   return (
     <section className="mt-16 rounded-[32px] border border-border/60 bg-linear-to-br from-muted/40 via-background to-background px-6 py-10 text-foreground shadow-[0_30px_80px_rgba(0,0,0,0.18)]">
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <Reveal>
           <h2 className="text-3xl font-extrabold tracking-tight">
-            Prime Blogs
+            {content.title}
           </h2>
         </Reveal>
-        <Button className="w-fit rounded-full bg-primary px-6 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90">
-          All Blog Posts
+        <Button
+          className="w-fit rounded-full bg-primary px-6 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+          asChild
+        >
+          <a href={content.buttonHref}>{content.buttonLabel}</a>
         </Button>
       </div>
 

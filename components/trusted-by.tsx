@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/reveal";
+import { supabaseServer } from "@/lib/supabase/server";
 
 const partners = [
   {
@@ -40,14 +41,24 @@ const partners = [
   },
 ];
 
-export function TrustedBy() {
+const fallbackTitle = "Trusted by these companies";
+
+export async function TrustedBy() {
+  const { data } = await supabaseServer
+    .from("home_trusted_by")
+    .select("*")
+    .order("id", { ascending: true })
+    .limit(1)
+    .maybeSingle();
+
+  const title = data?.title || fallbackTitle;
   const marqueePartners = [...partners, ...partners];
 
   return (
     <section className="mt-16 rounded-[32px] border border-border/60 bg-background px-6 py-12 text-foreground shadow-[0_20px_50px_rgba(0,0,0,0.08)]">
       <Reveal>
         <h2 className="text-center text-2xl font-extrabold tracking-tight">
-          Trusted by these companies
+          {title}
         </h2>
       </Reveal>
       <div className="marquee mt-8">

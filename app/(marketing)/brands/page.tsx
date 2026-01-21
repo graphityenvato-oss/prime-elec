@@ -13,8 +13,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { primeCardClassName } from "@/components/ui/prime-card";
-import { cn } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
 
@@ -76,40 +74,7 @@ export default function BrandsPage() {
 
   return (
     <>
-      <section className="pt-10 sm:pt-14">
-        <Reveal>
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-            Brands
-          </p>
-        </Reveal>
-        <Reveal delay={0.05}>
-          <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-            Trusted Brands. Fast Sourcing.
-          </h1>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="mt-4 max-w-2xl text-sm text-muted-foreground sm:text-base">
-            PrimeElec works with certified global manufacturers to deliver
-            project-ready electrical solutions. Browse official catalogs and
-            request quotes with confidence.
-          </p>
-        </Reveal>
-        <Reveal delay={0.15}>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button className="rounded-full bg-primary px-6">
-              Request Quote
-            </Button>
-            <Button
-              variant="outline"
-              className="rounded-full px-6 hover:bg-muted/30 hover:text-foreground"
-            >
-              How It Works
-            </Button>
-          </div>
-        </Reveal>
-      </section>
-
-      <section className="mt-12 rounded-[28px] border border-border/60 bg-muted/10 px-6 py-6 shadow-[0_16px_40px_rgba(0,0,0,0.08)]">
+       <section className="mt-12 rounded-[28px] border border-border/60 bg-muted/10 px-6 py-6 shadow-[0_16px_40px_rgba(0,0,0,0.08)]">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-lg font-semibold">Found a product?</h2>
@@ -123,58 +88,40 @@ export default function BrandsPage() {
           </Button>
         </div>
       </section>
-
       <section className="mt-10">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {brands.map((brand) => (
+          {brands.map((brand, index) => (
             <motion.div
               key={brand.name}
-              className={cn(
-                primeCardClassName,
-                "flex h-full flex-col justify-between p-6",
-              )}
+              className="brand-glow-card brand-glow-card--static h-55 p-6 text-foreground dark:text-white"
               whileHover={{ y: -6 }}
               transition={{ type: "spring", stiffness: 260, damping: 20 }}
             >
-              <div className="flex h-24 items-center justify-center">
-                <Image
-                  width={200}
-                  height={48}
-                  src={brand.logo}
-                  alt={brand.name}
-                  className="h-12 w-auto"
-                  loading="lazy"
-                />
-              </div>
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-sm font-semibold">{brand.name}</span>
-                <Button
-                  variant="outline"
-                  className="rounded-full px-4 text-xs"
-                  onClick={() => handleCatalogClick(brand.href, brand.name)}
-                >
-                  Visit Official Catalog
-                </Button>
-              </div>
+              <Reveal delay={index * 0.06}>
+                <div className="brand-glow-card__content flex h-full flex-col justify-between">
+                  <div className="flex h-24 items-center justify-center">
+                    <Image
+                      width={200}
+                      height={48}
+                      src={brand.logo}
+                      alt={brand.name}
+                      className="h-12 w-auto"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="mt-2 flex items-center justify-center">
+                    <Button
+                      variant="outline"
+                      className="rounded-full border-primary/30 px-4 text-xs text-primary hover:border-primary hover:bg-primary/10 dark:border-white/30 dark:text-white dark:hover:border-white dark:hover:bg-white/10"
+                      onClick={() => handleCatalogClick(brand.href, brand.name)}
+                    >
+                      Visit Official Website
+                    </Button>
+                  </div>
+                </div>
+              </Reveal>
             </motion.div>
           ))}
-        </div>
-      </section>
-
-      <section className="mt-12 rounded-[28px] border border-border/60 bg-linear-to-br from-muted/30 via-background to-background px-6 py-8 shadow-[0_20px_50px_rgba(0,0,0,0.12)]">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h2 className="text-2xl font-extrabold tracking-tight">
-              Need project pricing or bulk sourcing?
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Our team can consolidate multi-brand orders and deliver a single
-              project-ready shipment.
-            </p>
-          </div>
-          <Button className="rounded-full bg-primary px-6">
-            Talk to Procurement
-          </Button>
         </div>
       </section>
 

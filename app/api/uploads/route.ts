@@ -27,5 +27,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ path: data.path }, { status: 201 });
+  const { data: publicUrlData } = supabaseAdmin.storage
+    .from(bucket)
+    .getPublicUrl(data.path);
+
+  return NextResponse.json(
+    { path: data.path, publicUrl: publicUrlData.publicUrl },
+    { status: 201 },
+  );
 }

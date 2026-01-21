@@ -22,7 +22,7 @@ const groups = [
     label: "Catalog",
     defaultOpen: true,
     links: [
-      { label: "Brands", href: "/admin/brands" },
+      { label: "Brands", href: "/admin/brandspage" },
       { label: "Blog", href: "/admin/blog" },
       { label: "Projects", href: "/admin/projects" },
       { label: "Industries", href: "/admin/industries" },

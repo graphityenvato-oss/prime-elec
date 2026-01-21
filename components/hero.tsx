@@ -1,7 +1,9 @@
 import { Reveal } from "@/components/reveal";
-import { StatsGrid } from "@/components/stats-grid";
-import { Button } from "@/components/ui/button";
-import HeroVisual from "@/components/hero-visual";
+import { HeroImageParallax } from "@/components/hero-image-parallax";
+import {
+  PartnerCards,
+  type PartnerCardItem,
+} from "@/components/partner-cards";
 import { supabaseServer } from "@/lib/supabase/server";
 
 const fallbackHero = {
@@ -13,7 +15,52 @@ const fallbackHero = {
   primaryButtonHref: "/contact",
   secondaryButtonLabel: "View Catalog",
   secondaryButtonHref: "/brands",
-};
+};  
+
+const partnerCards: PartnerCardItem[] = [
+  {
+    brandName: "Eaton",
+    brandLogo: "/images/partners/Eaton-logo.png",
+    partName: "MCCB Series",
+    productImage: "/images/products/MCCB-Seriess.png",
+  },
+  {
+    brandName: "Degson",
+    brandLogo: "/images/partners/degson-logo.png",
+    partName: "Terminal Blocks",
+    productImage: "/images/products/Terminal-Blockss.png",
+  },
+  {
+    brandName: "OBO Bettermann",
+    brandLogo: "/images/partners/obo-logo.png",
+    partName: "Cable Trays",
+    productImage: "/images/products/Cable-Trayss.png",
+  },
+  {
+    brandName: "Indelec",
+    brandLogo: "/images/partners/Indelec-logo.png",
+    partName: "Surge Protection",
+    productImage: "/images/products/Surge-Protectionn.png",
+  },
+  {
+    brandName: "Teknoware",
+    brandLogo: "/images/partners/teknoware-logo.png",
+    partName: "Emergency Lighting",
+    productImage: "/images/products/Emergency-Lighting.png",
+  },
+  {
+    brandName: "Relpol",
+    brandLogo: "/images/partners/Logo-Relpol.png",
+    partName: "Control Relays",
+    productImage: "/images/products/Control-Relays.png",
+  },
+  {
+    brandName: "TEM",
+    brandLogo: "/images/partners/Tem-logo.png",
+    partName: "Switchgear",
+    productImage: "/images/products/Switchgear.png",
+  },
+];
 
 export async function Hero() {
   const { data } = await supabaseServer
@@ -36,51 +83,38 @@ export async function Hero() {
     : fallbackHero;
 
   return (
-    <section className="pt-10 sm:pt-14">
-      <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-        <div className="text-center lg:text-left">
-          <Reveal>
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-              {hero.subtitle}
-            </p>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              {hero.mainTitle}
-            </h1>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mt-4 max-w-xl text-sm text-muted-foreground sm:text-base lg:mx-0 mx-auto">
-              {hero.description}
-            </p>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
-              <Button
-                asChild
-                className="rounded-full bg-primary px-6 sm:w-auto w-full"
-              >
-                <a href={hero.primaryButtonHref}>
-                  {hero.primaryButtonLabel}
-                </a>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="rounded-full px-6 sm:w-auto w-full"
-              >
-                <a href={hero.secondaryButtonHref}>
-                  {hero.secondaryButtonLabel}
-                </a>
-              </Button>
-            </div>
-          </Reveal>
+    <section className="relative left-1/2 right-1/2 w-screen -mx-[50vw] min-h-[calc(100vh-4rem)] bg-white py-10 text-foreground dark:bg-[#0b1118] dark:text-white sm:py-14">
+      <div className="pointer-events-none absolute inset-0 bg-[url('/images/hero/bgg.png')] bg-cover bg-center opacity-30" />
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className="text-center lg:text-left">
+            <Reveal>
+              <p className="text-xs uppercase tracking-[0.3em] text-foreground/70">
+                {hero.subtitle}
+              </p>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                {hero.mainTitle}
+              </h1>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-4 mx-auto max-w-xl text-sm text-foreground/75 sm:text-base lg:mx-0">
+                {hero.description}
+              </p>
+            </Reveal>
+          </div>
+          <div className="relative isolate mx-auto w-full max-w-md overflow-visible rounded-3xl lg:max-w-none">
+            <HeroImageParallax
+              src="/images/hero/hero-image.png"
+              alt="PrimeElec hero visual"
+              width={760}
+              height={520}
+            />
+          </div>
         </div>
-        <Reveal delay={0.1}>
-          <HeroVisual />
-        </Reveal>
+        <PartnerCards items={partnerCards} />
       </div>
-      <StatsGrid />
-    </section>
+    </section>  
   );
 }

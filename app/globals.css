@@ -15,11 +15,16 @@ body {
     -apple-system,
     "Segoe UI",
     sans-serif;
+  overflow-x: hidden;
   transition:
     background-color 0.45s ease,
     color 0.45s ease,
     border-color 0.45s ease,
     box-shadow 0.45s ease;
+}
+
+.button{
+  cursor: pointer;
 }
 
 * {
@@ -202,6 +207,91 @@ body {
 .animate-liquid {
   background-size: 200% 200%;
   animation: liquid 12s ease infinite;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.brand-glow-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+}
+
+.brand-glow-card::before {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 220%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  background-image: linear-gradient(180deg, var(--primary), #7fb0ff);
+  animation: rotBGimg 8s linear infinite;
+  z-index: 0;
+}
+
+.brand-glow-card::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 18px;
+  background: var(--background);
+  z-index: 1;
+}
+
+.brand-glow-card__content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+}
+
+.brand-glow-card--static::before {
+  animation: none !important;
+}
+
+
+.dark .brand-glow-card::after {
+  background: var(--background);
+}
+
+.dark .brand-glow-card {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+
+@keyframes rotBGimg {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes pulse-radar {
+  0% {
+    box-shadow: 0 0 0 0 rgba(66, 111, 181, 0.35);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(66, 111, 181, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(66, 111, 181, 0);
+  }
+}
+
+.badge-radar {
+  animation: pulse-radar 1.8s ease-out infinite;
 }
 
 @keyframes liquid {

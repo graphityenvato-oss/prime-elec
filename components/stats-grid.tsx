@@ -5,14 +5,17 @@ import CountUp from "react-countup";
 import LiquidGlassCard from "@/components/ui/LiquidGlassCard";
 import { Reveal } from "@/components/reveal";
 
-const stats = [
-  { title: "SUCCESSFUL PROJECTS", value: 220, suffix: "+" },
-  { title: "YEARS OF EXPERIENCE", value: 7, suffix: "+" },
-  { title: "ELITE PARTNERS", value: 20, suffix: "+" },
-  { title: "SPECIALIZED SYSTEMS", value: 5, suffix: "+" },
-];
+export type StatItem = {
+  title: string;
+  value: number;
+  suffix?: string;
+};
 
-export function StatsGrid() {
+type StatsGridProps = {
+  stats: StatItem[];
+};
+
+export function StatsGrid({ stats }: StatsGridProps) {
   return (
     <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat, index) => (
