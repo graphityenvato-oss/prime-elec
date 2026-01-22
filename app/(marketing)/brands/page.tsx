@@ -74,7 +74,7 @@ export default function BrandsPage() {
 
   return (
     <>
-       <section className="mt-12 rounded-[28px] border border-border/60 bg-muted/10 px-6 py-6 shadow-[0_16px_40px_rgba(0,0,0,0.08)]">
+      <section className="mt-12 rounded-[28px] border border-border/60 bg-muted/10 px-6 py-6 shadow-[0_16px_40px_rgba(0,0,0,0.08)]">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-lg font-semibold">Found a product?</h2>

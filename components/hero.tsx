@@ -1,9 +1,6 @@
 import { Reveal } from "@/components/reveal";
 import { HeroImageParallax } from "@/components/hero-image-parallax";
-import {
-  PartnerCards,
-  type PartnerCardItem,
-} from "@/components/partner-cards";
+import { PartnerCards, type PartnerCardItem } from "@/components/partner-cards";
 import { supabaseServer } from "@/lib/supabase/server";
 
 const fallbackHero = {
@@ -15,7 +12,7 @@ const fallbackHero = {
   primaryButtonHref: "/contact",
   secondaryButtonLabel: "View Catalog",
   secondaryButtonHref: "/brands",
-};  
+};
 
 const partnerCards: PartnerCardItem[] = [
   {
@@ -115,6 +112,6 @@ export async function Hero() {
         </div>
         <PartnerCards items={partnerCards} />
       </div>
-    </section>  
+    </section>
   );
 }

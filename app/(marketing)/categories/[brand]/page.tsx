@@ -48,7 +48,10 @@ const brandData: Record<
         subcategories: [
           { title: "MCCB", subtitle: "Compact molded case breakers." },
           { title: "Switchgear", subtitle: "LV switchgear assemblies." },
-          { title: "Panel Boards", subtitle: "Distribution boards and panels." },
+          {
+            title: "Panel Boards",
+            subtitle: "Distribution boards and panels.",
+          },
         ],
       },
       {
@@ -101,7 +104,10 @@ const brandData: Record<
         image: "/images/products/Cable-Trayss.png",
         slug: "cables-accessories",
         subcategories: [
-          { title: "Metal Cable Routing Ducts", subtitle: "Metal trunking ducts." },
+          {
+            title: "Metal Cable Routing Ducts",
+            subtitle: "Metal trunking ducts.",
+          },
           { title: "Cable Trunking", subtitle: "PVC and metal trunking." },
           { title: "Cable Trays", subtitle: "Ladder and tray systems." },
         ],

@@ -23,7 +23,7 @@ body {
     box-shadow 0.45s ease;
 }
 
-.button{
+.button {
   cursor: pointer;
 }
 
@@ -90,7 +90,7 @@ body {
   --secondary-foreground: #111111;
   --muted: #e6e7e8;
   --muted-foreground: #6b6c70;
-  --accent: #929497;
+  --accent: color-mix(in srgb, var(--primary) 20%, transparent);
   --accent-foreground: #111111;
   --destructive: oklch(0.577 0.245 27.325);
   --border: #e6e7e8;
@@ -123,7 +123,7 @@ body {
   --secondary: #1f242b;
   --secondary-foreground: #e6e7e8;
   --muted: #1f242b;
-  --muted-foreground: #929497;
+  --muted-foreground: color-mix(in srgb, var(--primary) 35%, transparent);
   --accent: #2b3036;
   --accent-foreground: #e6e7e8;
   --destructive: oklch(0.704 0.191 22.216);
@@ -259,7 +259,6 @@ body {
   animation: none !important;
 }
 
-
 .dark .brand-glow-card::after {
   background: var(--background);
 }
@@ -267,7 +266,6 @@ body {
 .dark .brand-glow-card {
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
-
 
 @keyframes rotBGimg {
   from {

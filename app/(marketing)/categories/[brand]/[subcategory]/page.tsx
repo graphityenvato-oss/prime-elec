@@ -42,8 +42,14 @@ const subcategoryData: Record<
     title: "Lighting & Safety",
     items: [
       { title: "Exit Signs", image: "/images/placeholder/imageholder.webp" },
-      { title: "Emergency Luminaires", image: "/images/placeholder/imageholder.webp" },
-      { title: "Safety Accessories", image: "/images/placeholder/imageholder.webp" },
+      {
+        title: "Emergency Luminaires",
+        image: "/images/placeholder/imageholder.webp",
+      },
+      {
+        title: "Safety Accessories",
+        image: "/images/placeholder/imageholder.webp",
+      },
     ],
   },
   "eaton/energy-management": {
@@ -52,7 +58,10 @@ const subcategoryData: Record<
     items: [
       { title: "Meters", image: "/images/placeholder/imageholder.webp" },
       { title: "Monitoring", image: "/images/placeholder/imageholder.webp" },
-      { title: "Surge Protection", image: "/images/placeholder/imageholder.webp" },
+      {
+        title: "Surge Protection",
+        image: "/images/placeholder/imageholder.webp",
+      },
     ],
   },
   "eaton/wiring-devices": {
@@ -68,8 +77,14 @@ const subcategoryData: Record<
     brandName: "Eaton",
     title: "Cables & Accessories",
     items: [
-      { title: "Metal Cable Routing Ducts", image: "/images/placeholder/imageholder.webp" },
-      { title: "Cable Trunking", image: "/images/placeholder/imageholder.webp" },
+      {
+        title: "Metal Cable Routing Ducts",
+        image: "/images/placeholder/imageholder.webp",
+      },
+      {
+        title: "Cable Trunking",
+        image: "/images/placeholder/imageholder.webp",
+      },
       { title: "Cable Trays", image: "/images/placeholder/imageholder.webp" },
     ],
   },

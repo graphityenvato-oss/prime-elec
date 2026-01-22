@@ -85,7 +85,7 @@ export function PartnerCards({ items }: PartnerCardsProps) {
         <div className="flex flex-1 flex-col justify-between">
           <div className="relative h-8 w-32">
             <Image
-              src={item.brandLogo}  
+              src={item.brandLogo}
               alt={`${item.brandName} logo`}
               width={120}
               height={40}
@@ -115,7 +115,10 @@ export function PartnerCards({ items }: PartnerCardsProps) {
     return (
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item, itemIndex) => (
-          <Reveal key={`${item.brandName}-${item.partName}`} delay={itemIndex * 0.06}>
+          <Reveal
+            key={`${item.brandName}-${item.partName}`}
+            delay={itemIndex * 0.06}
+          >
             {renderCard(item)}
           </Reveal>
         ))}

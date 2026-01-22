@@ -17,9 +17,7 @@ type FeaturedStockClientProps = {
   categories: FeaturedStockCategory[];
 };
 
-export function FeaturedStockClient({
-  categories,
-}: FeaturedStockClientProps) {
+export function FeaturedStockClient({ categories }: FeaturedStockClientProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [cardWidth, setCardWidth] = useState(260);
   const [slots, setSlots] = useState(4);
@@ -86,7 +84,9 @@ export function FeaturedStockClient({
       <div
         ref={containerRef}
         className={
-          isMobile ? "hide-scrollbar overflow-x-auto pb-2 pt-1" : "overflow-hidden pb-2 pt-1"
+          isMobile
+            ? "hide-scrollbar overflow-x-auto pb-2 pt-1"
+            : "overflow-hidden pb-2 pt-1"
         }
       >
         {isMobile ? (

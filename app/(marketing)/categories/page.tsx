@@ -63,7 +63,7 @@ const categories: CategoryCard[] = [
     href: "/categories/eaton",
     logo: "/images/partners/Eaton-logo.png",
   },
-  
+
   {
     title: "OBO Systems",
     description: "Cable routing and grounding solutions.",

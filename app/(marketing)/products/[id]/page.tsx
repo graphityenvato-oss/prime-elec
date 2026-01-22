@@ -30,7 +30,10 @@ export default async function ProductPage({
   }
   const relatedProducts = products
     .filter((item) => item.id !== product.id)
-    .filter((item) => item.brand === product.brand || item.category === product.category)
+    .filter(
+      (item) =>
+        item.brand === product.brand || item.category === product.category,
+    )
     .slice(0, 3);
 
   return (
@@ -117,9 +120,7 @@ export default async function ProductPage({
       </div>
 
       <div className="mt-10 rounded-2xl border border-border/60 bg-background p-6">
-        <h2 className="text-lg font-semibold text-primary">
-          Product details
-        </h2>
+        <h2 className="text-lg font-semibold text-primary">Product details</h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {product.specs.map((spec) => (
             <div

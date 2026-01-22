@@ -26,12 +26,11 @@ const categories: FeaturedStockCategory[] = [
     description: "Cables, trays, conduits, and installation hardware.",
     image: "/images/categories/cabels.jpg",
   },
-    {
+  {
     title: "Industrial Auto",
     description: "PLC, sensors, and controls components built for scale.",
     image: "/images/categories/PLC.webp",
   },
-
 ];
 
 const fallbackContent = {

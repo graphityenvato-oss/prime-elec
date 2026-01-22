@@ -31,7 +31,7 @@ const initialItems = [
     partNumber: "SWG-9000",
     image: "/images/products/Switchgear.png",
     quantity: 1,
-    source: "stock",  
+    source: "stock",
   },
 ];
 
@@ -134,9 +134,7 @@ export default function CartPage() {
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="text-base font-semibold">
-                        {item.name}
-                      </div>
+                      <div className="text-base font-semibold">{item.name}</div>
                       <div className="text-xs text-muted-foreground">
                         {item.source === "external"
                           ? "External Request | "
@@ -217,10 +215,7 @@ export default function CartPage() {
               <label className="text-xs font-medium text-muted-foreground">
                 Project location / notes
               </label>
-              <Textarea
-                rows={4}
-                placeholder="City, project scope, or notes"
-              />
+              <Textarea rows={4} placeholder="City, project scope, or notes" />
             </div>
             <div className="flex items-center gap-2">
               <Checkbox id="consultation" />

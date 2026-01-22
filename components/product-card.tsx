@@ -72,7 +72,10 @@ export function ProductCard({
             <h3 className="text-lg font-semibold">{title}</h3>
           )}
           <p className="mt-1 text-xs text-muted-foreground dark:text-white/60">
-            Part No. <span className="font-semibold text-foreground dark:text-white">{partNumber}</span>
+            Part No.{" "}
+            <span className="font-semibold text-foreground dark:text-white">
+              {partNumber}
+            </span>
           </p>
           <p className="mt-2 text-sm text-foreground/70 dark:text-white/70">
             {description}
@@ -84,11 +87,7 @@ export function ProductCard({
             Add to Quote
           </Button>
           {href ? (
-            <Button
-              asChild
-              variant="outline"
-              className="w-full rounded-full"
-            >
+            <Button asChild variant="outline" className="w-full rounded-full">
               <Link href={href}>View Details</Link>
             </Button>
           ) : null}

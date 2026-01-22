@@ -95,19 +95,34 @@ export function SiteNav() {
               <NavLink className="text-primary-foreground" href="/">
                 Home
               </NavLink>
-              <NavLink className="text-primary-foreground/80 hover:text-primary-foreground" href="/about">
+              <NavLink
+                className="text-primary-foreground/80 hover:text-primary-foreground"
+                href="/about"
+              >
                 About Us
               </NavLink>
-              <NavLink className="text-primary-foreground/80 hover:text-primary-foreground" href="/stock">
+              <NavLink
+                className="text-primary-foreground/80 hover:text-primary-foreground"
+                href="/stock"
+              >
                 Stock
               </NavLink>
-              <NavLink className="text-primary-foreground/80 hover:text-primary-foreground" href="/categories">
+              <NavLink
+                className="text-primary-foreground/80 hover:text-primary-foreground"
+                href="/categories"
+              >
                 Categories
               </NavLink>
-              <NavLink className="text-primary-foreground/80 hover:text-primary-foreground" href="/brands">
+              <NavLink
+                className="text-primary-foreground/80 hover:text-primary-foreground"
+                href="/brands"
+              >
                 Brands
               </NavLink>
-              <NavLink className="text-primary-foreground/80 hover:text-primary-foreground" href="#">
+              <NavLink
+                className="text-primary-foreground/80 hover:text-primary-foreground"
+                href="#"
+              >
                 Industries
               </NavLink>
             </div>
@@ -145,62 +160,62 @@ export function SiteNav() {
               </Button>
             </div>
 
-        <div className="flex w-full items-center justify-between md:hidden">
-          <div className="flex items-center">
-            <Link href="/" aria-label="Prime Elec home" onClick={closeMenu}>
-              <Image
-                src="/images/logo/prime-elec-logo.png"
-                alt="Prime Elec"
-                width={120}
-                height={32}
-                className="h-8 w-auto brightness-0 invert"
-                priority
-              />
-            </Link>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              aria-label="Search"
-            >
-              <Search className="size-4" />
-            </Button>
-            <Link href="/cart" aria-label="Cart">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              >
-                <ShoppingCart className="size-4" />
-              </Button>
-            </Link>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              aria-label="Toggle theme"
-              onClick={toggleTheme}
-            >
-              <Sun className="size-4 hidden dark:block" />
-              <Moon className="size-4 dark:hidden" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-              onClick={() => setIsMenuOpen((open) => !open)}
-            >
-              {isMenuOpen ? (
-                <X className="size-4" />
-              ) : (
-                <Menu className="size-4" />
-              )}
-            </Button>
-          </div>
-        </div>
+            <div className="flex w-full items-center justify-between md:hidden">
+              <div className="flex items-center">
+                <Link href="/" aria-label="Prime Elec home" onClick={closeMenu}>
+                  <Image
+                    src="/images/logo/prime-elec-logo.png"
+                    alt="Prime Elec"
+                    width={120}
+                    height={32}
+                    className="h-8 w-auto brightness-0 invert"
+                    priority
+                  />
+                </Link>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                  aria-label="Search"
+                >
+                  <Search className="size-4" />
+                </Button>
+                <Link href="/cart" aria-label="Cart">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                  >
+                    <ShoppingCart className="size-4" />
+                  </Button>
+                </Link>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                  aria-label="Toggle theme"
+                  onClick={toggleTheme}
+                >
+                  <Sun className="size-4 hidden dark:block" />
+                  <Moon className="size-4 dark:hidden" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                  aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                  onClick={() => setIsMenuOpen((open) => !open)}
+                >
+                  {isMenuOpen ? (
+                    <X className="size-4" />
+                  ) : (
+                    <Menu className="size-4" />
+                  )}
+                </Button>
+              </div>
+            </div>
           </div>
         </nav>
         <div className="h-px w-full bg-white/60" />

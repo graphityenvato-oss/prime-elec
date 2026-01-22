@@ -9,7 +9,10 @@ type ProductImageGalleryProps = {
   title: string;
 };
 
-export function ProductImageGallery({ images, title }: ProductImageGalleryProps) {
+export function ProductImageGallery({
+  images,
+  title,
+}: ProductImageGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeImage = images[activeIndex] ?? images[0];
 

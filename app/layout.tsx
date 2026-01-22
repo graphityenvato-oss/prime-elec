@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { LenisProvider } from "@/components/lenis-provider";
-import { AdminFab } from "@/components/admin/admin-fab";
 import { Toaster } from "@/components/ui/sonner";
 
 const gilroyLight = localFont({
@@ -38,7 +37,6 @@ export default function RootLayout({
       >
         <LenisProvider>
           {children}
-          <AdminFab />
           <Toaster position="top-right" />
         </LenisProvider>
       </body>

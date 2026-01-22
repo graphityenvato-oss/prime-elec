@@ -111,7 +111,9 @@ export function CategoriesGrid({ categories }: CategoriesGridProps) {
             <PaginationItem>
               <PaginationNext
                 href="#"
-                className={page === totalPages ? "pointer-events-none opacity-40" : ""}
+                className={
+                  page === totalPages ? "pointer-events-none opacity-40" : ""
+                }
                 onClick={(event) => {
                   event.preventDefault();
                   goToPage(page + 1);

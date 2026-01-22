@@ -112,5 +112,3 @@ export function TestimonialsClient({ title, items }: TestimonialsClientProps) {
     </section>
   );
 }
-
-
