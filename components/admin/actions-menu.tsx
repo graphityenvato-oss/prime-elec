@@ -3,6 +3,7 @@
 import { Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { ConfirmationAlert } from "@/components/ui/confirmation-alert";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,10 +34,22 @@ export function ActionsMenu({ onView, onEdit, onDelete }: ActionsMenuProps) {
           <Pencil className="size-4" />
           Edit
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={onDelete} variant="destructive">
-          <Trash2 className="size-4" />
-          Delete
-        </DropdownMenuItem>
+        {onDelete ? (
+          <ConfirmationAlert
+            title="Delete blog?"
+            description="This action cannot be undone."
+            confirmLabel="Delete"
+            onConfirm={onDelete}
+          >
+            <DropdownMenuItem
+              onSelect={(event) => event.preventDefault()}
+              variant="destructive"
+            >
+              <Trash2 className="size-4" />
+              Delete
+            </DropdownMenuItem>
+          </ConfirmationAlert>
+        ) : null}
       </DropdownMenuContent>
     </DropdownMenu>
   );

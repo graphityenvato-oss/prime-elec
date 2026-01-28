@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import useSWR from "swr";
 
-import { AdminSidebar } from "@/components/admin/sidebar";
 import { PrimeCard } from "@/components/ui/prime-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/table";
 import { ActionsMenu } from "@/components/admin/actions-menu";
 import { supabaseClient } from "@/lib/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type BlogRow = {
   id: string;
@@ -44,6 +45,7 @@ export default function AdminBlogsPage() {
   const [checked, setChecked] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
+  const [token, setToken] = useState<string | null>(null);
   const [editorStateJson, setEditorStateJson] = useState("");
   const [status, setStatus] = useState("");
   const [featuredImage, setFeaturedImage] = useState<File | null>(null);
@@ -64,7 +66,6 @@ export default function AdminBlogsPage() {
   );
   const [scheduledTime, setScheduledTime] = useState("10:30:00");
   const [search, setSearch] = useState("");
-  const [blogRows, setBlogRows] = useState<BlogRow[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const slugify = (value: string) =>
@@ -74,21 +75,25 @@ export default function AdminBlogsPage() {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
 
-  const loadBlogs = async () => {
-    const { data } = await supabaseClient.auth.getSession();
-    const token = data.session?.access_token;
+  const fetchBlogs = async () => {
     if (!token) {
-      return;
+      return [];
     }
-
     const response = await fetch("/api/admin/blogs", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!response.ok) {
-      return;
+
+    if (response.status === 401) {
+      router.replace("/ns-admin");
+      return [];
     }
+
+    if (!response.ok) {
+      throw new Error("Failed to load blogs.");
+    }
+
     const result = (await response.json().catch(() => ({ blogs: [] }))) as {
       blogs?: Array<{
         id: string;
@@ -102,7 +107,8 @@ export default function AdminBlogsPage() {
         read_time_minutes?: number | null;
       }>;
     };
-    const mapped = (result.blogs ?? []).map((blog) => {
+
+    return (result.blogs ?? []).map((blog) => {
       const dateValue = blog.published_at ?? blog.created_at ?? null;
       return {
         id: blog.id,
@@ -115,43 +121,39 @@ export default function AdminBlogsPage() {
         readTimeMinutes: blog.read_time_minutes ?? null,
       } satisfies BlogRow;
     });
-    setBlogRows(mapped);
   };
 
   useEffect(() => {
     let isMounted = true;
 
-    const checkAdmin = async () => {
+    const loadSession = async () => {
       const { data } = await supabaseClient.auth.getSession();
-      const token = data.session?.access_token;
-      if (!token) {
-        router.replace("/ns-admin");
-        return;
-      }
-
-      const response = await fetch("/api/admin/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok || !result.isAdmin) {
+      const sessionToken = data.session?.access_token ?? null;
+      if (!sessionToken) {
         router.replace("/ns-admin");
         return;
       }
 
       if (isMounted) {
+        setToken(sessionToken);
         setChecked(true);
-        loadBlogs();
       }
     };
 
-    checkAdmin();
+    loadSession();
 
     return () => {
       isMounted = false;
     };
   }, [router]);
+
+  const {
+    data: blogRows = [],
+    isLoading,
+    mutate,
+  } = useSWR(token ? ["admin-blogs", token] : null, fetchBlogs, {
+    keepPreviousData: true,
+  });
 
   const filteredRows = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -217,8 +219,6 @@ export default function AdminBlogsPage() {
 
     setIsSubmitting(true);
     try {
-      const { data } = await supabaseClient.auth.getSession();
-      const token = data.session?.access_token;
       if (!token) {
         toast.error("Session expired. Please sign in again.");
         return;
@@ -273,6 +273,23 @@ export default function AdminBlogsPage() {
         throw new Error("Failed to save blog.");
       }
 
+      const nowDate = new Date().toLocaleDateString();
+      const scheduledDateLabel = scheduledAt
+        ? new Date(scheduledAt).toLocaleDateString()
+        : null;
+      const optimisticRow: BlogRow = {
+        id: crypto.randomUUID(),
+        title: title.trim(),
+        slug: slug.trim(),
+        category: category.trim(),
+        status: saveStatus,
+        author: author.trim(),
+        date: saveStatus === "published" ? nowDate : scheduledDateLabel,
+        readTimeMinutes: Number(readTimeMinutes),
+      };
+
+      mutate((current) => [optimisticRow, ...(current ?? [])], false);
+
       toast.success("Blog saved.");
       setShowForm(false);
       setTitle("");
@@ -288,7 +305,7 @@ export default function AdminBlogsPage() {
       setEditorStateJson("");
       setScheduledDate(undefined);
       setScheduledTime("10:30:00");
-      await loadBlogs();
+      mutate();
     } catch {
       toast.error("Could not save blog.");
     } finally {
@@ -297,12 +314,8 @@ export default function AdminBlogsPage() {
   };
 
   return (
-    <main className="min-h-screen bg-background px-6 py-10 text-foreground lg:px-10">
-      <div className="grid w-full gap-6 lg:grid-cols-[280px_1fr] lg:items-start lg:gap-8">
-        <AdminSidebar />
-
-        <div className="space-y-6">
-          <section>
+    <>
+      <section>
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
               Blogs
             </p>
@@ -314,7 +327,7 @@ export default function AdminBlogsPage() {
             </p>
           </section>
 
-          <PrimeCard className="p-6">
+      <PrimeCard className="p-6">
             {showForm ? (
               <div className="space-y-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
@@ -530,12 +543,24 @@ export default function AdminBlogsPage() {
                 </div>
 
                 <div className="mt-6">
-                  {filteredRows.length ? (
+                  {isLoading ? (
+                    <div className="space-y-3">
+                      {Array.from({ length: 3 }).map((_, index) => (
+                        <div
+                          key={`skeleton-${index}`}
+                          className="grid grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr] gap-3 rounded-2xl border border-border/60 p-4"
+                        >
+                          {Array.from({ length: 6 }).map((__, cellIndex) => (
+                            <Skeleton key={cellIndex} className="h-5 w-full" />
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  ) : filteredRows.length ? (
                     <Table>
                       <TableHeader>
                         <TableRow>
                           <TableHead>Title</TableHead>
-                          <TableHead>Category</TableHead>
                           <TableHead>Status</TableHead>
                           <TableHead>Author</TableHead>
                           <TableHead>Date</TableHead>
@@ -549,7 +574,6 @@ export default function AdminBlogsPage() {
                             <TableCell className="font-semibold">
                               {row.title}
                             </TableCell>
-                            <TableCell>{row.category}</TableCell>
                             <TableCell>{row.status}</TableCell>
                             <TableCell>{row.author}</TableCell>
                             <TableCell>{row.date ?? "-"}</TableCell>
@@ -565,9 +589,6 @@ export default function AdminBlogsPage() {
                                     window.open(`/blog/${row.slug}`, "_blank")
                                   }
                                   onDelete={async () => {
-                                    const { data } =
-                                      await supabaseClient.auth.getSession();
-                                    const token = data.session?.access_token;
                                     if (!token) {
                                       toast.error("Session expired.");
                                       return;
@@ -586,7 +607,13 @@ export default function AdminBlogsPage() {
                                       return;
                                     }
                                     toast.success("Blog deleted.");
-                                    loadBlogs();
+                                    mutate(
+                                      (current) =>
+                                        (current ?? []).filter(
+                                          (item) => item.id !== row.id,
+                                        ),
+                                      false,
+                                    );
                                   }}
                                 />
                               </div>
@@ -609,9 +636,7 @@ export default function AdminBlogsPage() {
                 </div>
               </>
             )}
-          </PrimeCard>
-        </div>
-      </div>
-    </main>
+      </PrimeCard>
+    </>
   );
 }

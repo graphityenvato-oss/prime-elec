@@ -56,6 +56,37 @@ const getAdminUser = async (request: Request) => {
   return { ok: (data?.length ?? 0) > 0, status: 200 };
 };
 
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const admin = await getAdminUser(request);
+  if (!admin.ok) {
+    return NextResponse.json(
+      { message: "Unauthorized" },
+      { status: admin.status },
+    );
+  }
+
+  const resolvedParams = await params;
+  const { data, error } = await supabaseAdmin
+    .from("blogs")
+    .select(
+      "id, title, slug, category, tags, featured_image_url, featured_image_path, gallery_images, author, read_time_minutes, status, scheduled_at, body_json",
+    )
+    .eq("id", resolvedParams.id)
+    .maybeSingle();
+
+  if (error || !data) {
+    return NextResponse.json(
+      { message: "Failed to load blog." },
+      { status: 500 },
+    );
+  }
+
+  return NextResponse.json({ blog: data });
+}
+
 export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> },

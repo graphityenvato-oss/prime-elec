@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminSidebar } from "@/components/admin/sidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PrimeCard } from "@/components/ui/prime-card";
 import { HeroTab } from "@/components/admin/homepage/hero-tab";
@@ -800,12 +799,8 @@ export default function AdminHomepagePage() {
   };
 
   return (
-    <main className="min-h-screen bg-background px-6 py-10 text-foreground lg:px-10">
-      <div className="grid w-full gap-6 lg:grid-cols-[280px_1fr] lg:items-start lg:gap-8">
-        <AdminSidebar />
-
-        <div className="space-y-6">
-          <section>
+    <>
+      <section>
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
               Home Page
             </p>
@@ -817,7 +812,7 @@ export default function AdminHomepagePage() {
             </p>
           </section>
 
-          <PrimeCard className="p-6">
+      <PrimeCard className="p-6">
             <Tabs defaultValue="hero">
               <TabsList>
                 <TabsTrigger value="hero">Hero</TabsTrigger>
@@ -920,9 +915,7 @@ export default function AdminHomepagePage() {
                 />
               </TabsContent>
             </Tabs>
-          </PrimeCard>
-        </div>
-      </div>
-    </main>
+      </PrimeCard>
+    </>
   );
 }
