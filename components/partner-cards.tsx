@@ -77,10 +77,8 @@ export function PartnerCards({ items }: PartnerCardsProps) {
     <motion.div
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className="group relative h-48 w-full overflow-hidden rounded-2xl border border-white/30 bg-white/10 backdrop-blur-xl"
+      className="group relative h-48 w-full overflow-hidden rounded-2xl border  bg-primary/70"
     >
-      <div className="pointer-events-none absolute -inset-px bg-linear-to-br from-primary/35 via-white/10 to-primary/25 opacity-100" />
-      <div className="pointer-events-none absolute -inset-px bg-linear-to-r from-white/20 via-transparent to-white/10 opacity-80" />
       <div className="relative z-10 flex h-full justify-between p-5">
         <div className="flex flex-1 flex-col justify-between">
           <div className="relative h-8 w-32">
@@ -93,7 +91,7 @@ export function PartnerCards({ items }: PartnerCardsProps) {
             />
           </div>
           <div>
-            <p className="text-sm font-medium tracking-wide text-slate-300/90">
+            <p className="text-sm font-medium tracking-wide text-white">
               {item.partName}
             </p>
           </div>
