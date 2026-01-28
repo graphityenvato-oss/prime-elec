@@ -4,7 +4,7 @@ import { PartnerCards, type PartnerCardItem } from "@/components/partner-cards";
 import { supabaseServer } from "@/lib/supabase/server";
 
 const fallbackHero = {
-  mainTitle: "Powering Electrical Projects with Precision.",
+  mainTitle: "SWITCH TO PERFECTION",
   subtitle: "PrimeElec",
   description:
     "Engineering-grade supply, project-ready stock, and technical support for industrial, commercial, and power sector builds.",
@@ -78,6 +78,7 @@ export async function Hero() {
         secondaryButtonHref: data.secondary_button_href,
       }
     : fallbackHero;
+  const mainTitle = hero.mainTitle.replace("SWITCH TO ", "SWITCH TO\n");
 
   return (
     <section className="relative left-1/2 right-1/2 w-screen -mx-[50vw] min-h-[calc(100vh-4rem)] bg-white py-10 text-foreground dark:bg-[#0b1118] dark:text-white sm:py-14">
@@ -91,8 +92,8 @@ export async function Hero() {
               </p>
             </Reveal>
             <Reveal delay={0.05}>
-              <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                {hero.mainTitle}
+              <h1 className="mt-3 whitespace-pre-line text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                {mainTitle}
               </h1>
             </Reveal>
             <Reveal delay={0.1}>

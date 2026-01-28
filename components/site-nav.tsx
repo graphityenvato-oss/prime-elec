@@ -83,9 +83,9 @@ export function SiteNav() {
                 <Image
                   src="/images/logo/prime-elec-logo.png"
                   alt="Prime Elec"
-                  width={140}
-                  height={36}
-                  className="h-12 w-auto brightness-0 invert"
+                  width={128}
+                  height={43}
+                  className="h-10.75 w-auto brightness-0 invert"
                   priority
                 />
               </Link>
