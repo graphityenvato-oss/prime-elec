@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, Moon, Search, ShoppingCart, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 const THEME_KEY = "theme";
 
@@ -32,16 +33,27 @@ type NavLinkProps = {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  isActive?: boolean;
 };
 
-function NavLink({ href, children, className, onClick }: NavLinkProps) {
+function NavLink({
+  href,
+  children,
+  className,
+  onClick,
+  isActive = false,
+}: NavLinkProps) {
+  const linkClassName = isActive
+    ? "text-primary-foreground"
+    : className ?? "";
+
   return (
-    <Link href={href} className={className ?? ""} onClick={onClick}>
+    <Link href={href} className={linkClassName} onClick={onClick}>
       <motion.span
         className="relative inline-flex"
         whileHover="hover"
         initial="rest"
-        animate="rest"
+        animate={isActive ? "active" : "rest"}
       >
         <span>{children}</span>
         <motion.span
@@ -49,6 +61,7 @@ function NavLink({ href, children, className, onClick }: NavLinkProps) {
           variants={{
             rest: { scaleX: 0, opacity: 0 },
             hover: { scaleX: 1, opacity: 1 },
+            active: { scaleX: 1, opacity: 1 },
           }}
           transition={{ duration: 0.2, ease: "easeOut" }}
         />
@@ -58,6 +71,7 @@ function NavLink({ href, children, className, onClick }: NavLinkProps) {
 }
 
 export function SiteNav() {
+  const pathname = usePathname();
   const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -69,6 +83,12 @@ export function SiteNav() {
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
+  };
+
+  const isActiveLink = (href: string) => {
+    if (!href || href === "#") return false;
+    if (href === "/") return pathname === "/";
+    return pathname?.startsWith(href);
   };
 
   const closeMenu = () => setIsMenuOpen(false);
@@ -92,30 +112,38 @@ export function SiteNav() {
             </div>
 
             <div className="hidden flex-1 items-center justify-center gap-6 text-md md:flex">
-              <NavLink className="text-primary-foreground" href="/">
+              <NavLink
+                className="text-primary-foreground/80 hover:text-primary-foreground"
+                href="/"
+                isActive={isActiveLink("/")}
+              >
                 Home
               </NavLink>
               <NavLink
                 className="text-primary-foreground/80 hover:text-primary-foreground"
                 href="/about"
+                isActive={isActiveLink("/about")}
               >
                 About Us
               </NavLink>
               <NavLink
                 className="text-primary-foreground/80 hover:text-primary-foreground"
                 href="/stock"
+                isActive={isActiveLink("/stock")}
               >
                 Stock
               </NavLink>
               <NavLink
                 className="text-primary-foreground/80 hover:text-primary-foreground"
                 href="/categories"
+                isActive={isActiveLink("/categories")}
               >
                 Categories
               </NavLink>
               <NavLink
                 className="text-primary-foreground/80 hover:text-primary-foreground"
                 href="/brands"
+                isActive={isActiveLink("/brands")}
               >
                 Brands
               </NavLink>
@@ -232,9 +260,10 @@ export function SiteNav() {
               <div className="p-4">
                 <div className="grid gap-2">
                   <NavLink
-                    className="text-primary-foreground"
+                    className="text-primary-foreground/80 hover:text-primary-foreground"
                     href="/"
                     onClick={closeMenu}
+                    isActive={isActiveLink("/")}
                   >
                     Home
                   </NavLink>
@@ -242,6 +271,7 @@ export function SiteNav() {
                     className="text-primary-foreground/80 hover:text-primary-foreground"
                     href="/about"
                     onClick={closeMenu}
+                    isActive={isActiveLink("/about")}
                   >
                     About Us
                   </NavLink>
@@ -249,6 +279,7 @@ export function SiteNav() {
                     className="text-primary-foreground/80 hover:text-primary-foreground"
                     href="/stock"
                     onClick={closeMenu}
+                    isActive={isActiveLink("/stock")}
                   >
                     Stock
                   </NavLink>
@@ -256,6 +287,7 @@ export function SiteNav() {
                     className="text-primary-foreground/80 hover:text-primary-foreground"
                     href="/categories"
                     onClick={closeMenu}
+                    isActive={isActiveLink("/categories")}
                   >
                     Categories
                   </NavLink>
@@ -263,6 +295,7 @@ export function SiteNav() {
                     className="text-primary-foreground/80 hover:text-primary-foreground"
                     href="/brands"
                     onClick={closeMenu}
+                    isActive={isActiveLink("/brands")}
                   >
                     Brands
                   </NavLink>

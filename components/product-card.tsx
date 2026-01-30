@@ -2,9 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-
 import { Button } from "@/components/ui/button";
+import { GlowCard } from "@/components/ui/glow-card";
 
 type ProductCardProps = {
   image: string;
@@ -24,12 +23,10 @@ export function ProductCard({
   href,
 }: ProductCardProps) {
   return (
-    <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ type: "spring", stiffness: 240, damping: 18 }}
-      className="brand-glow-card brand-glow-card--static h-65 p-5 text-foreground dark:text-white"
+    <GlowCard
+      className="h-65 p-5 text-foreground dark:text-white"
+      contentClassName="flex h-full flex-col justify-between"
     >
-      <div className="brand-glow-card__content flex h-full flex-col justify-between">
         <div className="flex items-start justify-between gap-4">
           <div className="h-20 w-24">
             {href ? (
@@ -92,7 +89,6 @@ export function ProductCard({
             </Button>
           ) : null}
         </div>
-      </div>
-    </motion.div>
+    </GlowCard>
   );
 }

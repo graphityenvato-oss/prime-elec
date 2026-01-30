@@ -10,12 +10,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import {
-  BlogCategoryCard,
-  BlogRelatedCard,
-  BlogSocialCard,
-  BlogTagCloudCard,
-} from "@/components/blog-social-card";
+import { BlogSocialCard } from "@/components/blog-social-card";
 import { BlogBody } from "@/components/blog-body";
 import { supabaseServer } from "@/lib/supabase/server";
 import { Calendar, Clock, MessageCircle, User } from "lucide-react";
@@ -59,40 +54,6 @@ export default async function BlogDetailPage({
   const relatedImages = [post.featured_image_url, ...galleryUrls].filter(
     Boolean,
   );
-
-  const relatedQuery = supabaseServer
-    .from("blogs")
-    .select("title,slug,featured_image_url,published_at,created_at,category")
-    .eq("category", post.category ?? "")
-    .neq("id", post.id);
-
-  const relatedTags =
-    Array.isArray(post.tags) && post.tags.length ? post.tags : null;
-
-  const { data: relatedPosts } = await (relatedTags
-    ? relatedQuery.overlaps("tags", relatedTags)
-    : relatedQuery
-  )
-    .order("published_at", { ascending: false, nullsFirst: false })
-    .limit(3);
-
-  const relatedItems =
-    relatedPosts?.map((item) => {
-      const relatedDate = item.published_at ?? item.created_at ?? null;
-      return {
-        title: item.title,
-        date: relatedDate
-          ? new Date(relatedDate).toLocaleDateString("en-US", {
-              month: "short",
-              day: "2-digit",
-              year: "numeric",
-            })
-          : "—",
-        image:
-          item.featured_image_url || "/images/placeholder/imageholder.webp",
-        href: `/blog/${item.slug}`,
-      };
-    }) ?? [];
 
   let bodyState = post.body_json ?? null;
   if (typeof bodyState === "string") {
@@ -177,61 +138,14 @@ export default async function BlogDetailPage({
                 />
               </div>
             </div>
-
             <BlogBody serializedState={bodyState} />
-
-            <div className="mt-6 grid gap-4 lg:grid-cols-[1.4fr_0.6fr]">
-              <div className="overflow-hidden rounded-3xl border border-border/60 bg-background">
-                <div className="relative h-65 w-full sm:h-80 lg:h-90">
-                  <Image
-                    src={
-                      relatedImages[0] ?? "/images/placeholder/imageholder.webp"
-                    }
-                    alt={`${post.title} featured`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-              <div className="grid gap-4">
-                <div className="overflow-hidden rounded-3xl border border-border/60 bg-background">
-                  <div className="relative h-35 w-full sm:h-37.5 lg:h-42.5">
-                    <Image
-                      src={
-                        relatedImages[1] ??
-                        "/images/placeholder/imageholder.webp"
-                      }
-                      alt={`${post.title} supporting 1`}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-                <div className="overflow-hidden rounded-3xl border border-border/60 bg-background">
-                  <div className="relative h-35 w-full sm:h-37.5 lg:h-42.5">
-                    <Image
-                      src={
-                        relatedImages[2] ??
-                        "/images/placeholder/imageholder.webp"
-                      }
-                      alt={`${post.title} supporting 2`}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </article>
-
         <aside className="space-y-6">
           <BlogSocialCard shareTitle={post.title} />
-          <BlogCategoryCard />
-          <BlogRelatedCard items={relatedItems} />
-          <BlogTagCloudCard />
         </aside>
       </div>
     </section>
   );
 }
+

@@ -1,9 +1,9 @@
 ﻿"use client";
 import { useState } from "react";
 
-import { motion } from "framer-motion";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
+import { GlowCard } from "@/components/ui/glow-card";
 import {
   Dialog,
   DialogContent,
@@ -91,36 +91,38 @@ export default function BrandsPage() {
       <section className="mt-10">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {brands.map((brand, index) => (
-            <motion.div
+            <GlowCard
               key={brand.name}
-              className="brand-glow-card brand-glow-card--static h-55 p-6 text-foreground dark:text-white"
-              whileHover={{ y: -6 }}
+              className="h-55 p-6 text-foreground dark:text-white"
+              contentClassName="h-full"
+              hover={{ y: -6 }}
               transition={{ type: "spring", stiffness: 260, damping: 20 }}
             >
-              <Reveal delay={index * 0.06}>
-                <div className="brand-glow-card__content flex h-full flex-col justify-between">
-                  <div className="flex h-24 items-center justify-center">
-                    <Image
-                      width={200}
-                      height={48}
-                      src={brand.logo}
-                      alt={brand.name}
-                      className="h-12 w-auto"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="mt-2 flex items-center justify-center">
-                    <Button
-                      variant="outline"
-                      className="rounded-full border-primary/30 px-4 text-xs text-primary hover:border-primary hover:bg-primary/10 dark:border-white/30 dark:text-white dark:hover:border-white dark:hover:bg-white/10"
-                      onClick={() => handleCatalogClick(brand.href, brand.name)}
-                    >
-                      Visit Official Website
-                    </Button>
-                  </div>
+              <Reveal
+                delay={index * 0.06}
+                className="flex h-full flex-col justify-between"
+              >
+                <div className="flex h-24 items-center justify-center">
+                  <Image
+                    width={200}
+                    height={48}
+                    src={brand.logo}
+                    alt={brand.name}
+                    className="h-12 w-auto"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="mt-2 flex items-center justify-center">
+                  <Button
+                    variant="outline"
+                    className="rounded-full border-primary/30 px-4 text-xs text-primary hover:border-primary hover:bg-primary/10 dark:border-white/30 dark:text-white dark:hover:border-white dark:hover:bg-white/10"
+                    onClick={() => handleCatalogClick(brand.href, brand.name)}
+                  >
+                    Visit Official Website
+                  </Button>
                 </div>
               </Reveal>
-            </motion.div>
+            </GlowCard>
           ))}
         </div>
       </section>

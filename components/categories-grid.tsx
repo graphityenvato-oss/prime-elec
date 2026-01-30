@@ -4,7 +4,9 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+
+import { Reveal } from "@/components/reveal";
+import { GlowCard } from "@/components/ui/glow-card";
 
 import {
   Pagination,
@@ -44,14 +46,15 @@ export function CategoriesGrid({ categories }: CategoriesGridProps) {
   return (
     <div className="mt-10">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {visible.map((category) => (
-          <motion.div
+        {visible.map((category, index) => (
+          <Reveal
             key={`${category.title}-${category.logo}`}
-            whileHover={{ y: -4 }}
-            transition={{ type: "spring", stiffness: 240, damping: 18 }}
-            className="brand-glow-card brand-glow-card--static h-50 p-6 text-foreground dark:text-white"
+            delay={index * 0.06}
           >
-            <div className="brand-glow-card__content flex h-full flex-col justify-between">
+            <GlowCard
+              className="h-50 p-6 text-foreground dark:text-white"
+              contentClassName="flex h-full flex-col justify-between"
+            >
               <div className="h-10 w-32">
                 <Image
                   src={category.logo}
@@ -71,8 +74,8 @@ export function CategoriesGrid({ categories }: CategoriesGridProps) {
                 <span>View Categories</span>
                 <ArrowRight className="size-3" aria-hidden="true" />
               </Link>
-            </div>
-          </motion.div>
+            </GlowCard>
+          </Reveal>
         ))}
       </div>
 

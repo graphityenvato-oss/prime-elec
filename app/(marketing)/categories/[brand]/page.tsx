@@ -388,31 +388,30 @@ export default async function CategoryBrandPage({
           {cards.map((card) => (
             <HoverCard
               key={card.title}
-              className="brand-glow-card brand-glow-card--static h-60 p-4 text-foreground dark:text-white sm:h-55 sm:p-6"
+              className="h-60 p-4 text-foreground dark:text-white sm:h-55 sm:p-6"
+              contentClassName="flex h-full flex-col justify-between"
             >
-              <div className="brand-glow-card__content flex h-full flex-col justify-between">
-                <div className="h-14 w-32 sm:h-16 sm:w-36">
-                  <Image
-                    src={card.image ?? "/images/placeholder/imageholder.webp"}
-                    alt={`${card.title} product`}
-                    width={180}
-                    height={120}
-                    className="h-full w-auto object-contain"
-                  />
-                </div>
-                <div>
-                  <h2 className="text-lg font-semibold">{card.title}</h2>
-                  <p className="mt-2 text-sm text-foreground/70 dark:text-white/70">
-                    {card.subtitle}
-                  </p>
-                </div>
-                <Link
-                  href={`/categories/${key}/${card.slug}`}
-                  className="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10 sm:mt-4 sm:text-xs"
-                >
-                  <span>View More</span>
-                </Link>
+              <div className="h-14 w-32 sm:h-16 sm:w-36">
+                <Image
+                  src={card.image ?? "/images/placeholder/imageholder.webp"}
+                  alt={`${card.title} product`}
+                  width={180}
+                  height={120}
+                  className="h-full w-auto object-contain"
+                />
               </div>
+              <div>
+                <h2 className="text-lg font-semibold">{card.title}</h2>
+                <p className="mt-2 text-sm text-foreground/70 dark:text-white/70">
+                  {card.subtitle}
+                </p>
+              </div>
+              <Link
+                href={`/categories/${key}/${card.slug}`}
+                className="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10 sm:mt-4 sm:text-xs"
+              >
+                <span>View More</span>
+              </Link>
             </HoverCard>
           ))}
         </div>

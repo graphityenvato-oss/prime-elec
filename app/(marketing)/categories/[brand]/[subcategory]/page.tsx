@@ -149,28 +149,27 @@ export default async function SubcategoryPage({
           {data.items.map((item) => (
             <HoverCard
               key={item.title}
-              className="brand-glow-card brand-glow-card--static h-55 p-4 text-foreground dark:text-white sm:h-50 sm:p-6"
+              className="h-55 p-4 text-foreground dark:text-white sm:h-50 sm:p-6"
+              contentClassName="flex h-full flex-col justify-between"
             >
-              <div className="brand-glow-card__content flex h-full flex-col justify-between">
-                <div className="h-14 w-32 sm:h-16 sm:w-36">
-                  <Image
-                    src={item.image ?? "/images/placeholder/imageholder.webp"}
-                    alt={`${item.title} product`}
-                    width={180}
-                    height={120}
-                    className="h-full w-auto object-contain"
-                  />
-                </div>
-                <div>
-                  <h2 className="text-lg font-semibold">{item.title}</h2>
-                </div>
-                <Link
-                  href="/brands"
-                  className="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10 sm:mt-4 sm:text-xs"
-                >
-                  <span>View Products</span>
-                </Link>
+              <div className="h-14 w-32 sm:h-16 sm:w-36">
+                <Image
+                  src={item.image ?? "/images/placeholder/imageholder.webp"}
+                  alt={`${item.title} product`}
+                  width={180}
+                  height={120}
+                  className="h-full w-auto object-contain"
+                />
               </div>
+              <div>
+                <h2 className="text-lg font-semibold">{item.title}</h2>
+              </div>
+              <Link
+                href="/brands"
+                className="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10 sm:mt-4 sm:text-xs"
+              >
+                <span>View Products</span>
+              </Link>
             </HoverCard>
           ))}
         </div>
