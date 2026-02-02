@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import {
   Breadcrumb,
@@ -10,14 +11,28 @@ import {
 } from "@/components/ui/breadcrumb";
 import { CategoriesGrid, type CategoryCard } from "@/components/categories-grid";
 import { SearchInput } from "@/components/search-input";
-import { getMainCategories } from "@/lib/catalog-data";
+import { getMainCategoryBySlug } from "@/lib/catalog-data";
 
-export default function CategoriesPage() {
-  const categories: CategoryCard[] = getMainCategories().map((category) => ({
-    title: category.title,
-    description: category.description,
-    href: `/categories/${category.slug}`,
-    logo: category.image ?? "/images/placeholder/imageholder.webp",
+export default async function CategoryBrandsPage({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}) {
+  const resolvedParams = await params;
+  if (!resolvedParams?.category) {
+    notFound();
+  }
+
+  const category = getMainCategoryBySlug(resolvedParams.category);
+  if (!category) {
+    notFound();
+  }
+
+  const cards: CategoryCard[] = category.brands.map((brand) => ({
+    title: brand.name,
+    description: `${brand.name} offerings in ${category.title}.`,
+    href: `/categories/${category.slug}/${brand.key}`,
+    logo: brand.logo,
   }));
 
   return (
@@ -32,20 +47,26 @@ export default function CategoriesPage() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>Categories</BreadcrumbPage>
+              <BreadcrumbLink asChild>
+                <Link href="/categories">Categories</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{category.title}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
 
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-          Browse Main Categories
+          {category.title} Brands
         </h1>
 
         <div className="mt-4 max-w-md">
-          <SearchInput placeholder="Search categories" />
+          <SearchInput placeholder="Search brands" />
         </div>
 
-        <CategoriesGrid categories={categories} buttonLabel="View Brands" />
+        <CategoriesGrid categories={cards} buttonLabel="View Subcategories" />
       </div>
     </section>
   );

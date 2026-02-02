@@ -21,7 +21,7 @@ export async function EvcsNews() {
         buttonHref: data.button_href,
       }
     : {
-        title: "Prime Blogs",
+        title: "Prime News",
         buttonLabel: "All Blog Posts",
         buttonHref: "#",
       };
@@ -59,7 +59,7 @@ export async function EvcsNews() {
     <section className="mt-16 rounded-[32px] border border-border/60 bg-linear-to-br from-muted/40 via-background to-background px-6 py-10 text-foreground shadow-[0_30px_80px_rgba(0,0,0,0.18)]">
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <Reveal>
-          <h2 className="text-3xl font-extrabold tracking-tight">
+          <h2 className="text-3xl font-extrabold tracking-tight text-primary">
             {content.title}
           </h2>
         </Reveal>

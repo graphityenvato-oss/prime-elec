@@ -69,7 +69,7 @@ export function TestimonialsClient({ title, items }: TestimonialsClientProps) {
 
   return (
     <section className="mt-16 rounded-[32px] border border-border/60 bg-linear-to-br from-muted/40 via-background to-background px-6 py-10 text-foreground shadow-[0_30px_80px_rgba(0,0,0,0.18)]">
-      <h2 className="text-center text-3xl font-extrabold tracking-tight">
+      <h2 className="text-center text-3xl font-extrabold tracking-tight text-primary">
         {title}
       </h2>
 

@@ -1,45 +1,30 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import Image from "next/image";
+export type SubcategoryItem = {
+  title: string;
+  subtitle?: string;
+  image?: string;
+};
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { HoverCard } from "@/components/hover-card";
-import { SearchInput } from "@/components/search-input";
+export type BrandCategory = {
+  title: string;
+  subtitle: string;
+  image?: string;
+  slug: string;
+  subcategories?: SubcategoryItem[];
+};
 
-type BrandKey =
-  | "eaton"
-  | "teknoware"
-  | "obo"
-  | "indelec"
-  | "degson"
-  | "relpol"
-  | "tem";
+export type BrandCatalog = {
+  key: string;
+  name: string;
+  logo: string;
+  categories: BrandCategory[];
+};
 
-const brandData: Record<
-  BrandKey,
+export const brandCatalog: BrandCatalog[] = [
   {
-    name: string;
-    logo: string;
-    cards: {
-      title: string;
-      subtitle: string;
-      image?: string;
-      slug: string;
-      subcategories?: { title: string; subtitle: string }[];
-    }[];
-  }
-> = {
-  eaton: {
+    key: "eaton",
     name: "Eaton",
     logo: "/images/partners/Eaton-logo.png",
-    cards: [
+    categories: [
       {
         title: "Power Distribution",
         subtitle: "Breakers, panels, and switchgear solutions.",
@@ -48,10 +33,7 @@ const brandData: Record<
         subcategories: [
           { title: "MCCB", subtitle: "Compact molded case breakers." },
           { title: "Switchgear", subtitle: "LV switchgear assemblies." },
-          {
-            title: "Panel Boards",
-            subtitle: "Distribution boards and panels.",
-          },
+          { title: "Panel Boards", subtitle: "Distribution boards and panels." },
         ],
       },
       {
@@ -72,7 +54,10 @@ const brandData: Record<
         slug: "lighting-safety",
         subcategories: [
           { title: "Exit Signs", subtitle: "Emergency exit signage." },
-          { title: "Emergency Luminaires", subtitle: "Backup lighting units." },
+          {
+            title: "Emergency Luminaires",
+            subtitle: "Backup lighting units.",
+          },
           { title: "Safety Accessories", subtitle: "Mounting and add-ons." },
         ],
       },
@@ -114,14 +99,20 @@ const brandData: Record<
       },
     ],
   },
-  teknoware: {
+  {
+    key: "teknoware",
     name: "Teknoware",
     logo: "/images/partners/teknoware-logo.png",
-    cards: [
+    categories: [
       {
         title: "Emergency Lighting",
         subtitle: "Exit signs and emergency luminaires.",
         slug: "emergency-lighting",
+        subcategories: [
+          { title: "Exit Signs" },
+          { title: "Emergency Luminaires" },
+          { title: "Central Monitoring" },
+        ],
       },
       {
         title: "Central Monitoring",
@@ -150,10 +141,11 @@ const brandData: Record<
       },
     ],
   },
-  obo: {
+  {
+    key: "obo",
     name: "OBO Bettermann",
     logo: "/images/partners/obo-logo.png",
-    cards: [
+    categories: [
       {
         title: "Cable Management",
         subtitle: "Trays, ladders, and routing systems.",
@@ -186,10 +178,11 @@ const brandData: Record<
       },
     ],
   },
-  indelec: {
+  {
+    key: "indelec",
     name: "Indelec",
     logo: "/images/partners/Indelec-logo.png",
-    cards: [
+    categories: [
       {
         title: "Surge Arresters",
         subtitle: "Protection for power systems.",
@@ -222,10 +215,11 @@ const brandData: Record<
       },
     ],
   },
-  degson: {
+  {
+    key: "degson",
     name: "Degson",
     logo: "/images/partners/degson-logo.png",
-    cards: [
+    categories: [
       {
         title: "Terminal Blocks",
         subtitle: "Reliable wiring connections.",
@@ -258,10 +252,11 @@ const brandData: Record<
       },
     ],
   },
-  relpol: {
+  {
+    key: "relpol",
     name: "Relpol",
     logo: "/images/partners/Logo-Relpol.png",
-    cards: [
+    categories: [
       {
         title: "Industrial Relays",
         subtitle: "General purpose switching.",
@@ -294,10 +289,11 @@ const brandData: Record<
       },
     ],
   },
-  tem: {
+  {
+    key: "tem",
     name: "TEM",
     logo: "/images/partners/Tem-logo.png",
-    cards: [
+    categories: [
       {
         title: "Switchgear",
         subtitle: "Protection and control systems.",
@@ -328,94 +324,88 @@ const brandData: Record<
         subtitle: "Busbars and wiring sets.",
         slug: "accessories",
       },
+      {
+        title: "Motor Protection",
+        subtitle: "Motor starters and overload protection.",
+        slug: "motor-protection",
+      },
+      {
+        title: "Power Quality",
+        subtitle: "Harmonic filters and power factor correction.",
+        slug: "power-quality",
+      },
+      {
+        title: "Enclosures",
+        subtitle: "Metal and polycarbonate enclosures.",
+        slug: "enclosures",
+      },
+      {
+        title: "Energy Storage",
+        subtitle: "Battery systems and energy storage solutions.",
+        slug: "energy-storage",
+      },
+      {
+        title: "Industrial Networking",
+        subtitle: "Industrial Ethernet and connectivity gear.",
+        slug: "industrial-networking",
+      },
+      {
+        title: "Safety Controls",
+        subtitle: "Safety relays, switches, and monitoring.",
+        slug: "safety-controls",
+      },
+      {
+        title: "Meters & Sensors",
+        subtitle: "Measurement, sensing, and instrumentation.",
+        slug: "meters-sensors",
+      },
     ],
   },
+];
+
+export type MainCategory = {
+  slug: string;
+  title: string;
+  description: string;
+  image?: string;
+  brands: BrandCatalog[];
 };
 
-const formatTitle = (value: string) =>
-  value
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
+export const getMainCategories = (): MainCategory[] => {
+  const index = new Map<string, MainCategory>();
 
-export default async function CategoryBrandPage({
-  params,
-}: {
-  params: Promise<{ brand: string }>;
-}) {
-  const resolvedParams = await params;
-  if (!resolvedParams?.brand) {
-    notFound();
-  }
-  const brandParam = resolvedParams.brand;
-  const key = brandParam.toLowerCase() as BrandKey;
-  const data = brandData[key];
-  const title = data?.name ?? formatTitle(brandParam);
-  const cards = data?.cards ?? [];
+  brandCatalog.forEach((brand) => {
+    brand.categories.forEach((category) => {
+      const existing = index.get(category.slug);
+      if (!existing) {
+        index.set(category.slug, {
+          slug: category.slug,
+          title: category.title,
+          description: category.subtitle,
+          image: category.image,
+          brands: [brand],
+        });
+      } else if (!existing.brands.find((item) => item.key === brand.key)) {
+        existing.brands.push(brand);
+      }
+    });
+  });
 
-  return (
-    <section className="relative left-1/2 right-1/2 w-screen -mx-[50vw] bg-white py-14 text-foreground dark:bg-[#0b1118] dark:text-white">
-      <div className="mx-auto w-full max-w-7xl px-6">
-        <Breadcrumb className="text-foreground/70 dark:text-white/70">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/">Home</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/categories">Categories</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{title}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-
-        <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-          {title} Categories
-        </h1>
-
-        <div className="mt-4 max-w-md">
-          <SearchInput placeholder="Search categories" />
-        </div>
-
-        <div className="mt-10 grid gap-4 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3">
-          {cards.map((card) => (
-            <HoverCard
-              key={card.title}
-              className="h-60 p-4 text-foreground dark:text-white sm:h-55 sm:p-6"
-              contentClassName="flex h-full flex-col justify-between"
-            >
-              <div className="h-14 w-32 sm:h-16 sm:w-36">
-                <Image
-                  src={card.image ?? "/images/placeholder/imageholder.webp"}
-                  alt={`${card.title} product`}
-                  width={180}
-                  height={120}
-                  className="h-full w-auto object-contain"
-                />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold">{card.title}</h2>
-                <p className="mt-2 text-sm text-foreground/70 dark:text-white/70">
-                  {card.subtitle}
-                </p>
-              </div>
-              <Link
-                href={`/categories/${key}/${card.slug}`}
-                className="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10 sm:mt-4 sm:text-xs"
-              >
-                <span>View More</span>
-              </Link>
-            </HoverCard>
-          ))}
-        </div>
-      </div>
-    </section>
+  return Array.from(index.values()).sort((a, b) =>
+    a.title.localeCompare(b.title),
   );
-}
+};
+
+export const getMainCategoryBySlug = (slug: string) =>
+  getMainCategories().find((category) => category.slug === slug);
+
+export const getBrandByKey = (key: string) =>
+  brandCatalog.find((brand) => brand.key === key);
+
+export const getBrandCategory = (brandKey: string, categorySlug: string) => {
+  const brand = getBrandByKey(brandKey);
+  if (!brand) return null;
+  const category = brand.categories.find((item) => item.slug === categorySlug);
+  if (!category) return null;
+  return { brand, category };
+};

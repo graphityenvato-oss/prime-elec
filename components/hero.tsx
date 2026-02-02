@@ -1,5 +1,4 @@
 import { Reveal } from "@/components/reveal";
-import { HeroImageParallax } from "@/components/hero-image-parallax";
 import { PartnerCards, type PartnerCardItem } from "@/components/partner-cards";
 import { supabaseServer } from "@/lib/supabase/server";
 
@@ -81,37 +80,31 @@ export async function Hero() {
   const mainTitle = hero.mainTitle.replace("SWITCH TO ", "SWITCH TO\n");
 
   return (
-    <section className="relative left-1/2 right-1/2 w-screen -mx-[50vw] min-h-[calc(100vh-4rem)] bg-white py-10 text-foreground dark:bg-[#0b1118] dark:text-white sm:py-14">
+    <section className="relative left-1/2 right-1/2 flex w-screen -mx-[50vw] min-h-[calc(100vh-4rem)] items-center overflow-hidden bg-white py-10 text-foreground dark:bg-[#0b1118] dark:text-white sm:py-14">
       <div className="pointer-events-none absolute inset-0 bg-[url('/images/hero/bgg.png')] bg-cover bg-center opacity-30" />
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6">
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="text-center lg:text-left">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center justify-items-center">
+          <div className="text-left justify-self-start">
             <Reveal>
               <p className="text-xs uppercase tracking-[0.3em] text-foreground/70">
                 {hero.subtitle}
               </p>
             </Reveal>
             <Reveal delay={0.05}>
-              <h1 className="mt-3 whitespace-pre-line text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              <h1 className="mt-3 whitespace-pre-line text-4xl font-extrabold tracking-tight text-primary sm:text-5xl lg:text-6xl">
                 {mainTitle}
               </h1>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mt-4 mx-auto max-w-xl text-sm text-foreground/75 sm:text-base lg:mx-0">
+              <p className="mt-4 mx-auto max-w-xl text-sm text-foreground/75 sm:text-base">
                 {hero.description}
               </p>
             </Reveal>
           </div>
           <div className="relative isolate mx-auto w-full max-w-md overflow-visible rounded-3xl lg:max-w-none">
-            <HeroImageParallax
-              src="/images/hero/hero-image.png"
-              alt="PrimeElec hero visual"
-              width={760}
-              height={520}
-            />
+            <PartnerCards items={partnerCards} />
           </div>
         </div>
-        <PartnerCards items={partnerCards} />
       </div>
     </section>
   );

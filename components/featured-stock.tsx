@@ -64,7 +64,7 @@ export async function FeaturedStock() {
             {content.eyebrow}
           </p>
           <Reveal>
-            <h2 className="mt-2 text-2xl font-extrabold tracking-tight">
+            <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-primary">
               {content.title}
             </h2>
           </Reveal>

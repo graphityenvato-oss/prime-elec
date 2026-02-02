@@ -2,7 +2,7 @@ import { TestimonialsClient } from "@/components/testimonials-client";
 import { supabaseServer } from "@/lib/supabase/server";
 
 const fallbackTestimonials = {
-  title: "Our customer loves",
+  title: "Trusted by Industry Leaders",
   items: [
     {
       name: "Scott John",

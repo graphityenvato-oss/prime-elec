@@ -116,6 +116,65 @@ function PaginationEllipsis({
   );
 }
 
+type PaginationNumbersProps = {
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+};
+
+function getPageItems(totalPages: number, currentPage: number) {
+  const items: Array<number | "ellipsis"> = [];
+
+  if (totalPages <= 5) {
+    for (let i = 1; i <= totalPages; i += 1) items.push(i);
+    return items;
+  }
+
+  items.push(1);
+
+  const start = Math.max(2, currentPage - 1);
+  const end = Math.min(totalPages - 1, currentPage + 1);
+
+  if (start > 2) items.push("ellipsis");
+  for (let i = start; i <= end; i += 1) items.push(i);
+  if (end < totalPages - 1) items.push("ellipsis");
+
+  items.push(totalPages);
+  return items;
+}
+
+function PaginationNumbers({
+  totalPages,
+  currentPage,
+  onPageChange,
+}: PaginationNumbersProps) {
+  const items = getPageItems(totalPages, currentPage);
+  return (
+    <>
+      {items.map((item, index) =>
+        item === "ellipsis" ? (
+          <PaginationItem key={`ellipsis-${index}`}>
+            <PaginationEllipsis />
+          </PaginationItem>
+        ) : (
+          <PaginationItem key={item}>
+            <PaginationLink
+              href="#"
+              isActive={item === currentPage}
+              onClick={(event) => {
+                event.preventDefault();
+                onPageChange(item);
+              }}
+            >
+              {item}
+            </PaginationLink>
+          </PaginationItem>
+        ),
+      )}
+    </>
+  );
+}
+
 export {
   Pagination,
   PaginationContent,
@@ -124,4 +183,5 @@ export {
   PaginationPrevious,
   PaginationNext,
   PaginationEllipsis,
+  PaginationNumbers,
 };

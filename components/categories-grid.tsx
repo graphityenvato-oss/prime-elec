@@ -12,7 +12,7 @@ import {
   Pagination,
   PaginationContent,
   PaginationItem,
-  PaginationLink,
+  PaginationNumbers,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
@@ -26,11 +26,15 @@ export type CategoryCard = {
 
 type CategoriesGridProps = {
   categories: CategoryCard[];
+  buttonLabel?: string;
 };
 
 const ITEMS_PER_PAGE = 9;
 
-export function CategoriesGrid({ categories }: CategoriesGridProps) {
+export function CategoriesGrid({
+  categories,
+  buttonLabel = "View Categories",
+}: CategoriesGridProps) {
   const [page, setPage] = useState(1);
   const totalPages = Math.max(1, Math.ceil(categories.length / ITEMS_PER_PAGE));
 
@@ -71,7 +75,7 @@ export function CategoriesGrid({ categories }: CategoriesGridProps) {
                 href={category.href}
                 className="mt-5 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
               >
-                <span>View Categories</span>
+                <span>{buttonLabel}</span>
                 <ArrowRight className="size-3" aria-hidden="true" />
               </Link>
             </GlowCard>
@@ -92,25 +96,11 @@ export function CategoriesGrid({ categories }: CategoriesGridProps) {
                 }}
               />
             </PaginationItem>
-
-            {Array.from({ length: totalPages }).map((_, index) => {
-              const pageNumber = index + 1;
-              return (
-                <PaginationItem key={pageNumber}>
-                  <PaginationLink
-                    href="#"
-                    isActive={pageNumber === page}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      goToPage(pageNumber);
-                    }}
-                  >
-                    {pageNumber}
-                  </PaginationLink>
-                </PaginationItem>
-              );
-            })}
-
+            <PaginationNumbers
+              totalPages={totalPages}
+              currentPage={page}
+              onPageChange={goToPage}
+            />
             <PaginationItem>
               <PaginationNext
                 href="#"

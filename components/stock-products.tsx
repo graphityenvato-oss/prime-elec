@@ -9,7 +9,7 @@ import {
   Pagination,
   PaginationContent,
   PaginationItem,
-  PaginationLink,
+  PaginationNumbers,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
@@ -68,23 +68,11 @@ export function StockProducts({ products, perPage = 12 }: StockProductsProps) {
               />
             </PaginationItem>
 
-            {Array.from({ length: totalPages }).map((_, index) => {
-              const pageNumber = index + 1;
-              return (
-                <PaginationItem key={pageNumber}>
-                  <PaginationLink
-                    href="#"
-                    isActive={pageNumber === page}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      goToPage(pageNumber);
-                    }}
-                  >
-                    {pageNumber}
-                  </PaginationLink>
-                </PaginationItem>
-              );
-            })}
+            <PaginationNumbers
+              totalPages={totalPages}
+              currentPage={page}
+              onPageChange={goToPage}
+            />
 
             <PaginationItem>
               <PaginationNext
