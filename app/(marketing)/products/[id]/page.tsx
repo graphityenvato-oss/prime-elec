@@ -84,7 +84,7 @@ export default async function ProductPage({
               {product.specs.slice(0, 3).map((spec) => (
                 <span
                   key={`${product.id}-tag-${spec.label}`}
-                  className="rounded-full border border-border/60 bg-muted/30 px-3 py-1 text-xs font-semibold text-foreground/80"
+                  className="rounded-full border border-border/60 dark:border-primary bg-muted/30 px-3 py-1 text-xs font-semibold text-foreground/80"
                 >
                   {spec.label}: {spec.value}
                 </span>
@@ -127,7 +127,7 @@ export default async function ProductPage({
               key={`${product.id}-${spec.label}`}
               className="rounded-xl border border-border/60 bg-muted/20 p-4"
             >
-              <p className="text-xs uppercase tracking-[0.2em] text-primary/70">
+              <p className="text-xs uppercase tracking-[0.2em] text-primary">
                 {spec.label}
               </p>
               <p className="mt-2 text-base font-semibold text-foreground">

@@ -37,7 +37,7 @@ export default function CategoriesPage() {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+        <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl text-primary">
           Browse Main Categories
         </h1>
 

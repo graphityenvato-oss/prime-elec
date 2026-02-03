@@ -18,12 +18,12 @@ export async function EvcsNews() {
     ? {
         title: data.title,
         buttonLabel: data.button_label,
-        buttonHref: data.button_href,
+        buttonHref: data.button_href || "/blog",
       }
     : {
         title: "Prime News",
         buttonLabel: "All Blog Posts",
-        buttonHref: "#",
+        buttonHref: "/blog",
       };
 
   const { data: blogPosts } = await supabaseServer
@@ -73,8 +73,8 @@ export async function EvcsNews() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-3">
         {posts.map((post, index) => (
-          <Reveal key={post.slug} delay={index * 0.08}>
-            <PrimeCard className="rounded-3xl p-4">
+          <Reveal key={post.slug} delay={index * 0.08} className="h-full">
+            <PrimeCard className="flex h-full flex-col rounded-3xl p-4">
               <div className="relative h-48 overflow-hidden rounded-2xl border border-border/60 bg-muted/30">
                 <Image
                   src={post.image}
@@ -98,11 +98,11 @@ export async function EvcsNews() {
                   </span>
                 ) : null}
               </div>
-              <h3 className="mt-2 text-lg font-semibold leading-snug">
+              <h3 className="mt-2 line-clamp-2 text-lg font-semibold leading-snug">
                 {post.title}
               </h3>
               {post.tags.length ? (
-                <div className="mt-2 flex flex-wrap gap-2">
+                <div className="mt-2 flex flex-wrap gap-2 pb-4">
                   {post.tags.slice(0, 2).map((tag) => (
                     <span
                       key={tag}
@@ -116,7 +116,7 @@ export async function EvcsNews() {
               ) : null}
               <Button
                 variant="outline"
-                className="mt-4 rounded-full px-4 text-xs"
+                className="mt-auto rounded-full px-4 text-xs"
                 asChild
               >
                 <a href={`/blog/${post.slug}`}>Read More</a>

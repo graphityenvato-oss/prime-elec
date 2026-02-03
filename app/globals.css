@@ -17,10 +17,10 @@ body {
     sans-serif;
   overflow-x: hidden;
   transition:
-    background-color 0.45s ease,
-    color 0.45s ease,
-    border-color 0.45s ease,
-    box-shadow 0.45s ease;
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 .button {
@@ -29,10 +29,10 @@ body {
 
 * {
   transition:
-    background-color 0.45s ease,
-    color 0.45s ease,
-    border-color 0.45s ease,
-    box-shadow 0.45s ease;
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 @theme inline {
@@ -112,7 +112,7 @@ body {
 }
 
 .dark {
-  --background: #0b1118;
+  --background: #292929;
   --foreground: #e6e7e8;
   --card: #0f1620;
   --card-foreground: #e6e7e8;
@@ -123,7 +123,7 @@ body {
   --secondary: #1f242b;
   --secondary-foreground: #e6e7e8;
   --muted: #1f242b;
-  --muted-foreground: color-mix(in srgb, var(--primary) 35%, transparent);
+  --muted-foreground: #f2f3f5;
   --accent: #2b3036;
   --accent-foreground: #e6e7e8;
   --destructive: oklch(0.704 0.191 22.216);
@@ -204,9 +204,26 @@ body {
   }
 }
 
+@keyframes waveFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 60%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .animate-liquid {
   background-size: 200% 200%;
-  animation: liquid 12s ease infinite;
+  animation: liquid 26s ease-in-out infinite;
+}
+
+.animate-wave {
+  background-size: 240% 240%;
+  animation: waveFlow 36s ease-in-out infinite;
 }
 
 .hide-scrollbar {

@@ -1,3 +1,5 @@
+import { Mail, MapPin, Phone, Radar, AlarmClock } from "lucide-react";
+
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +17,7 @@ export default function ContactPage() {
           </p>
         </Reveal>
         <Reveal delay={0.05}>
-          <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-primary">
             Let&apos;s build your next project together.
           </h1>
         </Reveal>
@@ -31,34 +33,79 @@ export default function ContactPage() {
       <section className="mt-10 grid items-stretch gap-6 lg:grid-cols-[1fr_1.2fr]">
         <div className="space-y-4 lg:flex lg:h-full lg:flex-col lg:gap-4 lg:space-y-0">
           <PrimeCard className="p-6 lg:flex-1">
-            <h2 className="text-lg font-semibold">Reach us</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              +1 (000) 000-0000
-            </p>
-            <p className="text-sm text-muted-foreground">sales@primeelec.com</p>
-          </PrimeCard>
-          <PrimeCard className="p-6 lg:flex-1">
-            <h2 className="text-lg font-semibold">Reach us</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              +1 (000) 000-0000
-            </p>
-            <p className="text-sm text-muted-foreground">sales@primeelec.com</p>
-          </PrimeCard>
-          <PrimeCard className="p-6 lg:flex-1">
-            <h2 className="text-lg font-semibold">Office</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              123 PrimeElec Way
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary">
+                <Phone className="size-5" />
+              </span>
+              <div>
+                <h2 className="text-lg font-semibold">Contact details</h2>
+                <p className="text-xs text-muted-foreground">
+                  Sales &amp; service lines
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 grid gap-1 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Phone className="size-4 text-primary/70" />
+                <span>+961 70 97 14 14</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="size-4 text-primary/70" />
+                <span>info@prime-elec.co</span>
+              </div>
+            </div>
+            <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              Response time
             </p>
             <p className="text-sm text-muted-foreground">
-              Dubai, United Arab Emirates
+              Within one business day
             </p>
           </PrimeCard>
           <PrimeCard className="p-6 lg:flex-1">
-            <h2 className="text-lg font-semibold">Hours</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Sunday - Thursday
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary">
+                <MapPin className="size-5" />
+              </span>
+              <div>
+                <h2 className="text-lg font-semibold">Office</h2>
+                <p className="text-xs text-muted-foreground">
+                  Logistics hub &amp; showroom
+                </p>
+              </div>
+            </div>
+            <p className="mt-4 text-sm text-muted-foreground">
+              Ghaziyeh
             </p>
-            <p className="text-sm text-muted-foreground">9:00 AM - 6:00 PM</p>
+            <p className="text-sm text-muted-foreground">
+              Saida, Lebanon
+            </p>
+            <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              Receiving
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Gate A
+            </p>
+          </PrimeCard>
+          <PrimeCard className="p-6 lg:flex-1">
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary">
+                <AlarmClock className="size-5" />
+              </span>
+              <div>
+                <h2 className="text-lg font-semibold">Hours</h2>
+                <p className="text-xs text-muted-foreground">
+                  Support &amp; dispatch
+                </p>
+              </div>
+            </div>
+            <p className="mt-4 text-sm text-muted-foreground">
+              Monday - Friday
+            </p>
+            <p className="text-sm text-muted-foreground">8:00 AM - 5:00 PM</p>
+            <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              Emergency
+            </p>
+            <p className="text-sm text-muted-foreground">24/7 dispatch</p>
           </PrimeCard>
         </div>
 
@@ -94,6 +141,10 @@ export default function ContactPage() {
               <Input id="contact-part" placeholder="Part number or link" />
             </div>
             <div className="grid gap-2">
+              <Label htmlFor="contact-qty">Estimated quantity</Label>
+              <Input id="contact-qty" placeholder="e.g. 120 units" />
+            </div>
+            <div className="grid gap-2">
               <Label htmlFor="contact-details">Project details</Label>
               <Textarea
                 id="contact-details"
@@ -110,7 +161,19 @@ export default function ContactPage() {
 
       <PrimeCard className="mt-10 p-6">
         <h2 className="text-lg font-semibold">Visit us</h2>
-        <div className="mt-4 h-64 rounded-xl border border-border/60 bg-muted/20" />
+        <p className="mt-2 text-sm text-muted-foreground">
+          Find our logistics hub and showroom. Visitor parking is available
+          on-site.
+        </p>
+        <div className="mt-4 h-72 overflow-hidden rounded-xl border border-border/60 bg-muted/20">
+          <iframe
+            title="PrimeElec location map"
+            className="h-full w-full"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.266384348692!2d35.36333967615992!3d33.50607244637149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151ef13518dcc271%3A0xd8b405973d68829!2sPRIME%20ELEC!5e1!3m2!1sen!2slb!4v1770103386852!5m2!1sen!2slb"
+          />
+        </div>
       </PrimeCard>
     </>
   );

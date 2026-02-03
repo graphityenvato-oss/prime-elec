@@ -106,7 +106,7 @@ export default function LoginPage() {
     <main className="flex min-h-screen items-center justify-center bg-background px-6 py-12 text-foreground">
       <div className="mx-auto flex w-full max-w-md flex-col items-center gap-8">
         <Image
-          src="/images/logo/prime-elec-logo.png"
+          src="/images/logo/prime-elec-logo-black.png"
           alt="Prime Elec"
           width={180}
           height={48}

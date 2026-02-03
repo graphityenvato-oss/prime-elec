@@ -159,7 +159,7 @@ function PaginationNumbers({
         ) : (
           <PaginationItem key={item}>
             <PaginationLink
-              href="#"
+              href="#top"
               isActive={item === currentPage}
               onClick={(event) => {
                 event.preventDefault();

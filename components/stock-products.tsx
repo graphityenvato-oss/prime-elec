@@ -59,7 +59,7 @@ export function StockProducts({ products, perPage = 12 }: StockProductsProps) {
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                href="#"
+                href="#top"
                 className={page === 1 ? "pointer-events-none opacity-40" : ""}
                 onClick={(event) => {
                   event.preventDefault();
@@ -76,7 +76,7 @@ export function StockProducts({ products, perPage = 12 }: StockProductsProps) {
 
             <PaginationItem>
               <PaginationNext
-                href="#"
+                href="#top"
                 className={
                   page === totalPages ? "pointer-events-none opacity-40" : ""
                 }

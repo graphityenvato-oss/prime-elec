@@ -38,7 +38,7 @@ export function PartnerCards({ items }: PartnerCardsProps) {
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
       className={[
-        "group relative h-[200px] w-full overflow-hidden rounded-2xl border border-primary bg-white text-foreground shadow-[0_24px_60px_-40px_rgba(15,23,42,0.2)]",
+        "group relative h-[200px] w-full overflow-hidden rounded-2xl border border-primary bg-white text-foreground shadow-[0_24px_60px_-40px_rgba(15,23,42,0.2)] dark:bg-primary dark:text-primary-foreground",
         variant === "featured" ? "" : "",
       ].join(" ")}
     >
@@ -54,7 +54,7 @@ export function PartnerCards({ items }: PartnerCardsProps) {
               className="h-full w-auto object-contain object-left"
             />
           </div>
-          <span className="text-[10px] uppercase tracking-[0.3em] text-foreground/60">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-foreground/60 dark:text-primary-foreground/70">
             Partner
           </span>
         </div>

@@ -23,7 +23,7 @@ import { products } from "@/lib/products";
 
 export default function StockPage() {
   return (
-    <section className="py-10 sm:py-14">
+    <section id="top" className="py-10 sm:py-14">
       <Breadcrumb className="text-foreground/70">
         <BreadcrumbList>
           <BreadcrumbItem>

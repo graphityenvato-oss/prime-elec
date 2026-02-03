@@ -6,10 +6,90 @@ import { XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+let dialogOpenCount = 0;
+let previousBodyOverflow = "";
+let previousBodyPosition = "";
+let previousBodyTop = "";
+let previousBodyWidth = "";
+let previousHtmlOverflow = "";
+let previousPaddingRight = "";
+let previousScrollY = 0;
+
+const lockBodyScroll = () => {
+  const root = document.documentElement;
+  const body = document.body;
+  if (dialogOpenCount === 0) {
+    previousBodyOverflow = body.style.overflow;
+    previousBodyPosition = body.style.position;
+    previousBodyTop = body.style.top;
+    previousBodyWidth = body.style.width;
+    previousHtmlOverflow = root.style.overflow;
+    previousPaddingRight = body.style.paddingRight;
+    previousScrollY = window.scrollY;
+    const scrollbarWidth = window.innerWidth - root.clientWidth;
+
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${previousScrollY}px`;
+    body.style.width = "100%";
+    root.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+  }
+
+  dialogOpenCount += 1;
+  root.dataset.dialogOpen = String(dialogOpenCount);
+};
+
+const unlockBodyScroll = () => {
+  const root = document.documentElement;
+  dialogOpenCount = Math.max(dialogOpenCount - 1, 0);
+  root.dataset.dialogOpen = String(dialogOpenCount);
+
+  if (dialogOpenCount === 0) {
+    const body = document.body;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+    body.style.paddingRight = previousPaddingRight;
+    root.style.overflow = previousHtmlOverflow;
+    window.scrollTo(0, previousScrollY);
+  }
+};
+
 function Dialog({
+  onOpenChange,
+  open,
+  defaultOpen,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />;
+  React.useEffect(() => {
+    const isOpen = open ?? defaultOpen;
+    if (isOpen) {
+      lockBodyScroll();
+      return () => unlockBodyScroll();
+    }
+    return;
+  }, []);
+
+  return (
+    <DialogPrimitive.Root
+      data-slot="dialog"
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={(nextOpen) => {
+        if (nextOpen) {
+          lockBodyScroll();
+        } else {
+          unlockBodyScroll();
+        }
+        onOpenChange?.(nextOpen);
+      }}
+      {...props}
+    />
+  );
 }
 
 function DialogTrigger({
@@ -59,8 +139,9 @@ function DialogContent({
       <DialogOverlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"
+        data-lenis-prevent
         className={cn(
-          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 outline-none sm:max-w-lg",
+          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 outline-none sm:max-w-lg max-h-[calc(100vh-2rem)] overflow-y-auto overscroll-contain",
           className,
         )}
         {...props}

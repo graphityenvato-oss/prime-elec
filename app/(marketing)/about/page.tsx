@@ -1,13 +1,13 @@
-import { MissionVision } from "@/components/mission-vision";
-import { SubscriptionPlans } from "@/components/subscription-plans";
+import { AboutHeroSection } from "@/components/about/about-hero-section";
+import { AboutServicesSection } from "@/components/about/about-services-section";
 import { TrustedBy } from "@/components/trusted-by";
 
 export default function AboutPage() {
   return (
     <>
-      <MissionVision />
-      <SubscriptionPlans />
+      <AboutHeroSection />
       <TrustedBy />
+      <AboutServicesSection />
     </>
   );
 }

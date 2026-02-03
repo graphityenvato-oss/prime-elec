@@ -5,6 +5,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import FileUpload03 from "@/components/file-upload-03";
 import { Menu, Moon, Search, ShoppingCart, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -74,6 +81,7 @@ export function SiteNav() {
   const pathname = usePathname();
   const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -97,15 +105,15 @@ export function SiteNav() {
     <div className="w-full">
       <div className="fixed inset-x-0 top-0 z-50">
         <nav className="border border-primary bg-primary text-primary-foreground shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
-          <div className="mx-auto flex h-16 w-full max-w-7xl items-center px-6">
-            <div className="hidden w-40 items-center md:flex">
+          <div className="mx-auto flex h-18 w-full max-w-7xl items-center px-6">
+            <div className="hidden w-72 items-center md:flex">
               <Link href="/" aria-label="Prime Elec home">
                 <Image
-                  src="/images/logo/prime-elec-logo.png"
+                  src="/images/logo/logo-original.svg"
                   alt="Prime Elec"
-                  width={128}
-                  height={43}
-                  className="h-10.75 w-auto brightness-0 invert"
+                  width={200}
+                  height={80}
+                  className="h-16 w-64 object-contain brightness-0 invert"
                   priority
                 />
               </Link>
@@ -183,7 +191,10 @@ export function SiteNav() {
                 <Sun className="size-4 hidden dark:block" />
                 <Moon className="size-4 dark:hidden" />
               </Button>
-              <Button className="rounded-full bg-primary-foreground px-5 py-2 text-sm font-semibold text-primary hover:bg-primary-foreground/90">
+              <Button
+                className="rounded-full bg-primary-foreground px-5 py-2 text-sm font-semibold text-primary hover:bg-primary-foreground/90"
+                onClick={() => setIsUploadOpen(true)}
+              >
                 Upload BOQ
               </Button>
             </div>
@@ -192,11 +203,11 @@ export function SiteNav() {
               <div className="flex items-center">
                 <Link href="/" aria-label="Prime Elec home" onClick={closeMenu}>
                   <Image
-                    src="/images/logo/prime-elec-logo.png"
+                    src="/images/logo/logo-original.svg"
                     alt="Prime Elec"
-                    width={120}
-                    height={32}
-                    className="h-8 w-auto brightness-0 invert"
+                    width={160}
+                    height={40}
+                    className="h-10 w-44 object-contain brightness-0 invert"
                     priority
                   />
                 </Link>
@@ -308,7 +319,10 @@ export function SiteNav() {
                   </NavLink>
                 </div>
                 <div className="mt-4 flex items-center">
-                  <Button className="rounded-full bg-primary-foreground px-4 py-2 text-sm font-semibold text-primary hover:bg-primary-foreground/90">
+                  <Button
+                    className="rounded-full bg-primary-foreground px-4 py-2 text-sm font-semibold text-primary hover:bg-primary-foreground/90"
+                    onClick={() => setIsUploadOpen(true)}
+                  >
                     Upload BOQ
                   </Button>
                 </div>
@@ -317,7 +331,18 @@ export function SiteNav() {
           ) : null}
         </AnimatePresence>
       </div>
-      <div className="h-[4.25rem]" />
+      <div className="h-17" />
+
+      <Dialog open={isUploadOpen} onOpenChange={setIsUploadOpen}>
+        <DialogContent className="left-4 right-4 w-auto max-w-none translate-x-0 p-0 sm:left-[50%] sm:right-auto sm:w-full sm:max-w-3xl sm:translate-x-[-50%]">
+          <DialogHeader className="px-6 pt-6">
+            <DialogTitle>Upload BOQ</DialogTitle>
+          </DialogHeader>
+          <div className="max-h-[calc(100vh-7.5rem)] overflow-y-auto px-6 pb-6">
+            <FileUpload03 className="px-0 pb-0" />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

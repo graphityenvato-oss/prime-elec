@@ -18,22 +18,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-const initialItems = [
-  {
-    name: "MCCB Series",
-    partNumber: "MCCB-420X",
-    image: "/images/products/MCCB-Seriess.png",
-    quantity: 2,
-    source: "stock",
-  },
-  {
-    name: "Switchgear Unit",
-    partNumber: "SWG-9000",
-    image: "/images/products/Switchgear.png",
-    quantity: 1,
-    source: "stock",
-  },
-];
+const initialItems: Array<{
+  name: string;
+  partNumber: string;
+  image: string;
+  quantity: number;
+  source: "stock" | "external";
+}> = [];
 
 export default function CartPage() {
   const [items, setItems] = useState(initialItems);
@@ -118,68 +109,74 @@ export default function CartPage() {
               Current List ({items.length})
             </h2>
             <div className="mt-4 space-y-4">
-              {items.map((item) => (
-                <div
-                  key={item.partNumber}
-                  className="flex flex-col gap-4 rounded-2xl border border-border/60 bg-background p-5 shadow-[0_12px_30px_rgba(12,28,60,0.08)] sm:flex-row sm:items-center sm:justify-between"
-                >
-                  <div className="flex min-w-0 flex-1 items-center gap-4">
-                    <div className="h-16 w-16 rounded-xl bg-muted/30 p-2">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={96}
-                        height={96}
-                        className="h-full w-full object-contain"
-                      />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="text-base font-semibold">{item.name}</div>
-                      <div className="text-xs text-muted-foreground">
-                        {item.source === "external"
-                          ? "External Request | "
-                          : "Stock | Part No."}
-                        <span className="block break-all font-semibold text-foreground">
-                          {item.partNumber}
-                        </span>
+              {items.length === 0 ? (
+                <p className="rounded-2xl border border-dashed border-border/60 bg-muted/10 p-5 text-sm text-muted-foreground">
+                  Your cart is empty.
+                </p>
+              ) : (
+                items.map((item) => (
+                  <div
+                    key={item.partNumber}
+                    className="flex flex-col gap-4 rounded-2xl border border-border/60 bg-background p-5 shadow-[0_12px_30px_rgba(12,28,60,0.08)] sm:flex-row sm:items-center sm:justify-between"
+                  >
+                    <div className="flex min-w-0 flex-1 items-center gap-4">
+                      <div className="h-16 w-16 rounded-xl bg-muted/30 p-2">
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          width={96}
+                          height={96}
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-base font-semibold">{item.name}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {item.source === "external"
+                            ? "External Request | "
+                            : "Stock | Part No."}
+                          <span className="block break-all font-semibold text-foreground">
+                            {item.partNumber}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="flex shrink-0 items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="h-9 w-9"
-                      onClick={() => updateQuantity(item.partNumber, -1)}
-                    >
-                      -
-                    </Button>
-                    <Input
-                      className="h-9 w-16 text-center"
-                      value={item.quantity}
-                      readOnly
-                    />
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="h-9 w-9"
-                      onClick={() => updateQuantity(item.partNumber, 1)}
-                    >
-                      +
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-9 w-9 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
-                      aria-label={`Remove ${item.name}`}
-                      onClick={() => removeItem(item.partNumber)}
-                    >
-                      <Trash2 className="size-4" />
-                    </Button>
+                    <div className="flex shrink-0 items-center gap-2">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-9 w-9"
+                        onClick={() => updateQuantity(item.partNumber, -1)}
+                      >
+                        -
+                      </Button>
+                      <Input
+                        className="h-9 w-16 text-center"
+                        value={item.quantity}
+                        readOnly
+                      />
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-9 w-9"
+                        onClick={() => updateQuantity(item.partNumber, 1)}
+                      >
+                        +
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                        aria-label={`Remove ${item.name}`}
+                        onClick={() => removeItem(item.partNumber)}
+                      >
+                        <Trash2 className="size-4" />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </section>
         </div>
@@ -209,7 +206,7 @@ export default function CartPage() {
               <label className="text-xs font-medium text-muted-foreground">
                 Phone number
               </label>
-              <Input placeholder="+1 000 000 0000" />
+              <Input placeholder="+961 76 345 678" />
             </div>
             <div className="space-y-2">
               <label className="text-xs font-medium text-muted-foreground">

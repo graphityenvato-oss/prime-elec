@@ -73,7 +73,7 @@ export function AdminSidebar() {
     <aside className="flex w-full flex-col border-border/60 bg-linear-to-br from-background/80 via-background/60 to-muted/30 px-4 py-6 text-sm text-muted-foreground shadow-[0_20px_60px_rgba(0,0,0,0.08)] backdrop-blur lg:min-h-[calc(100vh-3rem)] lg:w-72 lg:rounded-2xl lg:border">
       <div className="flex items-center justify-between gap-3">
         <Image
-          src="/images/logo/prime-elec-logo.png"
+          src="/images/logo/prime-elec-logo-black.png"
           alt="Prime Elec"
           width={140}
           height={36}
