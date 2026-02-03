@@ -4,17 +4,17 @@ const boardMembers = [
   {
     name: "Mohammad Sabra",
     role: "CEO, Founder",
-    image: "/images/Team/Mohammad-Sabra-CEO.png",
+    image: "/images/team/Mohammad-Sabra-CEO.png",
   },
   {
     name: "Ali Taki",
-    role: "Business Development Manager",
-    image: "/images/Team/Ali-Taki-BDM.png",
+    role: "Business Development Manager (Co Partner)",
+    image: "/images/team/Ali-Taki-BDM.png",
   },
   {
     name: "Hassan Hussein",
-    role: "Sales Manager",
-    image: "/images/Team/Hassan-Hussein-SM.png",
+    role: "Sales Manager (Co Partner)",
+    image: "/images/team/Hassan-Hussein-SM.png",
   },
 ];
 
