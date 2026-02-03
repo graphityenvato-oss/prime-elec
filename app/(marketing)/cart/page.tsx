@@ -130,7 +130,9 @@ export default function CartPage() {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="text-base font-semibold">{item.name}</div>
+                        <div className="text-base font-semibold">
+                          {item.name}
+                        </div>
                         <div className="text-xs text-muted-foreground">
                           {item.source === "external"
                             ? "External Request | "

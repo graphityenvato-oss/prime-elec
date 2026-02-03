@@ -83,8 +83,8 @@ export function FeaturedStockClient({ categories }: FeaturedStockClientProps) {
               // 1. flex-none w-full: Forces the slide to be width of screen
               // 2. snap-center: Centers the slide when scrolling stops
               // 3. px-6: Adds the side margins so the card looks centered & not cropped
-              <div 
-                key={category.title} 
+              <div
+                key={category.title}
                 className="flex-none w-full snap-center px-6"
               >
                 <Reveal delay={itemIndex * 0.08}>

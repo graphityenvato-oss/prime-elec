@@ -8,7 +8,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { CategoriesGrid, type CategoryCard } from "@/components/categories-grid";
+import {
+  CategoriesGrid,
+  type CategoryCard,
+} from "@/components/categories-grid";
 import { SearchInput } from "@/components/search-input";
 import { getMainCategories } from "@/lib/catalog-data";
 

@@ -52,7 +52,7 @@ function NavLink({
 }: NavLinkProps) {
   const linkClassName = isActive
     ? "text-primary-foreground"
-    : className ?? "";
+    : (className ?? "");
 
   return (
     <Link href={href} className={linkClassName} onClick={onClick}>

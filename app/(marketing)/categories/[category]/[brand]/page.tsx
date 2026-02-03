@@ -67,7 +67,8 @@ export default async function SubcategoryPage({
         </Breadcrumb>
 
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-          {brand.name} <span className="text-primary">&bull;</span> {category.title}
+          {brand.name} <span className="text-primary">&bull;</span>{" "}
+          {category.title}
         </h1>
 
         <div className="mt-4 max-w-md">
@@ -111,5 +112,3 @@ export default async function SubcategoryPage({
     </section>
   );
 }
-
-

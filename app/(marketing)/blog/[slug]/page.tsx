@@ -45,16 +45,6 @@ export default async function BlogDetailPage({
       })
     : "—";
 
-  const galleryImages = Array.isArray(post.gallery_images)
-    ? post.gallery_images
-    : [];
-  const galleryUrls = galleryImages
-    .map((item: { url?: string } | null) => item?.url)
-    .filter(Boolean);
-  const relatedImages = [post.featured_image_url, ...galleryUrls].filter(
-    Boolean,
-  );
-
   let bodyState = post.body_json ?? null;
   if (typeof bodyState === "string") {
     try {
@@ -148,4 +138,3 @@ export default async function BlogDetailPage({
     </section>
   );
 }
-

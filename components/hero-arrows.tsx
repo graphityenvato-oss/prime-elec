@@ -10,13 +10,7 @@ export function HeroArrows() {
       animate={{ opacity: 1, y: 120 }}
       transition={{ duration: 1.4, ease: "easeOut" }}
     >
-      <svg
-        width="90"
-        height="90"
-        viewBox="0 0 120 120"
-        fill="none"
-        aria-hidden
-      >
+      <svg width="90" height="90" viewBox="0 0 120 120" fill="none" aria-hidden>
         <motion.path
           d="M24 24L60 60L96 24"
           stroke="currentColor"

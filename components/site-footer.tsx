@@ -13,7 +13,7 @@ const columns = [
     links: ["Prime News", "Customer Service", "FAQ", "Contact Us"],
   },
   {
-    title: "Legal", 
+    title: "Legal",
     links: ["Privacy Policy", "Terms of Service", "Cookie Policy"],
   },
 ];
@@ -21,7 +21,10 @@ const columns = [
 const socials = [
   { label: "Facebook", href: "https://www.facebook.com/PrimeElec.Lb" },
   { label: "Instagram", href: "https://www.instagram.com/prime_elec" },
-  { label: "WhatsApp", href: "https://wa.me/96170971414?text=Hello%20Prime%20Elec%2C%20I%E2%80%99d%20like%20to%20inquire%20about%20product%20availability%20and%20pricing." },
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/96170971414?text=Hello%20Prime%20Elec%2C%20I%E2%80%99d%20like%20to%20inquire%20about%20product%20availability%20and%20pricing.",
+  },
 ];
 
 export function SiteFooter() {
@@ -36,7 +39,7 @@ export function SiteFooter() {
               width={140}
               height={56}
               className="h-14 w-auto"
-            />  
+            />
           </Reveal>
           <Reveal>
             <p className="mt-4 max-w-md text-sm text-muted-foreground dark:text-accent-foreground">
@@ -59,27 +62,27 @@ export function SiteFooter() {
                         ? "/about"
                         : link === "Products"
                           ? "/stock"
-                        : link === "Categories"
-                          ? "/categories"
-                        : link === "Brands"
-                          ? "/brands"
+                          : link === "Categories"
+                            ? "/categories"
+                            : link === "Brands"
+                              ? "/brands"
                               : link === "Blog"
                                 ? "/blog"
                                 : link === "Prime News"
                                   ? "/blog"
                                   : link === "Customer Service"
                                     ? "/contact"
-                                  : link === "FAQ"
-                                    ? "/faq"
-                                  : link === "Contact Us"
-                                    ? "/contact"
-                                    : link === "Privacy Policy"
-                                      ? "/privacy-policy"
-                                      : link === "Terms of Service"
-                                        ? "/terms-of-service"
-                                        : link === "Cookie Policy"
-                                          ? "/cookie-policy"
-                                          : "#";
+                                    : link === "FAQ"
+                                      ? "/faq"
+                                      : link === "Contact Us"
+                                        ? "/contact"
+                                        : link === "Privacy Policy"
+                                          ? "/privacy-policy"
+                                          : link === "Terms of Service"
+                                            ? "/terms-of-service"
+                                            : link === "Cookie Policy"
+                                              ? "/cookie-policy"
+                                              : "#";
                   return (
                     <li key={link}>
                       <a className="hover:text-primary" href={href}>

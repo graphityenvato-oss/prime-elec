@@ -801,120 +801,120 @@ export default function AdminHomepagePage() {
   return (
     <>
       <section>
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-              Home Page
-            </p>
-            <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              Content manager
-            </h1>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Edit homepage sections and update the live content.
-            </p>
-          </section>
+        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+          Home Page
+        </p>
+        <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
+          Content manager
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Edit homepage sections and update the live content.
+        </p>
+      </section>
 
       <PrimeCard className="p-6">
-            <Tabs defaultValue="hero">
-              <TabsList>
-                <TabsTrigger value="hero">Hero</TabsTrigger>
-                <TabsTrigger value="stats">Stats</TabsTrigger>
-                <TabsTrigger value="mission">Mission</TabsTrigger>
-                <TabsTrigger value="stock">Featured Stock</TabsTrigger>
-                <TabsTrigger value="subscription">Company Values</TabsTrigger>
-                <TabsTrigger value="trusted">Trusted By</TabsTrigger>
-                <TabsTrigger value="steps">Steps</TabsTrigger>
-                <TabsTrigger value="testimonials">Testimonials</TabsTrigger>
-                <TabsTrigger value="news">News</TabsTrigger>
-              </TabsList>
+        <Tabs defaultValue="hero">
+          <TabsList>
+            <TabsTrigger value="hero">Hero</TabsTrigger>
+            <TabsTrigger value="stats">Stats</TabsTrigger>
+            <TabsTrigger value="mission">Mission</TabsTrigger>
+            <TabsTrigger value="stock">Featured Stock</TabsTrigger>
+            <TabsTrigger value="subscription">Company Values</TabsTrigger>
+            <TabsTrigger value="trusted">Trusted By</TabsTrigger>
+            <TabsTrigger value="steps">Steps</TabsTrigger>
+            <TabsTrigger value="testimonials">Testimonials</TabsTrigger>
+            <TabsTrigger value="news">News</TabsTrigger>
+          </TabsList>
 
-              <TabsContent value="hero">
-                <HeroTab
-                  hero={hero}
-                  status={status}
-                  onChange={updateHero}
-                  onSave={handleSave}
-                />
-              </TabsContent>
-              <TabsContent value="stats">
-                <StatsTab
-                  stats={stats}
-                  status={status}
-                  onChange={updateStat}
-                  onSave={handleStatsSave}
-                />
-              </TabsContent>
+          <TabsContent value="hero">
+            <HeroTab
+              hero={hero}
+              status={status}
+              onChange={updateHero}
+              onSave={handleSave}
+            />
+          </TabsContent>
+          <TabsContent value="stats">
+            <StatsTab
+              stats={stats}
+              status={status}
+              onChange={updateStat}
+              onSave={handleStatsSave}
+            />
+          </TabsContent>
 
-              <TabsContent value="mission">
-                <MissionTab
-                  mission={mission}
-                  imagePreview={missionImagePreview}
-                  status={status}
-                  onChange={updateMission}
-                  onCardChange={updateMissionCard}
-                  onImageSelect={handleMissionImageSelect}
-                  onImageRemove={handleMissionImageRemove}
-                  onSave={handleMissionSave}
-                />
-              </TabsContent>
-              <TabsContent value="stock">
-                <StockTab
-                  stock={stock}
-                  status={status}
-                  onChange={updateStock}
-                  onSave={handleStockSave}
-                />
-              </TabsContent>
-              <TabsContent value="subscription">
-                <ValuesTab
-                  values={values}
-                  imagePreview={valuesImagePreview}
-                  status={status}
-                  onChange={updateValues}
-                  onBenefitChange={updateValuesBenefit}
-                  onImageSelect={handleValuesImageSelect}
-                  onImageRemove={handleValuesImageRemove}
-                  onSave={handleValuesSave}
-                />
-              </TabsContent>
-              <TabsContent value="trusted">
-                <TrustedTab
-                  trustedBy={trustedBy}
-                  status={status}
-                  onChange={updateTrustedBy}
-                  onSave={handleTrustedBySave}
-                />
-              </TabsContent>
-              <TabsContent value="steps">
-                <StepsTab
-                  steps={steps}
-                  imagePreviews={stepImagePreviews}
-                  status={status}
-                  onChange={updateSteps}
-                  onStepChange={updateStep}
-                  onImageSelect={handleStepImageSelect}
-                  onImageRemove={handleStepImageRemove}
-                  onSave={handleStepsSave}
-                />
-              </TabsContent>
-              <TabsContent value="testimonials">
-                <TestimonialsTab
-                  testimonials={testimonials}
-                  status={status}
-                  onChange={updateTestimonials}
-                  onItemChange={updateTestimonialItem}
-                  onAdd={handleAddTestimonial}
-                  onRemove={handleRemoveTestimonial}
-                  onSave={handleTestimonialsSave}
-                />
-              </TabsContent>
-              <TabsContent value="news">
-                <NewsTab
-                  news={news}
-                  status={status}
-                  onChange={updateNews}
-                  onSave={handleNewsSave}
-                />
-              </TabsContent>
-            </Tabs>
+          <TabsContent value="mission">
+            <MissionTab
+              mission={mission}
+              imagePreview={missionImagePreview}
+              status={status}
+              onChange={updateMission}
+              onCardChange={updateMissionCard}
+              onImageSelect={handleMissionImageSelect}
+              onImageRemove={handleMissionImageRemove}
+              onSave={handleMissionSave}
+            />
+          </TabsContent>
+          <TabsContent value="stock">
+            <StockTab
+              stock={stock}
+              status={status}
+              onChange={updateStock}
+              onSave={handleStockSave}
+            />
+          </TabsContent>
+          <TabsContent value="subscription">
+            <ValuesTab
+              values={values}
+              imagePreview={valuesImagePreview}
+              status={status}
+              onChange={updateValues}
+              onBenefitChange={updateValuesBenefit}
+              onImageSelect={handleValuesImageSelect}
+              onImageRemove={handleValuesImageRemove}
+              onSave={handleValuesSave}
+            />
+          </TabsContent>
+          <TabsContent value="trusted">
+            <TrustedTab
+              trustedBy={trustedBy}
+              status={status}
+              onChange={updateTrustedBy}
+              onSave={handleTrustedBySave}
+            />
+          </TabsContent>
+          <TabsContent value="steps">
+            <StepsTab
+              steps={steps}
+              imagePreviews={stepImagePreviews}
+              status={status}
+              onChange={updateSteps}
+              onStepChange={updateStep}
+              onImageSelect={handleStepImageSelect}
+              onImageRemove={handleStepImageRemove}
+              onSave={handleStepsSave}
+            />
+          </TabsContent>
+          <TabsContent value="testimonials">
+            <TestimonialsTab
+              testimonials={testimonials}
+              status={status}
+              onChange={updateTestimonials}
+              onItemChange={updateTestimonialItem}
+              onAdd={handleAddTestimonial}
+              onRemove={handleRemoveTestimonial}
+              onSave={handleTestimonialsSave}
+            />
+          </TabsContent>
+          <TabsContent value="news">
+            <NewsTab
+              news={news}
+              status={status}
+              onChange={updateNews}
+              onSave={handleNewsSave}
+            />
+          </TabsContent>
+        </Tabs>
       </PrimeCard>
     </>
   );

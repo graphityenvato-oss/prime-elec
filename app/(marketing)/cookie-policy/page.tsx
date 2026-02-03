@@ -31,9 +31,7 @@ const sections = [
   },
   {
     title: "Updates",
-    body: [
-      "We may update this Cookie Policy as we improve our services.",
-    ],
+    body: ["We may update this Cookie Policy as we improve our services."],
   },
   {
     title: "Contact",

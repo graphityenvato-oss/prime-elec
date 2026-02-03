@@ -34,7 +34,7 @@ export default function FileUpload03({ className }: FileUpload03Props) {
             aria-label="Remove file"
             onClick={() =>
               setFiles((prevFiles) =>
-                prevFiles.filter((prevFile) => prevFile.name !== file.name)
+                prevFiles.filter((prevFile) => prevFile.name !== file.name),
               )
             }
           >
@@ -46,7 +46,9 @@ export default function FileUpload03({ className }: FileUpload03Props) {
             <File className="h-5 w-5 text-foreground" aria-hidden={true} />
           </span>
           <div>
-            <p className="text-pretty font-medium text-foreground">{file.name}</p>
+            <p className="text-pretty font-medium text-foreground">
+              {file.name}
+            </p>
             <p className="text-pretty mt-0.5 text-sm text-muted-foreground">
               {file.size} bytes
             </p>
@@ -121,7 +123,7 @@ export default function FileUpload03({ className }: FileUpload03Props) {
                 isDragActive
                   ? "border-primary bg-primary/10 ring-2 ring-primary/20"
                   : "border-border",
-                "mt-2 flex justify-center rounded-md border border-dashed px-6 py-20 transition-colors duration-200"
+                "mt-2 flex justify-center rounded-md border border-dashed px-6 py-20 transition-colors duration-200",
               )}
             >
               <div>

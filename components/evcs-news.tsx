@@ -42,8 +42,7 @@ export async function EvcsNews() {
       slug: post.slug,
       category: post.category,
       tags: Array.isArray(post.tags) ? post.tags : [],
-      image:
-        post.featured_image_url || "/images/placeholder/imageholder.webp",
+      image: post.featured_image_url || "/images/placeholder/imageholder.webp",
       date: dateValue
         ? new Date(dateValue).toLocaleDateString("en-US", {
             month: "short",

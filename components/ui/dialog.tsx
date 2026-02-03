@@ -65,14 +65,29 @@ function Dialog({
   defaultOpen,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
+  const isControlled = open !== undefined;
+
   React.useEffect(() => {
-    const isOpen = open ?? defaultOpen;
-    if (isOpen) {
+    if (!isControlled && defaultOpen) {
       lockBodyScroll();
       return () => unlockBodyScroll();
     }
     return;
-  }, []);
+  }, [defaultOpen, isControlled]);
+
+  React.useEffect(() => {
+    if (!isControlled) {
+      return;
+    }
+
+    if (open) {
+      lockBodyScroll();
+      return () => unlockBodyScroll();
+    }
+
+    unlockBodyScroll();
+    return;
+  }, [open, isControlled]);
 
   return (
     <DialogPrimitive.Root
@@ -80,10 +95,12 @@ function Dialog({
       open={open}
       defaultOpen={defaultOpen}
       onOpenChange={(nextOpen) => {
-        if (nextOpen) {
-          lockBodyScroll();
-        } else {
-          unlockBodyScroll();
+        if (!isControlled) {
+          if (nextOpen) {
+            lockBodyScroll();
+          } else {
+            unlockBodyScroll();
+          }
         }
         onOpenChange?.(nextOpen);
       }}

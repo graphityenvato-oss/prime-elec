@@ -43,8 +43,8 @@ export function AboutHeroSection() {
               <p>
                 Using their expertise, they demonstrated growth during tough
                 times. With focus on carefully selected high-quality products
-                and elite engineered systems, they distinguished themselves as
-                a unique supplier and solution provider.
+                and elite engineered systems, they distinguished themselves as a
+                unique supplier and solution provider.
               </p>
               <p>
                 Prioritizing customers&apos; success and building trust are the
@@ -76,10 +76,9 @@ export function AboutHeroSection() {
             </h3>
             <p className="mt-3 text-sm text-muted-foreground dark:text-foreground/80">
               Delivering top-tier electrical products and tailored system
-              solutions to MEP contractors and industrial businesses. Our
-              expert sales and technical support ensure customer satisfaction,
-              raising market standards to professional, safe, and trustworthy
-              levels.
+              solutions to MEP contractors and industrial businesses. Our expert
+              sales and technical support ensure customer satisfaction, raising
+              market standards to professional, safe, and trustworthy levels.
             </p>
             <h3 className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground dark:text-primary">
               Vision

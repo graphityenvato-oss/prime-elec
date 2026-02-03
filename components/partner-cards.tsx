@@ -30,10 +30,16 @@ export function PartnerCards({ items }: PartnerCardsProps) {
 
   const visibleItems = useMemo(() => {
     if (items.length <= 4) return items;
-    return Array.from({ length: 4 }, (_, i) => items[(startIndex + i) % items.length]);
+    return Array.from(
+      { length: 4 },
+      (_, i) => items[(startIndex + i) % items.length],
+    );
   }, [items, startIndex]);
 
-  const renderCard = (item: PartnerCardItem, variant: "featured" | "default") => (
+  const renderCard = (
+    item: PartnerCardItem,
+    variant: "featured" | "default",
+  ) => (
     <motion.div
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
@@ -112,26 +118,30 @@ export function PartnerCards({ items }: PartnerCardsProps) {
       </div>
       <div className="hidden md:grid md:grid-cols-2 gap-4">
         <AnimatePresence mode="popLayout">
-        {displayItems.map((item, itemIndex) => {
-          const isFeatured = itemIndex === 0;
-          return (
-            <div
-              key={`${item.brandName}-${item.partName}-${itemIndex}`}
-              className=""
-            >
-              <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.98 }}
-                transition={{ duration: 0.45, ease: "easeOut", delay: itemIndex * 0.04 }}
+          {displayItems.map((item, itemIndex) => {
+            const isFeatured = itemIndex === 0;
+            return (
+              <div
+                key={`${item.brandName}-${item.partName}-${itemIndex}`}
+                className=""
               >
-                <Reveal delay={itemIndex * 0.03}>
-                  {renderCard(item, isFeatured ? "featured" : "default")}
-                </Reveal>
-              </motion.div>
-            </div>
-          );
-        })}
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                  transition={{
+                    duration: 0.45,
+                    ease: "easeOut",
+                    delay: itemIndex * 0.04,
+                  }}
+                >
+                  <Reveal delay={itemIndex * 0.03}>
+                    {renderCard(item, isFeatured ? "featured" : "default")}
+                  </Reveal>
+                </motion.div>
+              </div>
+            );
+          })}
         </AnimatePresence>
       </div>
     </div>

@@ -33,7 +33,10 @@ export const brandCatalog: BrandCatalog[] = [
         subcategories: [
           { title: "MCCB", subtitle: "Compact molded case breakers." },
           { title: "Switchgear", subtitle: "LV switchgear assemblies." },
-          { title: "Panel Boards", subtitle: "Distribution boards and panels." },
+          {
+            title: "Panel Boards",
+            subtitle: "Distribution boards and panels.",
+          },
         ],
       },
       {

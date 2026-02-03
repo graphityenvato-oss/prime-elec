@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone, Radar, AlarmClock } from "lucide-react";
+import { Mail, MapPin, Phone, AlarmClock } from "lucide-react";
 
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
@@ -73,18 +73,12 @@ export default function ContactPage() {
                 </p>
               </div>
             </div>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Ghaziyeh
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Saida, Lebanon
-            </p>
+            <p className="mt-4 text-sm text-muted-foreground">Ghaziyeh</p>
+            <p className="text-sm text-muted-foreground">Saida, Lebanon</p>
             <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
               Receiving
             </p>
-            <p className="text-sm text-muted-foreground">
-              Gate A
-            </p>
+            <p className="text-sm text-muted-foreground">Gate A</p>
           </PrimeCard>
           <PrimeCard className="p-6 lg:flex-1">
             <div className="flex items-center gap-3">

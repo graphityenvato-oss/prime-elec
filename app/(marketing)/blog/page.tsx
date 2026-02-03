@@ -52,9 +52,10 @@ export default async function BlogPage({
   const resolvedSearchParams = await searchParams;
   const categoryFilter = resolvedSearchParams?.category?.trim() || "";
   const requestedPage = Number(resolvedSearchParams?.page ?? "1");
-  const currentPage = Number.isFinite(requestedPage) && requestedPage > 0
-    ? Math.floor(requestedPage)
-    : 1;
+  const currentPage =
+    Number.isFinite(requestedPage) && requestedPage > 0
+      ? Math.floor(requestedPage)
+      : 1;
 
   let query = supabaseServer
     .from("blogs")
@@ -123,8 +124,8 @@ export default async function BlogPage({
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-4 max-w-2xl text-sm text-muted-foreground sm:text-base">
-            Stay up to date with product highlights, installation guidance,
-            and project stories from the Prime Elec team.
+            Stay up to date with product highlights, installation guidance, and
+            project stories from the Prime Elec team.
           </p>
         </Reveal>
       </section>
@@ -220,7 +221,11 @@ export default async function BlogPage({
               <PaginationItem>
                 <PaginationPrevious
                   href={buildPageHref(Math.max(1, currentPage - 1))}
-                  className={currentPage === 1 ? "pointer-events-none opacity-50" : undefined}
+                  className={
+                    currentPage === 1
+                      ? "pointer-events-none opacity-50"
+                      : undefined
+                  }
                 />
               </PaginationItem>
 
@@ -244,7 +249,11 @@ export default async function BlogPage({
               <PaginationItem>
                 <PaginationNext
                   href={buildPageHref(Math.min(totalPages, currentPage + 1))}
-                  className={currentPage === totalPages ? "pointer-events-none opacity-50" : undefined}
+                  className={
+                    currentPage === totalPages
+                      ? "pointer-events-none opacity-50"
+                      : undefined
+                  }
                 />
               </PaginationItem>
             </PaginationContent>
@@ -254,4 +263,3 @@ export default async function BlogPage({
     </>
   );
 }
-
