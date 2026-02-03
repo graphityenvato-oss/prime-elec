@@ -39,7 +39,7 @@ export function StockProducts({ products, perPage = 12 }: StockProductsProps) {
 
   return (
     <>
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-2 items-stretch gap-2 lg:grid-cols-3">
         {visible.map((product, index) => (
           <Reveal key={product.partNumber} delay={index * 0.06}>
             <ProductCard

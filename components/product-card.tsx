@@ -24,11 +24,20 @@ export function ProductCard({
 }: ProductCardProps) {
   return (
     <GlowCard
-      className="h-65 p-5 text-foreground dark:text-white"
-      contentClassName="flex h-full flex-col justify-between"
+      className="h-full p-5 text-foreground dark:text-white"
+      contentClassName="flex h-full flex-col"
     >
-      <div className="flex items-start justify-between gap-4">
-        <div className="h-20 w-24">
+      <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-start sm:gap-4">
+        <span
+          className={`order-1 whitespace-nowrap rounded-full px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.18em] sm:order-2 sm:ml-auto sm:px-2 sm:py-1 sm:text-[10px] ${
+            inStock
+              ? "badge-radar bg-primary/10 text-primary"
+              : "bg-muted text-muted-foreground"
+          }`}
+        >
+          {inStock ? "In Stock" : "Out of Stock"}
+        </span>
+        <div className="order-2 h-20 w-24 sm:order-1">
           {href ? (
             <Link href={href} aria-label={`${title} details`}>
               <Image
@@ -49,24 +58,18 @@ export function ProductCard({
             />
           )}
         </div>
-        <span
-          className={`rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${
-            inStock
-              ? "badge-radar bg-primary/10 text-primary"
-              : "bg-muted text-muted-foreground"
-          }`}
-        >
-          {inStock ? "In Stock" : "Out of Stock"}
-        </span>
       </div>
 
-      <div>
+      <div className="py-2">
         {href ? (
-          <Link href={href} className="text-lg font-semibold">
+          <Link
+            href={href}
+            className="line-clamp-2 text-lg font-semibold"
+          >
             {title}
           </Link>
         ) : (
-          <h3 className="text-lg font-semibold">{title}</h3>
+          <h3 className="line-clamp-2 text-lg font-semibold">{title}</h3>
         )}
         <p className="mt-1 text-xs text-muted-foreground dark:text-white/60">
           Part No.{" "}
@@ -74,12 +77,12 @@ export function ProductCard({
             {partNumber}
           </span>
         </p>
-        <p className="mt-2 text-sm text-foreground/70 dark:text-white/70">
+        <p className="mt-2 line-clamp-2 text-sm text-foreground/70 dark:text-white/70">
           {description}
         </p>
       </div>
 
-      <div className="grid gap-2 sm:grid-cols-2">
+      <div className="mt-auto grid gap-1 sm:grid-cols-2">
         <Button className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
           Add to Quote
         </Button>
