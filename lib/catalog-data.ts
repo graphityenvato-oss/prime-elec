@@ -89,7 +89,7 @@ export const brandCatalog: BrandCatalog[] = [
       {
         title: "Cables & Accessories",
         subtitle: "Trays, conduits, and installation hardware.",
-        image: "/images/products/Cable-Trayss.png",
+        image: "/images/categ/5093533_PG1_min.webp",
         slug: "cables-accessories",
         subcategories: [
           {

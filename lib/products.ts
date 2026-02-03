@@ -141,9 +141,9 @@ export const products: Product[] = [
     description: "Cable tray system for heavy-duty routing.",
     longDescription:
       "CT-300 is engineered for industrial cable routing with fast assembly and corrosion-resistant finishes.",
-    image: "/images/products/Cable-Trayss.png",
+    image: "../Categories/images/5093533_PG1.png",
     images: [
-      "/images/products/Cable-Trayss.png",
+      "../Categories/images/5093533_PG1.png",
       "/images/placeholder/imageholder.webp",
       "/images/placeholder/imageholder.webp",
     ],
@@ -417,9 +417,9 @@ export const products: Product[] = [
     description: "Cable tray section for overhead runs.",
     longDescription:
       "CT-640 provides high load performance for overhead cable routing with reinforced ribs.",
-    image: "/images/products/Cable-Trayss.png",
+    image: "../Categories/images/5093533_PG1.png",
     images: [
-      "/images/products/Cable-Trayss.png",
+      "../Categories/images/5093533_PG1.png",
       "/images/placeholder/imageholder.webp",
       "/images/placeholder/imageholder.webp",
     ],

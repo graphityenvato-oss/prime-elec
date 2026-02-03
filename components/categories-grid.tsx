@@ -59,13 +59,13 @@ export function CategoriesGrid({
               className="h-50 p-6 text-foreground dark:text-white"
               contentClassName="flex h-full flex-col justify-between"
             >
-              <div className="h-10 w-32">
+              <div className="h-[68px] w-[68px]">
                 <Image
                   src={category.logo}
                   alt={`${category.title} logo`}
-                  width={140}
-                  height={40}
-                  className="h-full w-auto object-contain"
+                  width={68}
+                  height={68}
+                  className="h-full w-full object-contain"
                 />
               </div>
               <p className="text-base leading-snug text-foreground/90 dark:text-white/85">
