@@ -15,15 +15,57 @@ import {
 import { Input } from "@/components/ui/input";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const brands = [
-  { name: "Degson", logo: "/images/partners/degson-logo.png", href: "#" },
-  { name: "Eaton", logo: "/images/partners/Eaton-logo.png", href: "#" },
-  { name: "Indelec", logo: "/images/partners/Indelec-logo.png", href: "#" },
-  { name: "Relpol", logo: "/images/partners/Logo-Relpol.png", href: "#" },
-  { name: "OBO", logo: "/images/partners/obo-logo.png", href: "#" },
-  { name: "Teknoware", logo: "/images/partners/teknoware-logo.png", href: "#" },
-  { name: "Tem", logo: "/images/partners/Tem-logo.png", href: "#" },
+  {
+    name: "Degson",
+    logo: "/images/partners/degson-logo.png",
+    href: "https://www.degson.com/?lang=en",
+  },
+  {
+    name: "Deltabox",
+    logo: "/images/partners/Deltabox.png",
+    href: "https://www.delta-box.com/en/",
+  },
+  {
+    name: "Eaton",
+    logo: "/images/partners/Eaton-logo.png",
+    href: "https://www.eaton.com/ae/en-gb.html",
+  },
+  {
+    name: "FEC Heliports equipment",
+    logo: "/images/partners/FEC Heliports equipment.png",
+    href: "https://www.heliportsequipment.com/",
+  },
+  {
+    name: "Indelec",
+    logo: "/images/partners/Indelec-logo.png",
+    href: "https://indelec.com/",
+  },
+  {
+    name: "Relpol",
+    logo: "/images/partners/Logo-Relpol.png",
+    href: "https://www.relpol.pl/en",
+  },
+  {
+    name: "OBO",
+    logo: "/images/partners/obo-logo.png",
+    href: "https://www.obo.global/",
+    secondaryHref: "https://www.oboindia.com/en-in",
+    secondaryLabel: "OBO India",
+  },
+  {
+    name: "Solway",
+    logo: "/images/partners/Solway.png",
+    href: "https://www.ledsolway.com/",
+  },
+  {
+    name: "Teknoware",
+    logo: "/images/partners/teknoware-logo.png",
+    href: "https://www.teknoware.com/",
+  },
+  { name: "Tem", logo: "/images/partners/Tem-logo.png", href: "https://www.tem-si.com/" },
 ];
 
 export default function BrandsPage() {
@@ -83,9 +125,11 @@ export default function BrandsPage() {
               pricing fast.
             </p>
           </div>
-          <Button variant="outline" className="rounded-full px-6">
-            Start Quote List
-          </Button>
+          <Link href="/cart">
+            <Button variant="outline" className="rounded-full px-6">
+              Start Quote List
+            </Button>
+          </Link>
         </div>
       </section>
       <section className="mt-10">
@@ -112,7 +156,7 @@ export default function BrandsPage() {
                     loading="lazy"
                   />
                 </div>
-                <div className="mt-2 flex items-center justify-center">
+                <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
                   <Button
                     variant="outline"
                     className="rounded-full border-primary/30 px-4 text-xs text-primary hover:border-primary hover:bg-primary/10 dark:border-white/30 dark:text-white dark:hover:border-white dark:hover:bg-white/10"
@@ -120,6 +164,17 @@ export default function BrandsPage() {
                   >
                     Visit Official Website
                   </Button>
+                  {brand.secondaryHref ? (
+                    <Button
+                      variant="outline"
+                      className="rounded-full border-primary/30 px-4 text-xs text-primary hover:border-primary hover:bg-primary/10 dark:border-white/30 dark:text-white dark:hover:border-white dark:hover:bg-white/10"
+                      onClick={() =>
+                        handleCatalogClick(brand.secondaryHref, brand.name)
+                      }
+                    >
+                      {brand.secondaryLabel ?? "Visit Website"}
+                    </Button>
+                  ) : null}
                 </div>
               </Reveal>
             </GlowCard>

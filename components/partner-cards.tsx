@@ -11,6 +11,7 @@ export type PartnerCardItem = {
   brandLogo: string;
   partName: string;
   productImage: string;
+  href?: string;
 };
 
 type PartnerCardsProps = {
@@ -39,48 +40,65 @@ export function PartnerCards({ items }: PartnerCardsProps) {
   const renderCard = (
     item: PartnerCardItem,
     variant: "featured" | "default",
-  ) => (
-    <motion.div
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className={[
-        "group relative h-[200px] w-full overflow-hidden rounded-2xl border border-primary bg-white text-foreground shadow-[0_24px_60px_-40px_rgba(15,23,42,0.2)] dark:bg-primary dark:text-primary-foreground",
-        variant === "featured" ? "" : "",
-      ].join(" ")}
-    >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.06),_transparent_55%)]" />
-      <div className="relative z-10 flex h-full flex-col justify-between p-5">
-        <div className="flex items-center justify-between">
-          <div className="relative h-8 w-32">
+  ) => {
+    const card = (
+      <motion.div
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className={[
+          "group relative h-[200px] w-full overflow-hidden rounded-2xl border border-primary bg-white text-foreground shadow-[0_24px_60px_-40px_rgba(15,23,42,0.2)] dark:bg-primary dark:text-primary-foreground",
+          variant === "featured" ? "" : "",
+        ].join(" ")}
+      >
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.06),_transparent_55%)]" />
+        <div className="relative z-10 flex h-full flex-col justify-between p-5">
+          <div className="flex items-center justify-between">
+            <div className="relative h-8 w-32">
+              <Image
+                src={item.brandLogo}
+                alt={`${item.brandName} logo`}
+                width={120}
+                height={40}
+                className="h-full w-auto object-contain object-left"
+              />
+            </div>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-foreground/60 dark:text-primary-foreground/70">
+              Partner
+            </span>
+          </div>
+          <div className="mt-5 space-y-2">
+            <p className="text-base font-semibold tracking-tight">
+              {item.partName}
+            </p>
+          </div>
+          <div className="relative mt-3 h-20 w-full">
             <Image
-              src={item.brandLogo}
-              alt={`${item.brandName} logo`}
-              width={120}
-              height={40}
-              className="h-full w-auto object-contain object-left"
+              src={item.productImage}
+              alt={`${item.partName} product`}
+              fill
+              sizes="320px"
+              className="object-contain object-right-bottom"
             />
           </div>
-          <span className="text-[10px] uppercase tracking-[0.3em] text-foreground/60 dark:text-primary-foreground/70">
-            Partner
-          </span>
         </div>
-        <div className="mt-5 space-y-2">
-          <p className="text-base font-semibold tracking-tight">
-            {item.partName}
-          </p>
-        </div>
-        <div className="relative mt-3 h-20 w-full">
-          <Image
-            src={item.productImage}
-            alt={`${item.partName} product`}
-            fill
-            sizes="320px"
-            className="object-contain object-right-bottom"
-          />
-        </div>
-      </div>
-    </motion.div>
-  );
+      </motion.div>
+    );
+
+    if (!item.href) {
+      return card;
+    }
+
+    return (
+      <a
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${item.brandName} ${item.partName}`}
+      >
+        {card}
+      </a>
+    );
+  };
 
   if (!items.length) {
     return null;

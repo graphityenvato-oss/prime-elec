@@ -56,8 +56,8 @@ export function CategoriesGrid({
             delay={index * 0.06}
           >
             <GlowCard
-              className="h-50 p-6 text-foreground dark:text-white"
-              contentClassName="flex h-full flex-col justify-between"
+              className="min-h-[14rem] p-6 text-foreground dark:text-white"
+              contentClassName="flex h-full flex-col justify-between pb-2"
             >
               <div className="h-[68px] w-[68px]">
                 <Image
@@ -68,12 +68,12 @@ export function CategoriesGrid({
                   className="h-full w-full object-contain"
                 />
               </div>
-              <p className="text-base leading-snug text-foreground/90 dark:text-white/85">
-                {category.description}
-              </p>
+              <h3 className="mt-5 min-h-[3.25rem] text-lg font-semibold leading-snug text-foreground dark:text-white line-clamp-2">
+                {category.title}
+              </h3>
               <Link
                 href={category.href}
-                className="mt-5 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
+                className="mt-3 mb-1 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
               >
                 <span>{buttonLabel}</span>
                 <ArrowRight className="size-3" aria-hidden="true" />

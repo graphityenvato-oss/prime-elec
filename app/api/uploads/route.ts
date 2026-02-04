@@ -12,10 +12,13 @@ export async function POST(request: Request) {
 
   const url = new URL(request.url);
   const folder = url.searchParams.get("folder") || "uploads";
+  const preserveName = url.searchParams.get("preserve") === "1";
   const bucket = process.env.SUPABASE_STORAGE_BUCKET || "uploads";
 
   const arrayBuffer = await file.arrayBuffer();
-  const filePath = `${folder}/${Date.now()}-${file.name}`;
+  const filePath = preserveName
+    ? `${folder}/${file.name}`
+    : `${folder}/${Date.now()}-${file.name}`;
   const { data, error } = await supabaseAdmin.storage
     .from(bucket)
     .upload(filePath, new Uint8Array(arrayBuffer), {

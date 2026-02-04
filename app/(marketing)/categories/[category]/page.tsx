@@ -14,7 +14,7 @@ import {
   type CategoryCard,
 } from "@/components/categories-grid";
 import { SearchInput } from "@/components/search-input";
-import { getMainCategoryBySlug } from "@/lib/catalog-data";
+import { getMainCategoryBySlugDb } from "@/lib/catalog-data-db";
 
 export default async function CategoryBrandsPage({
   params,
@@ -26,7 +26,7 @@ export default async function CategoryBrandsPage({
     notFound();
   }
 
-  const category = getMainCategoryBySlug(resolvedParams.category);
+  const category = await getMainCategoryBySlugDb(resolvedParams.category);
   if (!category) {
     notFound();
   }
@@ -35,7 +35,7 @@ export default async function CategoryBrandsPage({
     title: brand.name,
     description: `${brand.name} offerings in ${category.title}.`,
     href: `/categories/${category.slug}/${brand.key}`,
-    logo: brand.logo,
+    logo: brand.logo ?? "/images/placeholder/imageholder.webp",
   }));
 
   return (

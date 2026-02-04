@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 type FileUpload03Props = {
   className?: string;
@@ -19,8 +20,21 @@ type FileUpload03Props = {
 
 export default function FileUpload03({ className }: FileUpload03Props) {
   const [files, setFiles] = React.useState<File[]>([]);
+  const [fullName, setFullName] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [projectName, setProjectName] = React.useState("");
+  const [notes, setNotes] = React.useState("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: (acceptedFiles) => setFiles(acceptedFiles),
+    maxFiles: 1,
+    maxSize: 2 * 1024 * 1024,
+    onDrop: (acceptedFiles, rejectedFiles) => {
+      if (rejectedFiles.length) {
+        toast.error("File must be under 2MB.");
+        return;
+      }
+      setFiles(acceptedFiles);
+    },
   });
 
   const filesList = files.map((file) => (
@@ -58,12 +72,57 @@ export default function FileUpload03({ className }: FileUpload03Props) {
     </li>
   ));
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!fullName.trim() || !phone.trim()) {
+      toast.error("Name and phone number are required.");
+      return;
+    }
+    if (!files.length) {
+      toast.error("Please upload a BOQ file.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", files[0]);
+      formData.append("fullName", fullName.trim());
+      formData.append("phone", phone.trim());
+      formData.append("projectName", projectName.trim());
+      formData.append("notes", notes.trim());
+
+      const response = await fetch("/api/boq", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit request.");
+      }
+
+      toast.success("BOQ submitted.");
+      setFiles([]);
+      setFullName("");
+      setPhone("");
+      setProjectName("");
+      setNotes("");
+      document
+        .querySelector<HTMLButtonElement>('[data-dialog-close="boq"]')
+        ?.click();
+    } catch {
+      toast.error("Could not submit BOQ.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className={cn("px-6 pb-6", className)}>
       <p className="text-sm text-muted-foreground">
         Upload your BOQ file and we will review it shortly.
       </p>
-      <form action="#" method="post" className="mt-6">
+      <form className="mt-6" onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-6">
           <div className="col-span-full sm:col-span-3">
             <Label htmlFor="contact-name" className="font-medium">
@@ -75,6 +134,8 @@ export default function FileUpload03({ className }: FileUpload03Props) {
               name="contact-name"
               placeholder="Full name"
               className="mt-2"
+              value={fullName}
+              onChange={(event) => setFullName(event.target.value)}
             />
           </div>
           <div className="col-span-full sm:col-span-3">
@@ -87,6 +148,8 @@ export default function FileUpload03({ className }: FileUpload03Props) {
               name="contact-phone"
               placeholder="+961 70 000 000"
               className="mt-2"
+              value={phone}
+              onChange={(event) => setPhone(event.target.value)}
             />
           </div>
           <div className="col-span-full">
@@ -99,6 +162,8 @@ export default function FileUpload03({ className }: FileUpload03Props) {
               name="project-name"
               placeholder="Project name"
               className="mt-2"
+              value={projectName}
+              onChange={(event) => setProjectName(event.target.value)}
             />
           </div>
           <div className="col-span-full">
@@ -111,6 +176,8 @@ export default function FileUpload03({ className }: FileUpload03Props) {
               placeholder="Short notes"
               className="mt-2"
               rows={3}
+              value={notes}
+              onChange={(event) => setNotes(event.target.value)}
             />
           </div>
           <div className="col-span-full">
@@ -169,11 +236,13 @@ export default function FileUpload03({ className }: FileUpload03Props) {
         <Separator className="my-6" />
         <div className="flex items-center justify-end space-x-3">
           <DialogClose asChild>
-            <Button type="button" variant="outline">
+            <Button type="button" variant="outline" data-dialog-close="boq">
               Cancel
             </Button>
           </DialogClose>
-          <Button type="submit">Send</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Sending..." : "Send"}
+          </Button>
         </div>
       </form>
     </div>

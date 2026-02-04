@@ -111,9 +111,9 @@ export function SiteNav() {
                 <Image
                   src="/images/logo/logo-original.svg"
                   alt="Prime Elec"
-                  width={200}
-                  height={80}
-                  className="h-16 w-64 object-contain brightness-0 invert"
+                  width={240}
+                  height={96}
+                  className="h-18 w-72 object-contain brightness-0 invert"
                   priority
                 />
               </Link>
@@ -205,9 +205,9 @@ export function SiteNav() {
                   <Image
                     src="/images/logo/logo-original.svg"
                     alt="Prime Elec"
-                    width={160}
-                    height={40}
-                    className="h-10 w-44 object-contain brightness-0 invert"
+                    width={180}
+                    height={48}
+                    className="h-12 w-52 object-contain brightness-0 invert"
                     priority
                   />
                 </Link>

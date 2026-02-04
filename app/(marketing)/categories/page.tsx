@@ -13,10 +13,11 @@ import {
   type CategoryCard,
 } from "@/components/categories-grid";
 import { SearchInput } from "@/components/search-input";
-import { getMainCategories } from "@/lib/catalog-data";
+import { getMainCategoriesDb } from "@/lib/catalog-data-db";
 
-export default function CategoriesPage() {
-  const categories: CategoryCard[] = getMainCategories().map((category) => ({
+export default async function CategoriesPage() {
+  const categories = await getMainCategoriesDb();
+  const cards: CategoryCard[] = categories.map((category) => ({
     title: category.title,
     description: category.description,
     href: `/categories/${category.slug}`,
@@ -48,7 +49,7 @@ export default function CategoriesPage() {
           <SearchInput placeholder="Search categories" />
         </div>
 
-        <CategoriesGrid categories={categories} buttonLabel="View Brands" />
+        <CategoriesGrid categories={cards} buttonLabel="View Brands" />
       </div>
     </section>
   );

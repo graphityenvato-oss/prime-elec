@@ -36,7 +36,7 @@ export function ActionsMenu({ onView, onEdit, onDelete }: ActionsMenuProps) {
         </DropdownMenuItem>
         {onDelete ? (
           <ConfirmationAlert
-            title="Delete blog?"
+            title="Delete item?"
             description="This action cannot be undone."
             confirmLabel="Delete"
             onConfirm={onDelete}

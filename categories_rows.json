@@ -1,0 +1,206 @@
+[
+  {
+    "id": "01f3ea14-bc73-4b66-acfa-3d4f09a5bcbd",
+    "name": "Heliport Equipment - Offshore",
+    "slug": "heliport-equipment-offshore",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "0bacb534-22f3-4e1e-96d1-cf2aa436d930",
+    "name": "Back-up power, UPS, surge & IT power distribution",
+    "slug": "back-up-power-ups-surge-it-power-distribution",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "152d927f-33b6-420f-89d6-4282122fa621",
+    "name": "Aircraft Warning Lights Airports",
+    "slug": "aircraft-warning-lights-airports",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "15b946ba-5a1d-4a49-b60f-323863dfb2c0",
+    "name": "Enclosures",
+    "slug": "enclosures",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "1d71ac92-00f8-4bf0-a58c-67a33f54653d",
+    "name": "Building installations",
+    "slug": "building-installations",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "1d83e947-34da-49d6-88e6-fa86c07849a2",
+    "name": "Aircraft Warning Lights for Civil Engineering Structures",
+    "slug": "aircraft-warning-lights-for-civil-engineering-structures",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "2059f0f5-5a3c-4191-9710-d686fc0bea86",
+    "name": "Earthing and Lightning protection system",
+    "slug": "earthing-and-lightning-protection-system",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "21532b3c-5276-4b6b-a0a9-ef0dae200868",
+    "name": "Markings for High Voltage Lines",
+    "slug": "markings-for-high-voltage-lines",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "24cf0068-0784-4818-beab-a5f3b92e7023",
+    "name": "Industrial control, drives, automation & sensors",
+    "slug": "industrial-control-drives-automation-sensors",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "27d65720-af84-44ef-9a2c-d4a378d92e4a",
+    "name": "PV Connector",
+    "slug": "pv-connector",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "294fd7dd-6569-4a31-a961-898cf9b2d09b",
+    "name": "Heliport Equipment - Portable",
+    "slug": "heliport-equipment-portable",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "2b0f7b75-92b0-41bf-bf6e-aa9589a1bcf9",
+    "name": "Aircraft Warning Lights for stacks",
+    "slug": "aircraft-warning-lights-for-stacks",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "305888c3-076a-4955-800e-b92c077c89e5",
+    "name": "Solar lighting",
+    "slug": "solar-lighting",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "name": "Control relays & monitoring",
+    "slug": "control-relays-monitoring",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "44649ffe-0efd-4c15-baf0-ed76eae17ec9",
+    "name": "DIN-Rail TB",
+    "slug": "din-rail-tb",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "6b39ea7f-7345-4609-9da4-f1eca1f565ed",
+    "name": "Safety and protection installations",
+    "slug": "safety-and-protection-installations",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "6baa40ec-d0e3-43c4-a45f-c96240cb3336",
+    "name": "Aircraft Warning Lights for cranes",
+    "slug": "aircraft-warning-lights-for-cranes",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "7a2f50e7-24f5-4792-85ac-8b91d04b7f6f",
+    "name": "Aircraft Warning Lights for Pylons",
+    "slug": "aircraft-warning-lights-for-pylons",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "7bf98851-187a-4f3c-9a06-002b7183bc11",
+    "name": "Emergency Lighting",
+    "slug": "emergency-lighting",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "81c67d8f-ee74-4a03-ab5f-75e087dfaeb3",
+    "name": "Terminal Blocks",
+    "slug": "terminal-blocks",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "98d4a2c0-9390-4dd7-b401-24853c0c8b22",
+    "name": "Industrial installations",
+    "slug": "industrial-installations",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "a6738952-c28a-4035-bd2d-c1d552bf9a13",
+    "name": "EV Charging",
+    "slug": "ev-charging",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "ac4ea64d-d771-4d2b-93c9-a20f0476d701",
+    "name": "Aircraft Warning Lights for buildings",
+    "slug": "aircraft-warning-lights-for-buildings",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "name": "Heliport Equipment - Onshore",
+    "slug": "heliport-equipment-onshore",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "b7edd87f-bd82-4b7e-b630-635f944ddcd5",
+    "name": "Circular Connector",
+    "slug": "circular-connector",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "bb55fa08-fb7f-4784-869e-f1415b91bb24",
+    "name": "Electrical circuit protection",
+    "slug": "electrical-circuit-protection",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "d313ac99-17cd-4204-a52a-22584d0e3cc6",
+    "name": "Wiring Devices",
+    "slug": "wiring-devices",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "d93b2cc1-45e7-4fb1-8a72-7ff28eff1f00",
+    "name": "Heavy Duty Connectors",
+    "slug": "heavy-duty-connectors",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "d969c160-1345-4ec7-85aa-f31fa719a511",
+    "name": "Busway Systems",
+    "slug": "busway-systems",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "dc531c96-fdb8-48cf-b1ee-f0dc14255cfb",
+    "name": "Energy Storage Connector",
+    "slug": "energy-storage-connector",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "def67b0e-c666-44e2-b769-978934b59882",
+    "name": "Heliport Equipment - Onshor",
+    "slug": "heliport-equipment-onshor",
+    "created_at": "2026-02-04 13:13:17.20504+00"
+  },
+  {
+    "id": "ea72ccb5-9b91-448a-801a-7f0d794c6499",
+    "name": "Aircraft Warning Lights for Wind Turbines",
+    "slug": "aircraft-warning-lights-for-wind-turbines",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "fcfb2035-1b42-40fb-9a91-598338ed5caa",
+    "name": "Electronic Products",
+    "slug": "electronic-products",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  },
+  {
+    "id": "ffc473f0-45ff-4d0e-ba11-2e66f073a6e9",
+    "name": "Medium-voltage switchgear",
+    "slug": "medium-voltage-switchgear",
+    "created_at": "2026-02-04 07:37:05.983301+00"
+  }
+]

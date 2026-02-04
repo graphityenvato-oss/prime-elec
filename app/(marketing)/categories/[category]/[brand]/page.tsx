@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { SearchInput } from "@/components/search-input";
 import { HoverCard } from "@/components/hover-card";
-import { getBrandCategory } from "@/lib/catalog-data";
+import { getBrandCategoryDb } from "@/lib/catalog-data-db";
 
 export default async function SubcategoryPage({
   params,
@@ -24,7 +24,7 @@ export default async function SubcategoryPage({
     notFound();
   }
 
-  const result = getBrandCategory(
+  const result = await getBrandCategoryDb(
     resolvedParams.brand.toLowerCase(),
     resolvedParams.category.toLowerCase(),
   );
@@ -77,29 +77,35 @@ export default async function SubcategoryPage({
 
         {items.length ? (
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((item) => (
-              <HoverCard
-                key={item.title}
-                className="h-55 p-4 text-foreground dark:text-white sm:h-50 sm:p-6"
-                contentClassName="flex h-full flex-col justify-between"
-              >
-                <div className="h-14 w-32 sm:h-16 sm:w-36">
-                  <Image
-                    src={item.image ?? "/images/placeholder/imageholder.webp"}
-                    alt={`${item.title} product`}
-                    width={180}
-                    height={120}
-                    className="h-full w-auto object-contain"
-                  />
-                </div>
+              {items.map((item) => (
+                <HoverCard
+                  key={item.title}
+                  className="h-55 p-4 text-foreground dark:text-white sm:h-50 sm:p-6"
+                  contentClassName="flex h-full flex-col justify-between"
+                >
+                  <div className="h-14 w-32 sm:h-16 sm:w-36">
+                    <Image
+                      src={item.image ?? "/images/placeholder/imageholder.webp"}
+                      alt={`${item.title} product`}
+                      width={180}
+                      height={120}
+                      className="h-full w-auto object-contain"
+                    />
+                  </div>
                 <div>
                   <h2 className="text-lg font-semibold">{item.title}</h2>
-                  {item.subtitle ? (
-                    <p className="mt-2 text-sm text-foreground/70 dark:text-white/70">
-                      {item.subtitle}
-                    </p>
-                  ) : null}
+                  {item.pageUrl ? null : null}
                 </div>
+                {item.pageUrl ? (
+                  <Link
+                    href={item.pageUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
+                  >
+                    View Products
+                  </Link>
+                ) : null}
               </HoverCard>
             ))}
           </div>

@@ -1,0 +1,1002 @@
+[
+  {
+    "id": "08155f11-0d5f-42e6-93de-edeadb91d382",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Programmable relay",
+    "slug": "programmable-relay",
+    "page_url": "https://www.relpol.pl/en/Products/Programmable-relay",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Programmable%20relay_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "0823c27e-c0f2-40f4-91b0-f9a262dfdc1b",
+    "category_id": "01f3ea14-bc73-4b66-acfa-3d4f09a5bcbd",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Windpower Standard Tool Box",
+    "slug": "windpower-standard-tool-box",
+    "page_url": "https://www.heliportsequipment.com/offshore/windpower-standard-tool-box",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Windpower%20Standard%20Tool%20Box_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "0ac15a24-74c7-4400-bc20-849762af1be4",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Signal Lamps",
+    "slug": "signal-lamps",
+    "page_url": "https://www.relpol.pl/en/Products/Signal-Lamps",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Signal%20Lamps_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "0bc7515b-a410-4f68-8214-73b87e23fecb",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Bistable - impulse relays",
+    "slug": "bistable-impulse-relays",
+    "page_url": "https://www.relpol.pl/en/Products/Bistable-impulse-relays",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Bistable%20-%20impulse%20relays_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "0dfd5337-3ac4-4334-9ca0-c836d93be30f",
+    "category_id": "21532b3c-5276-4b6b-a0a9-ef0dae200868",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Conductor Marking Light for High Voltage Lines",
+    "slug": "conductor-marking-light-for-high-voltage-lines",
+    "page_url": "https://www.delta-box.com/en/marking/bht-marking-light-for-high-voltage-line/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Conductor%20Marking%20Light%20for%20High%20Voltage%20Lines_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "0e865e9f-213b-45b1-9a84-cb93b64137dc",
+    "category_id": "d969c160-1345-4ec7-85aa-f31fa719a511",
+    "brand_id": "1654bc99-d70b-4c06-8657-87dce2461f17",
+    "name": "Busway Systems",
+    "slug": "busway-systems",
+    "page_url": "https://www.eaton.com/ae/en-gb/catalog/low-voltage-power-distribution-controls-systems/busway-systems.html",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Busway%20Systems_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "100623b4-f754-4e9c-b884-29ad42920bb0",
+    "category_id": "7bf98851-187a-4f3c-9a06-002b7183bc11",
+    "brand_id": "66ba4e69-4a78-4286-80ee-c48db7b4a924",
+    "name": "Emergency lights for open areas for CBS",
+    "slug": "emergency-lights-for-open-areas-for-cbs",
+    "page_url": "https://www.teknoware.com/emergency-lighting-for-buildings/products/central-battery-systems/cbs-emergency-lights-for-open-areas/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Emergency%20lights%20for%20open%20areas%20for%20CBS_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "10532e37-7472-4475-9e21-15115ce68682",
+    "category_id": "7a2f50e7-24f5-4792-85ac-8b91d04b7f6f",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – High Intensity",
+    "slug": "aircraft-warning-lights-high-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-high-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-high-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "15129916-413d-4c7c-80ed-6cad5a47d3c0",
+    "category_id": "dc531c96-fdb8-48cf-b1ee-f0dc14255cfb",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "High protection single core high current Connector",
+    "slug": "high-protection-single-core-high-current-connector",
+    "page_url": "https://www.degson.com/product/classify20_4438066.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/High%20protection%20single%20core%20high%20current%20Connector_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "16c2ac5f-0b58-47f3-8170-f321ddb57260",
+    "category_id": "a6738952-c28a-4035-bd2d-c1d552bf9a13",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "EV-Charger",
+    "slug": "ev-charger",
+    "page_url": "https://www.degson.com/product/classify20_231930.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/EV-Charger_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "16dfc3c5-c1f5-48d0-96da-c3668c3f5100",
+    "category_id": "fcfb2035-1b42-40fb-9a91-598338ed5caa",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Multi-Core Cable",
+    "slug": "multi-core-cable",
+    "page_url": "https://www.degson.com/product/classify20_231922.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Multi-Core%20Cable_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "1781bf4b-fda1-422b-aeb4-790ca010cd4a",
+    "category_id": "21532b3c-5276-4b6b-a0a9-ef0dae200868",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Medium Intensity",
+    "slug": "aircraft-warning-lights-medium-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-medium-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-medium-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "1851f1e4-e97d-49f5-aa5d-8d67b5c09051",
+    "category_id": "44649ffe-0efd-4c15-baf0-ed76eae17ec9",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Power Distribution Module",
+    "slug": "power-distribution-module",
+    "page_url": "https://www.degson.com/product/classify20_4978984.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Power%20Distribution%20Module_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "19d885ea-7303-4b6d-84d1-732433ff31f9",
+    "category_id": "305888c3-076a-4955-800e-b92c077c89e5",
+    "brand_id": "457ffcae-a214-4d5f-8e49-35f10eb0edc0",
+    "name": "Solar Garden Lighting",
+    "slug": "solar-garden-lighting",
+    "page_url": "https://www.ledsolway.com/solar-garden-lighting/#md",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Solar%20Garden%20Lighting_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "1a3aec09-162c-406c-9c4a-f3100fc53d73",
+    "category_id": "305888c3-076a-4955-800e-b92c077c89e5",
+    "brand_id": "457ffcae-a214-4d5f-8e49-35f10eb0edc0",
+    "name": "Solar Street Lights",
+    "slug": "solar-street-lights",
+    "page_url": "https://www.ledsolway.com/Solar-Street-Lights/#md",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Solar%20Street%20Lights_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "1b2d3ed8-4f43-4ecd-96af-dc4dea06fca4",
+    "category_id": "d93b2cc1-45e7-4fb1-8a72-7ff28eff1f00",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Housing",
+    "slug": "housing",
+    "page_url": "https://www.degson.com/product/classify20_231888.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Housing_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "1bf38b12-2b1a-40aa-9fbd-b77024a09274",
+    "category_id": "27d65720-af84-44ef-9a2c-d4a378d92e4a",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "PV DC Connector",
+    "slug": "pv-dc-connector",
+    "page_url": "https://www.degson.com/product/classify20_5069074.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/PV%20DC%20Connector_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "1f301e24-0a74-4541-b130-2361e6f9f593",
+    "category_id": "fcfb2035-1b42-40fb-9a91-598338ed5caa",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Safety Relays",
+    "slug": "safety-relays",
+    "page_url": "https://www.degson.com/product/classify20_5062092.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Safety%20Relays_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "20fe672b-a0bb-4d5e-9f94-34e22755c630",
+    "category_id": "b7edd87f-bd82-4b7e-b630-635f944ddcd5",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Distributor",
+    "slug": "distributor",
+    "page_url": "https://www.degson.com/product/productlist20_231881.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Distributor_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "223fbe6a-8334-47da-85b2-5b39e1461233",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Monitoring relays",
+    "slug": "monitoring-relays",
+    "page_url": "https://www.relpol.pl/en/Products/Monitoring-relays",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Monitoring%20relays_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "2367f636-a939-4f34-9700-f08665335bb9",
+    "category_id": "01f3ea14-bc73-4b66-acfa-3d4f09a5bcbd",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Emergency Aviation Tool Kit Metric",
+    "slug": "emergency-aviation-tool-kit-metric",
+    "page_url": "https://www.heliportsequipment.com/offshore/emergency-aviation-tool-kit-metric",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Emergency%20Aviation%20Tool%20Kit%20Metric_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "25146865-a0fa-4653-a53b-47eb44d5dece",
+    "category_id": "01f3ea14-bc73-4b66-acfa-3d4f09a5bcbd",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Windpower Heavy Duty Tool Box",
+    "slug": "windpower-heavy-duty-tool-box",
+    "page_url": "https://www.heliportsequipment.com/offshore/windpower-heavy-duty-tool-box",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Windpower%20Heavy%20Duty%20Tool%20Box_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "256d9215-0f6b-48c6-88e3-f49a6eba8ae4",
+    "category_id": "ac4ea64d-d771-4d2b-93c9-a20f0476d701",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – High Intensity",
+    "slug": "aircraft-warning-lights-high-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-high-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-high-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "2590f051-d794-4046-acd8-469b6c7f380f",
+    "category_id": "81c67d8f-ee74-4a03-ab5f-75e087dfaeb3",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Barrier Terminal Blocks",
+    "slug": "barrier-terminal-blocks",
+    "page_url": "https://www.degson.com/product/classify20_231862.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Barrier%20Terminal%20Blocks_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "268231d0-e8ed-49e3-9ca5-8802e89678d8",
+    "category_id": "ac4ea64d-d771-4d2b-93c9-a20f0476d701",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Medium Intensity",
+    "slug": "aircraft-warning-lights-medium-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-medium-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-medium-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "27246652-b4d6-4179-850d-c9a561f744ee",
+    "category_id": "81c67d8f-ee74-4a03-ab5f-75e087dfaeb3",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "PCB Terminal Blocks",
+    "slug": "pcb-terminal-blocks",
+    "page_url": "https://www.degson.com/product/classify20_231581.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/PCB%20Terminal%20Blocks_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "273e4810-1330-4c78-9655-c4fdaf482a85",
+    "category_id": "fcfb2035-1b42-40fb-9a91-598338ed5caa",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Controller System Wiring",
+    "slug": "controller-system-wiring",
+    "page_url": "https://www.degson.com/product/classify20_231920.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Controller%20System%20Wiring_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "27981396-83f1-4018-8b8f-857011325fcc",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Weather Station",
+    "slug": "weather-station",
+    "page_url": "https://www.heliportsequipment.com/onshore/heliport-equipment/weather-station",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Heliport%20Equipment%20-%20Weather%20Station_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "292d93d4-498c-4917-a720-dc36576e2281",
+    "category_id": "1d83e947-34da-49d6-88e6-fa86c07849a2",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Medium Intensity",
+    "slug": "aircraft-warning-lights-medium-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-medium-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-medium-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "2e2d9897-b412-41dc-8244-82ff5388f7a7",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Solid state relays",
+    "slug": "solid-state-relays",
+    "page_url": "https://www.relpol.pl/en/Products/Solid-state-relays",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Solid%20state%20relays_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "2e57584a-05f4-4b67-a7f0-91a77f209df5",
+    "category_id": "dc531c96-fdb8-48cf-b1ee-f0dc14255cfb",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "MSD-FMSD",
+    "slug": "msd-fmsd",
+    "page_url": "https://www.degson.com/product/productlist20_4912886.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/MSD-FMSD_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "2f5657ba-2f89-4cb8-8ca6-69ec6d5eb07c",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Firefighting Equipment",
+    "slug": "firefighting-equipment",
+    "page_url": "https://www.heliportsequipment.com/onshore/heliport-equipment/firefighting-equipment",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Portable%20Foam%20Fire%20Extinguisher%20for%20Helipads.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "30132ee4-3f65-4c70-92fd-af24f2f96348",
+    "category_id": "152d927f-33b6-420f-89d6-4282122fa621",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "TEMPORARY LIGHT MARKING",
+    "slug": "temporary-light-marking",
+    "page_url": "https://www.delta-box.com/en/marking/airfield-portable-beacon/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/TEMPORARY%20LIGHT%20MARKING_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "32f7080d-76c3-4267-aeda-c20db19a768b",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Airbus Avionics Tool Cabinet 8 Drawer",
+    "slug": "airbus-avionics-tool-cabinet-8-drawer",
+    "page_url": "https://www.heliportsequipment.com/onshore/airbus-avionics-tool-cabinet-8-drawer",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Airbus%20Avionics%20Tool%20Cabinet%208%20Drawer_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "3480cc3b-eaa6-4212-8ecf-a3bd14ecfba7",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "High power Relays",
+    "slug": "high-power-relays",
+    "page_url": "https://www.relpol.pl/en/Products/High-power-Relays",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/High%20power%20Relays_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "34ee0d59-3e05-4d65-b6a9-3bd8280c5ea4",
+    "category_id": "1d71ac92-00f8-4bf0-a58c-67a33f54653d",
+    "brand_id": "c4d34617-d1ea-4e4e-ae38-2eb33de1c439",
+    "name": "Floor installation systems and underfloor applications",
+    "slug": "floor-installation-systems-and-underfloor-applications",
+    "page_url": "https://www.obo.global/products/building-installations/floor-installation-systems-and-underfloor-applications/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Floor%20installation%20systems%20and%20underfloor%20applications_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "3557c988-a562-4817-b6e9-9225000912c4",
+    "category_id": "dc531c96-fdb8-48cf-b1ee-f0dc14255cfb",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Low protection Connector",
+    "slug": "low-protection-connector",
+    "page_url": "https://www.degson.com/product/classify20_4912888.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Low%20protection%20Connector_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "35d4193e-665c-4257-9c9e-77019d44d62d",
+    "category_id": "98d4a2c0-9390-4dd7-b401-24853c0c8b22",
+    "brand_id": "c4d34617-d1ea-4e4e-ae38-2eb33de1c439",
+    "name": "Connection and routing systems",
+    "slug": "connection-and-routing-systems",
+    "page_url": "https://www.obo.global/products/industrial-installations/connection-and-routing-systems/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Connection%20and%20routing%20systems_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "365c37b8-49fb-45a3-b34b-d71562b4b9e9",
+    "category_id": "d313ac99-17cd-4204-a52a-22584d0e3cc6",
+    "brand_id": "bd833e5a-d15b-4ddd-810d-a2db32cd3db5",
+    "name": "Ekonomik",
+    "slug": "ekonomik",
+    "page_url": "https://www.tem-si.com/classic-switches/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Ekonomik_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "37fa99e7-cdb9-41a2-86f6-1bb202ee7c06",
+    "category_id": "2059f0f5-5a3c-4191-9710-d686fc0bea86",
+    "brand_id": "8593f4e2-9b66-4c90-94aa-84b5e1d4ec64",
+    "name": "External lightning protection-French standard",
+    "slug": "external-lightning-protection-french-standard",
+    "page_url": "https://indelec.com/en/catalog/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/External%20lightning%20protection-French%20standard_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "39d06d8a-d7b5-42c3-8f81-3e5f1dedb41a",
+    "category_id": "7a2f50e7-24f5-4792-85ac-8b91d04b7f6f",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Medium Intensity",
+    "slug": "aircraft-warning-lights-medium-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-medium-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-medium-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "3a3d9667-2d45-4349-a6d6-d3f147819a24",
+    "category_id": "2b0f7b75-92b0-41bf-bf6e-aa9589a1bcf9",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Low Intensity",
+    "slug": "aircraft-warning-lights-low-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-low-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-low-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "3a9ae678-d567-43bd-8077-9edef0c807a7",
+    "category_id": "ac4ea64d-d771-4d2b-93c9-a20f0476d701",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Low Intensity",
+    "slug": "aircraft-warning-lights-low-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-low-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-low-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "3c4171db-9415-4d75-b189-214b736c9cac",
+    "category_id": "fcfb2035-1b42-40fb-9a91-598338ed5caa",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Push Button Indicator",
+    "slug": "push-button-indicator",
+    "page_url": "https://www.degson.com/product/classify20_4949354.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Push%20Button%20Indicator_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "3c471aab-5ee0-4677-8f60-948e902e360e",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Plug-in sockets on 35 mm rail mount GSR",
+    "slug": "plug-in-sockets-on-35-mm-rail-mount-gsr",
+    "page_url": "https://www.relpol.pl/en/Products/Plug-in-sockets-on-35-mm-rail-mount-GSR",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Plug-in%20sockets%20on%2035%20mm%20rail%20mount%20GSR_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "3fee121e-4836-4b16-9838-95f8ef71edbe",
+    "category_id": "d313ac99-17cd-4204-a52a-22584d0e3cc6",
+    "brand_id": "bd833e5a-d15b-4ddd-810d-a2db32cd3db5",
+    "name": "Logiq",
+    "slug": "logiq",
+    "page_url": "https://www.tem-si.com/classic-switches-logiq/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Logiq_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "40374ba7-9f31-4359-9627-313e4757d8c8",
+    "category_id": "81c67d8f-ee74-4a03-ab5f-75e087dfaeb3",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Through-Wall Terminal Blocks",
+    "slug": "through-wall-terminal-blocks",
+    "page_url": "https://www.degson.com/product/productlist20_231863.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Through-Wall%20Terminal%20Blocks_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "40fbc957-bd90-49e2-aaeb-c7e488c343c3",
+    "category_id": "6baa40ec-d0e3-43c4-a45f-c96240cb3336",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Low Intensity",
+    "slug": "aircraft-warning-lights-low-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-low-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-low-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "43c6ded5-e278-4803-8356-7e9174695bc2",
+    "category_id": "98d4a2c0-9390-4dd7-b401-24853c0c8b22",
+    "brand_id": "c4d34617-d1ea-4e4e-ae38-2eb33de1c439",
+    "name": "Fastening material",
+    "slug": "fastening-material",
+    "page_url": "https://www.obo.global/products/industrial-installations/fastening-material/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Fastening%20material_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "444376bb-dbf1-45fc-ab8d-236d3f9ce93d",
+    "category_id": "1d83e947-34da-49d6-88e6-fa86c07849a2",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Low Intensity",
+    "slug": "aircraft-warning-lights-low-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-low-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-low-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "49078d44-4597-4cf6-b169-a6a64ff3b066",
+    "category_id": "dc531c96-fdb8-48cf-b1ee-f0dc14255cfb",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Multi contact copper bar Connector",
+    "slug": "multi-contact-copper-bar-connector",
+    "page_url": "https://www.degson.com/product/productlist20_4912884.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Multi%20contact%20copper%20bar%20Connector_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "4b8de67e-5d8b-4113-b4ef-61bf1295fafe",
+    "category_id": "305888c3-076a-4955-800e-b92c077c89e5",
+    "brand_id": "457ffcae-a214-4d5f-8e49-35f10eb0edc0",
+    "name": "Vertical Solar PV Poles",
+    "slug": "vertical-solar-pv-poles",
+    "page_url": "https://www.ledsolway.com/ISPL-Series-Vertical-Solar-PVPoles/230.html#md",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Vertical%20Solar%20PV%20Poles_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "4c8b943a-d848-497a-8bb3-098a37c8e9dd",
+    "category_id": "152d927f-33b6-420f-89d6-4282122fa621",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – High Intensity",
+    "slug": "aircraft-warning-lights-high-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-high-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-high-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "4df7c8ca-52df-4c2c-8a12-264e83c64631",
+    "category_id": "294fd7dd-6569-4a31-a961-898cf9b2d09b",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "FEC HEMS-Station® Secure Storage & Charging Cabinet",
+    "slug": "fec-hems-station-secure-storage-charging-cabinet",
+    "page_url": "https://www.heliportsequipment.com/portable/fec-hems-stationr-secure-storage-charging-cabinet",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/fec-hems-station-secure-storage-charging-cabinet-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "50f636e1-0f52-4d36-9b6c-8fed2d6ca19f",
+    "category_id": "ea72ccb5-9b91-448a-801a-7f0d794c6499",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Medium Intensity",
+    "slug": "aircraft-warning-lights-medium-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-medium-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-medium-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "55fe6ef7-28ba-4194-be1f-fc8a04a06b6d",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Wolf Safety Torches",
+    "slug": "wolf-safety-torches",
+    "page_url": "https://www.heliportsequipment.com/onshore/heliport-equipment/wolf-safety-torches",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Wolf%20ATEX%20Safety%20Torch%20with%20LED.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "579ac9c9-6b3e-4f6d-8324-8e8b0fa3da3b",
+    "category_id": "44649ffe-0efd-4c15-baf0-ed76eae17ec9",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Push-In DIN-Rail TB",
+    "slug": "push-in-din-rail-tb",
+    "page_url": "https://www.degson.com/product/productlist20_231768.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Push-In%20DIN-Rail%20TB_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "5a4398a6-d1f0-4db7-bbc1-602b75e0f6a7",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Operational & Handling Equipment",
+    "slug": "operational-handling-equipment",
+    "page_url": "https://www.heliportsequipment.com/onshore/heliport-equipment/operational-handling-equipment",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Operational%20&%20Handling%20Equipment.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "5d2df083-f7f6-48fe-84e2-63303084c52f",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Airbus Helicopter Avionics Kit",
+    "slug": "airbus-helicopter-avionics-kit",
+    "page_url": "https://www.heliportsequipment.com/onshore/airbus-helicopter-avionics-kit",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Airbus%20Helicopter%20Avionics%20Kit_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "5e6194a4-4677-4a98-8e25-8d62e489483b",
+    "category_id": "a6738952-c28a-4035-bd2d-c1d552bf9a13",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Charging stations",
+    "slug": "charging-stations",
+    "page_url": "https://www.relpol.pl/en/Products/Charging-stations-for-electric-and-plug-in-hybrid-cars",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Charging%20stations_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "5ee166b1-78d2-47ba-b7d4-3225b9954b6e",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Windsocks",
+    "slug": "windsocks",
+    "page_url": "https://www.heliportsequipment.com/onshore/windsocks",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Windsocks_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "5f9bd7d3-acc9-4384-8e0e-9de0eb6901df",
+    "category_id": "21532b3c-5276-4b6b-a0a9-ef0dae200868",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Low Intensity",
+    "slug": "aircraft-warning-lights-low-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-low-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-low-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "5faad1a9-f1c3-4bce-9614-d453105912e6",
+    "category_id": "01f3ea14-bc73-4b66-acfa-3d4f09a5bcbd",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Offshore Oil & Gas Crane Toolkit 29 Tools",
+    "slug": "offshore-oil-gas-crane-toolkit-29-tools",
+    "page_url": "https://www.heliportsequipment.com/offshore/offshore-oil-gas-crane-toolkit-29-tools",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Offshore%20Oil%20&%20Gas%20Crane%20Toolkit%2029%20Tools_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "62fda766-6cbc-4d5a-bb48-b87e83be6a33",
+    "category_id": "294fd7dd-6569-4a31-a961-898cf9b2d09b",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "FEC HEMS-Station® Solar Plus",
+    "slug": "fec-hems-station-solar-plus",
+    "page_url": "https://www.heliportsequipment.com/portable/fec-hems-stationr-solar-plus",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/fec-hems-station-solar-plus-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "633bdcc7-b2da-4371-a8a7-305590613d0f",
+    "category_id": "7bf98851-187a-4f3c-9a06-002b7183bc11",
+    "brand_id": "66ba4e69-4a78-4286-80ee-c48db7b4a924",
+    "name": "Central Battery Systems",
+    "slug": "central-battery-systems",
+    "page_url": "https://www.teknoware.com/emergency-lighting-for-buildings/products/central-battery-systems/central-battery-units/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Central%20Battery%20Systems_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "634ae3b1-4554-44a4-84f1-75ac84a72935",
+    "category_id": "d313ac99-17cd-4204-a52a-22584d0e3cc6",
+    "brand_id": "bd833e5a-d15b-4ddd-810d-a2db32cd3db5",
+    "name": "Modul",
+    "slug": "modul",
+    "page_url": "https://www.tem-si.com/design-switches/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Modul_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "67381672-b504-40cc-974f-5040c0a645ed",
+    "category_id": "a6738952-c28a-4035-bd2d-c1d552bf9a13",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Charging Socket",
+    "slug": "charging-socket",
+    "page_url": "https://www.degson.com/product/classify20_231931.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Charging%20Socket_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "6a7dd394-b9d0-4e9b-b729-6ba0f0c7512a",
+    "category_id": "b7edd87f-bd82-4b7e-b630-635f944ddcd5",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "7-8 Connector",
+    "slug": "7-8-connector",
+    "page_url": "https://www.degson.com/product/productlist20_231883.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/7-8%20Connector_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "72060114-fad2-40f0-bcbe-7f342cf6929d",
+    "category_id": "294fd7dd-6569-4a31-a961-898cf9b2d09b",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Portable Helipads",
+    "slug": "portable-helipads",
+    "page_url": "https://www.heliportsequipment.com/portable/portable-helipads",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Portable%20Helipads_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "7235ba13-b02a-4184-896f-5478cc5d39c6",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Modular installation Relays",
+    "slug": "modular-installation-relays",
+    "page_url": "https://www.relpol.pl/en/Products/Modular-installation-Relays",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Modular%20installation%20Relays_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "7397c703-e771-42ae-98f4-a974f83e4ada",
+    "category_id": "ffc473f0-45ff-4d0e-ba11-2e66f073a6e9",
+    "brand_id": "1654bc99-d70b-4c06-8657-87dce2461f17",
+    "name": "Medium-voltage switchgear",
+    "slug": "medium-voltage-switchgear",
+    "page_url": "https://www.eaton.com/ae/en-gb/products/medium-voltage-power-distribution-control-systems/switchgear.html",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Medium-voltage%20switchgear_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "74efd04a-29da-4a31-a8a9-789c9297e3f7",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "AW139 Cabinet",
+    "slug": "aw139-cabinet",
+    "page_url": "https://www.heliportsequipment.com/onshore/aw139-cabinet",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/AW139%20Cabinet_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "77ae512b-0389-4ba9-a59d-d0b7f07d893d",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Lighting",
+    "slug": "lighting",
+    "page_url": "https://www.heliportsequipment.com/onshore/lighting",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Lighting_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "78d846e5-5eec-4cb7-a794-514f2d48c0d2",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Wolf Safety Portable Work Lights",
+    "slug": "wolf-safety-portable-work-lights",
+    "page_url": "https://www.heliportsequipment.com/onshore/heliport-equipment/wolf-safety-portable-work-lights",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Heliport%20Equipment%20-%20Wolf%20Safety%20Portable%20Work%20Lights_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "7947a8cf-618b-4854-9cf1-35004b4ff4b0",
+    "category_id": "fcfb2035-1b42-40fb-9a91-598338ed5caa",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Industrial Sensors",
+    "slug": "industrial-sensors",
+    "page_url": "https://www.degson.com/product/classify20_5093599.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Industrial%20Sensors_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "7af31487-4a98-4608-ae3d-9aa4ca233df2",
+    "category_id": "81c67d8f-ee74-4a03-ab5f-75e087dfaeb3",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Data Connector",
+    "slug": "data-connector",
+    "page_url": "https://www.degson.com/product/classify20_4907908.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Data%20Connector_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "7fad40d3-65dc-49ed-acaf-b2c5fb4c74c2",
+    "category_id": "d93b2cc1-45e7-4fb1-8a72-7ff28eff1f00",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Cable Gland",
+    "slug": "cable-gland",
+    "page_url": "https://www.degson.com/product/productlist20_231916.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Cable%20Gland_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "82854581-4f59-453f-911a-fb0d0dada44c",
+    "category_id": "152d927f-33b6-420f-89d6-4282122fa621",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Medium Intensity",
+    "slug": "aircraft-warning-lights-medium-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-medium-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-medium-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "82859c78-fb91-4824-b8a7-0113ec55b8c3",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Helicopter Crash Rescue Equipment",
+    "slug": "helicopter-crash-rescue-equipment",
+    "page_url": "https://www.heliportsequipment.com/onshore/heliport-equipment/helicopter-crash-rescue-equipment",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Helideck%20Equipment_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "837cd2f0-39ce-4ff5-b724-1c8174418444",
+    "category_id": "21532b3c-5276-4b6b-a0a9-ef0dae200868",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Day marking for High Voltage Lines",
+    "slug": "day-marking-for-high-voltage-lines",
+    "page_url": "https://www.delta-box.com/en/marking/warning-spheres/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Day%20marking%20for%20High%20Voltage%20Lines_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "86163953-9a6c-432d-b57b-fe2ddab41e07",
+    "category_id": "21532b3c-5276-4b6b-a0a9-ef0dae200868",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – High Intensity",
+    "slug": "aircraft-warning-lights-high-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-high-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-high-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "866a3421-0648-48a1-908e-1a118dc2e6a4",
+    "category_id": "7a2f50e7-24f5-4792-85ac-8b91d04b7f6f",
+    "brand_id": "25ddff7f-8485-40c1-8fd6-bc164863a578",
+    "name": "Aircraft Warning Lights – Low Intensity",
+    "slug": "aircraft-warning-lights-low-intensity",
+    "page_url": "https://www.delta-box.com/en/marking/aircraft-warning-lights-led-low-intensity/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/aircraft-warning-lights-low-intensity-min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "89ee963c-a63d-4588-817b-8bcaa6b8eac1",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Tools",
+    "slug": "tools",
+    "page_url": "https://www.heliportsequipment.com/onshore/heliport-equipment/tools",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Airbus%20Avionics%20Tool%20Cabinet%208%20Drawer_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "8bac78f7-e8de-4772-890a-34da98f2a55e",
+    "category_id": "7bf98851-187a-4f3c-9a06-002b7183bc11",
+    "brand_id": "66ba4e69-4a78-4286-80ee-c48db7b4a924",
+    "name": "Emergency lights for points of emphasis for CBS",
+    "slug": "emergency-lights-for-points-of-emphasis-for-cbs",
+    "page_url": "https://www.teknoware.com/emergency-lighting-for-buildings/products/central-battery-systems/cbs-emergency-lights-for-points-of-emphasis/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Emergency%20lights%20for%20points%20of%20emphasis%20for%20CBS_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "8c6456f2-7b26-4872-afad-a4b25bd6060d",
+    "category_id": "b7edd87f-bd82-4b7e-b630-635f944ddcd5",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Servo Connector",
+    "slug": "servo-connector",
+    "page_url": "https://www.degson.com/product/productlist20_231882.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Servo%20Connector_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "8c96b3d5-9ae3-417c-9dab-665f20cb0af8",
+    "category_id": "7bf98851-187a-4f3c-9a06-002b7183bc11",
+    "brand_id": "66ba4e69-4a78-4286-80ee-c48db7b4a924",
+    "name": "Remote monitoring",
+    "slug": "remote-monitoring",
+    "page_url": "https://www.teknoware.com/emergency-lighting-for-buildings/products/central-battery-systems/cbs-remote-monitoring/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Remote%20monitoring_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "8e47986d-cac1-4c7d-b69c-25c7680cc27a",
+    "category_id": "7bf98851-187a-4f3c-9a06-002b7183bc11",
+    "brand_id": "66ba4e69-4a78-4286-80ee-c48db7b4a924",
+    "name": "Escap supercapacitor",
+    "slug": "escap-supercapacitor",
+    "page_url": "https://www.teknoware.com/emergency-lighting-for-buildings/products/escap-self-contained-luminaires/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Escap%20supercapacitor_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "8e99011e-315f-448a-847d-0cff254bc4c2",
+    "category_id": "305888c3-076a-4955-800e-b92c077c89e5",
+    "brand_id": "457ffcae-a214-4d5f-8e49-35f10eb0edc0",
+    "name": "Solar Light Tower",
+    "slug": "solar-light-tower",
+    "page_url": "https://www.ledsolway.com/Solar-Light-Tower/#md",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Solar%20Light%20Tower_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "90012a92-b4af-4b36-8f45-335e8b98eb2e",
+    "category_id": "7bf98851-187a-4f3c-9a06-002b7183bc11",
+    "brand_id": "66ba4e69-4a78-4286-80ee-c48db7b4a924",
+    "name": "Emergency exit lights for CBS",
+    "slug": "emergency-exit-lights-for-cbs",
+    "page_url": "https://www.teknoware.com/emergency-lighting-for-buildings/products/central-battery-systems/cbs-emergency-exit-lights/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Escap%20supercapacitor_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "90819b33-8e52-41cc-bd6f-b7e0e8811545",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Multifunction network parameter meters",
+    "slug": "multifunction-network-parameter-meters",
+    "page_url": "https://www.relpol.pl/en/Products/Multifunction-network-parameter-meters",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Multifunction%20network%20parameter%20meters_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "9142cea7-a58f-4fd0-8bc3-4cc74b8948aa",
+    "category_id": "15b946ba-5a1d-4a49-b60f-323863dfb2c0",
+    "brand_id": "1654bc99-d70b-4c06-8657-87dce2461f17",
+    "name": "Enclosures",
+    "slug": "enclosures",
+    "page_url": "https://www.eaton.com/ae/en-gb/products/enclosures.html",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Enclosures_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "9b973f61-1343-4231-b193-3d130ccfe42a",
+    "category_id": "24cf0068-0784-4818-beab-a5f3b92e7023",
+    "brand_id": "1654bc99-d70b-4c06-8657-87dce2461f17",
+    "name": "Industrial control, drives, automation & sensors",
+    "slug": "industrial-control-drives-automation-sensors",
+    "page_url": "https://www.eaton.com/ae/en-gb/products/controls-drives-automation-sensors.html",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Industrial%20control,%20drives,%20automation%20&%20sensors_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "9da2172b-6643-46b1-8a79-564446f5ea2c",
+    "category_id": "bb55fa08-fb7f-4784-869e-f1415b91bb24",
+    "brand_id": "1654bc99-d70b-4c06-8657-87dce2461f17",
+    "name": "Electrical circuit protection",
+    "slug": "electrical-circuit-protection",
+    "page_url": "https://www.eaton.com/ae/en-gb/products/electrical-circuit-protection.html",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Electrical%20circuit%20protection_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "9e1ed65a-6ffd-4d4b-9301-b4dea2c73e2b",
+    "category_id": "2059f0f5-5a3c-4191-9710-d686fc0bea86",
+    "brand_id": "c4d34617-d1ea-4e4e-ae38-2eb33de1c439",
+    "name": "Equipotential bonding and earthing",
+    "slug": "equipotential-bonding-and-earthing",
+    "page_url": "https://www.obo.global/products/safety-and-protection-installations/equipotential-bonding-and-earthing/",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Equipotential%20bonding%20and%20earthing_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "9edf7cbb-f258-4939-9fef-8de0db0701f2",
+    "category_id": "81c67d8f-ee74-4a03-ab5f-75e087dfaeb3",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Pluggable Terminal Blocks",
+    "slug": "pluggable-terminal-blocks",
+    "page_url": "https://www.degson.com/product/classify20_231580.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Pluggable%20Terminal%20Blocks_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "9f21c1c3-a281-4770-99c9-a770cdb7e6eb",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Staircase timer",
+    "slug": "staircase-timer",
+    "page_url": "https://www.relpol.pl/en/Products/Staircase-timer",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Staircase%20timer_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "9fc4f28b-46bd-4daa-b0bc-0ead9bd76f18",
+    "category_id": "b029cc0b-7f46-4960-af68-de738dce1b72",
+    "brand_id": "5f60d687-cc54-49f9-969d-2819f003295f",
+    "name": "Controllers",
+    "slug": "controllers",
+    "page_url": "https://www.heliportsequipment.com/onshore/controllers",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Controllers_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "9fdba39a-0946-4564-91c5-2d48a0262b8e",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Installation contactors",
+    "slug": "installation-contactors",
+    "page_url": "https://www.relpol.pl/en/Products/Installation-contactors",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Installation%20contactors_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "a087d87e-3ab4-4427-8f6a-3f9ce204dcf7",
+    "category_id": "390d5721-6d87-427c-8116-0d165064ba73",
+    "brand_id": "714e1866-5402-49ea-bf79-88461c7d9a82",
+    "name": "Industrial plug in Relays",
+    "slug": "industrial-plug-in-relays",
+    "page_url": "https://www.relpol.pl/en/Products/Industrial-plug-in-Relays",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Industrial%20plug%20in%20Relays_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  },
+  {
+    "id": "a2bdb612-eb55-4a1a-accf-3b4e08d2e9d2",
+    "category_id": "27d65720-af84-44ef-9a2c-d4a378d92e4a",
+    "brand_id": "de27c0e7-4ab6-4f1d-b739-a6b17f3397a2",
+    "name": "Dual RJ45 Communication Connector",
+    "slug": "dual-rj45-communication-connector",
+    "page_url": "https://www.degson.com/product/productlist20_5218168.html?lang=en",
+    "image_url": "https://gvhtcxkowkmjjdrbtpge.supabase.co/storage/v1/object/public/Prime/catalog/Dual%20RJ45%20Communication%20Connector_min.webp",
+    "created_at": "2026-02-04 07:37:07.558191+00"
+  }
+]

@@ -24,10 +24,10 @@ const groups = [
     links: [
       { label: "Brands", href: "/admin/brandspage" },
       { label: "Blogs", href: "/admin/blogs" },
-      { label: "Projects", href: "/admin/projects" },
       { label: "Industries", href: "/admin/industries" },
       { label: "Products", href: "/admin/products" },
       { label: "Categories", href: "/admin/categories" },
+      { label: "Import Categories", href: "/admin/categories/import" },
     ],
   },
   {
@@ -91,30 +91,43 @@ export function AdminSidebar() {
         </div>
       </div>
       <nav className="mt-5 grid gap-4">
-        {groups.map((group) => (
-          <Collapsible
-            key={group.label}
-            defaultOpen={group.defaultOpen}
-            className="space-y-2"
-          >
-            <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors duration-200 hover:bg-muted/40 hover:text-foreground">
-              {group.label}
-              <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="grid gap-1 overflow-hidden pl-2 transition-all duration-300 data-[state=closed]:max-h-0 data-[state=closed]:opacity-0 data-[state=open]:max-h-96 data-[state=open]:opacity-100">
-              {group.links.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="rounded-lg px-3 py-2 text-sm transition-colors duration-200 hover:bg-muted/40 hover:text-foreground"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </CollapsibleContent>
-            <div className="h-px bg-border/60" />
-          </Collapsible>
-        ))}
+        {groups.map((group) => {
+          if (group.label === "Pages") {
+            return (
+              <div key={group.label} className="space-y-2">
+                <div className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground/60">
+                  {group.label}
+                </div>
+                <div className="h-px bg-border/60" />
+              </div>
+            );
+          }
+
+          return (
+            <Collapsible
+              key={group.label}
+              defaultOpen={group.defaultOpen}
+              className="space-y-2"
+            >
+              <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors duration-200 hover:bg-muted/40 hover:text-foreground">
+                {group.label}
+                <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="grid gap-1 overflow-hidden pl-2 transition-all duration-300 data-[state=closed]:max-h-0 data-[state=closed]:opacity-0 data-[state=open]:max-h-96 data-[state=open]:opacity-100">
+                {group.links.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="rounded-lg px-3 py-2 text-sm transition-colors duration-200 hover:bg-muted/40 hover:text-foreground"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </CollapsibleContent>
+              <div className="h-px bg-border/60" />
+            </Collapsible>
+          );
+        })}
       </nav>
       <div className="mt-auto border-t border-border/60 pt-4">
         <button

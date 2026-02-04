@@ -1,4 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import { Mail, MapPin, Phone, AlarmClock } from "lucide-react";
+import { toast } from "sonner";
 
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
@@ -8,6 +12,56 @@ import { PrimeCard } from "@/components/ui/prime-card";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function ContactPage() {
+  const [fullName, setFullName] = useState("");
+  const [company, setCompany] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [partNumber, setPartNumber] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [details, setDetails] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!fullName.trim() || !email.trim()) {
+      toast.error("Full name and email are required.");
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: fullName.trim(),
+          company: company.trim() || null,
+          email: email.trim(),
+          phone: phone.trim() || null,
+          partNumber: partNumber.trim() || null,
+          quantity: quantity.trim() || null,
+          details: details.trim() || null,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit request.");
+      }
+
+      toast.success("Request submitted.");
+      setFullName("");
+      setCompany("");
+      setEmail("");
+      setPhone("");
+      setPartNumber("");
+      setQuantity("");
+      setDetails("");
+    } catch {
+      toast.error("Could not submit request.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <section className="pt-10 sm:pt-14">
@@ -109,34 +163,66 @@ export default function ContactPage() {
             Tell us what you need and we&apos;ll follow up within one business
             day.
           </p>
-          <form className="mt-6 grid gap-4">
+          <form className="mt-6 grid gap-4" onSubmit={handleSubmit}>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="contact-name">Full name</Label>
-                <Input id="contact-name" placeholder="Full name" />
+                <Input
+                  id="contact-name"
+                  placeholder="Full name"
+                  value={fullName}
+                  onChange={(event) => setFullName(event.target.value)}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="contact-company">Company</Label>
-                <Input id="contact-company" placeholder="Company" />
+                <Input
+                  id="contact-company"
+                  placeholder="Company"
+                  value={company}
+                  onChange={(event) => setCompany(event.target.value)}
+                />
               </div>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="contact-email">Email</Label>
-                <Input id="contact-email" type="email" placeholder="Email" />
+                <Input
+                  id="contact-email"
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="contact-phone">Phone</Label>
-                <Input id="contact-phone" type="tel" placeholder="Phone" />
+                <Input
+                  id="contact-phone"
+                  type="tel"
+                  placeholder="Phone"
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                />
               </div>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="contact-part">Part number or link</Label>
-              <Input id="contact-part" placeholder="Part number or link" />
+              <Input
+                id="contact-part"
+                placeholder="Part number or link"
+                value={partNumber}
+                onChange={(event) => setPartNumber(event.target.value)}
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="contact-qty">Estimated quantity</Label>
-              <Input id="contact-qty" placeholder="e.g. 120 units" />
+              <Input
+                id="contact-qty"
+                placeholder="e.g. 120 units"
+                value={quantity}
+                onChange={(event) => setQuantity(event.target.value)}
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="contact-details">Project details</Label>
@@ -144,9 +230,15 @@ export default function ContactPage() {
                 id="contact-details"
                 className="min-h-35"
                 placeholder="Tell us about your project..."
+                value={details}
+                onChange={(event) => setDetails(event.target.value)}
               />
             </div>
-            <Button className="rounded-full bg-primary px-6">
+            <Button
+              className="rounded-full bg-primary px-6"
+              disabled={isSubmitting}
+              type="submit"
+            >
               Submit Request
             </Button>
           </form>
