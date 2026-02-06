@@ -12,7 +12,7 @@ import {
   CategoriesGrid,
   type CategoryCard,
 } from "@/components/categories-grid";
-import { SearchInput } from "@/components/search-input";
+import { CategoriesPageClient } from "@/components/categories-page-client";
 import { getMainCategoriesDb } from "@/lib/catalog-data-db";
 
 export default async function CategoriesPage() {
@@ -45,11 +45,7 @@ export default async function CategoriesPage() {
           Browse Main Categories
         </h1>
 
-        <div className="mt-4 max-w-md">
-          <SearchInput placeholder="Search categories" />
-        </div>
-
-        <CategoriesGrid categories={cards} buttonLabel="View Brands" />
+        <CategoriesPageClient categories={cards} />
       </div>
     </section>
   );

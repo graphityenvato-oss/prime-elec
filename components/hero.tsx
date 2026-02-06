@@ -1,70 +1,16 @@
 import { HeroArrows } from "@/components/hero-arrows";
+import { HeroImageRotator } from "@/components/hero-image-rotator";
 import { Reveal } from "@/components/reveal";
-import { PartnerCards, type PartnerCardItem } from "@/components/partner-cards";
 import { supabaseServer } from "@/lib/supabase/server";
 
 const fallbackHero = {
   mainTitle: "SWITCH TO PERFECTION",
   subtitle: "PrimeElec",
-  description:
-    "Engineering-grade supply, project-ready stock, and technical support for industrial, commercial, and power sector builds.",
   primaryButtonLabel: "Request Quote",
   primaryButtonHref: "/contact",
   secondaryButtonLabel: "View Catalog",
   secondaryButtonHref: "/brands",
 };
-
-const partnerCards: PartnerCardItem[] = [
-  {
-    brandName: "Eaton",
-    brandLogo: "/images/partners/Eaton-logo.png",
-    partName: "MCCB Series",
-    productImage: "/images/products/MCCB-Seriess.png",
-    href: "https://www.eaton.com/us/en-us/products/electrical-circuit-protection/circuit-breakers/molded-case-circuit-breakers.html",
-  },
-  {
-    brandName: "Degson",
-    brandLogo: "/images/partners/degson-logo.png",
-    partName: "Terminal Blocks",
-    productImage: "/images/products/Terminal-Blockss.png",
-    href: "https://www.degson.com/product/typelist20_231579.html?lang=en",
-  },
-  {
-    brandName: "OBO Bettermann",
-    brandLogo: "/images/partners/obo-logo.png",
-    partName: "Cable Trays",
-    productImage: "/images/products/Cable-Trayss.png",
-    href: "https://www.obo.global/products/industrial-installations/cable-support-systems/cable-trays/",
-  },
-  {
-    brandName: "Indelec",
-    brandLogo: "/images/partners/Indelec-logo.png",
-    partName: "Surge Protection",
-    productImage: "/images/products/Surge-Protectionn.png",
-    href: "https://indelec.com/en/category-product/surge-protection-devices/",
-  },
-  {
-    brandName: "Teknoware",
-    brandLogo: "/images/partners/teknoware-logo.png",
-    partName: "Emergency Lighting",
-    productImage: "/images/products/Emergency-Lighting.png",
-    href: "https://www.teknoware.com/emergency-lighting-for-buildings/emergency-lighting-basics/emergency-lights/",
-  },
-  {
-    brandName: "Relpol",
-    brandLogo: "/images/partners/Logo-Relpol.png",
-    partName: "Control Relays",
-    productImage: "/images/products/Control-Relays.png",
-    href: "https://www.relpol.pl/en/Products/Relays-for-industrial-automation/Industrial-relays",
-  },
-  {
-    brandName: "TEM",
-    brandLogo: "/images/partners/Tem-logo.png",
-    partName: "Switchgear",
-    productImage: "/images/products/Switchgear.png",
-    href: "https://www.tem-si.com/design-switches/",
-  },
-];
 
 export async function Hero() {
   const { data } = await supabaseServer
@@ -86,6 +32,13 @@ export async function Hero() {
       }
     : fallbackHero;
   const mainTitle = hero.mainTitle.replace("SWITCH TO ", "SWITCH TO\n");
+  const heroImages = [
+    { src: "/images/hero/h1.svg", alt: "Prime Elec hero" },
+    { src: "/images/hero/h2.svg", alt: "Prime Elec panels" },
+    { src: "/images/hero/h3.svg", alt: "Prime Elec switchgear" },
+    { src: "/images/hero/h4.svg", alt: "Prime Elec switchgear" },
+    { src: "/images/hero/h5.svg", alt: "Prime Elec switchgear" },
+  ];
 
   return (
     <section className="relative left-1/2 right-1/2 flex w-screen -mx-[50vw] min-h-[calc(100vh-4rem)] items-center overflow-hidden bg-white py-10 text-foreground dark:bg-[#0b1118] dark:text-white sm:py-14">
@@ -104,14 +57,9 @@ export async function Hero() {
                 {mainTitle}
               </h1>
             </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-4 mx-auto max-w-xl text-sm text-foreground/75 sm:text-base">
-                {hero.description}
-              </p>
-            </Reveal>
           </div>
-          <div className="relative isolate mx-auto w-full max-w-md overflow-visible rounded-3xl lg:max-w-none">
-            <PartnerCards items={partnerCards} />
+          <div className="relative isolate mx-auto w-full max-w-xl overflow-hidden rounded-3xl border border-border/60 bg-muted/5 shadow-[0_25px_80px_rgba(0,0,0,0.2)] lg:max-w-none">
+            <HeroImageRotator images={heroImages} intervalMs={5000} />
           </div>
         </div>
       </div>

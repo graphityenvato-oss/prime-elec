@@ -68,9 +68,12 @@ export function CategoriesGrid({
                   className="h-full w-full object-contain"
                 />
               </div>
-              <h3 className="mt-5 min-h-[3.25rem] text-lg font-semibold leading-snug text-foreground dark:text-white line-clamp-2">
+              <Link
+                href={category.href}
+                className="mt-5 min-h-[3.25rem] text-lg font-semibold leading-snug text-foreground transition-colors line-clamp-2 hover:text-primary dark:text-white"
+              >
                 {category.title}
-              </h3>
+              </Link>
               <Link
                 href={category.href}
                 className="mt-3 mb-1 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"

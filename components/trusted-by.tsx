@@ -41,7 +41,7 @@ const partners = [
   },
 ];
 
-const fallbackTitle = "Trusted by these companies";
+const fallbackTitle = "Success Stories";
 
 export async function TrustedBy() {
   const { data } = await supabaseServer

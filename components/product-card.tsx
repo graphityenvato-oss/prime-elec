@@ -22,6 +22,11 @@ export function ProductCard({
   inStock,
   href,
 }: ProductCardProps) {
+  const safeImage =
+    image && (image.startsWith("/") || image.startsWith("http"))
+      ? image
+      : "/images/placeholder/imageholder.webp";
+
   return (
     <GlowCard
       className="h-full p-5 text-foreground dark:text-white"
@@ -41,7 +46,7 @@ export function ProductCard({
           {href ? (
             <Link href={href} aria-label={`${title} details`}>
               <Image
-                src={image}
+                src={safeImage}
                 alt={partNumber}
                 width={160}
                 height={160}
@@ -50,7 +55,7 @@ export function ProductCard({
             </Link>
           ) : (
             <Image
-              src={image}
+              src={safeImage}
               alt={partNumber}
               width={160}
               height={160}

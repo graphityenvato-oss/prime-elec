@@ -2,6 +2,7 @@ import Image from "next/image";
 import { SocialIcon } from "react-social-icons";
 
 import { Reveal } from "@/components/reveal";
+import { Copyright } from "lucide-react";
 
 const columns = [
   {
@@ -10,7 +11,7 @@ const columns = [
   },
   {
     title: "Resources",
-    links: ["Prime News", "Customer Service", "FAQ", "Contact Us"],
+    links: ["Prime News", "FAQ", "Contact Us"],
   },
   {
     title: "Legal",
@@ -23,7 +24,7 @@ const socials = [
   { label: "Instagram", href: "https://www.instagram.com/prime_elec" },
   {
     label: "WhatsApp",
-    href: "https://wa.me/96170971414?text=Hello%20Prime%20Elec%2C%20I%E2%80%99d%20like%20to%20inquire%20about%20product%20availability%20and%20pricing.",
+    href: "https://wa.me/96170971414?text=Hello%20Prime%20Elec%2C%20I%27d%20like%20to%20inquire%20about%20product%20availability%20and%20pricing.",
   },
 ];
 
@@ -38,12 +39,12 @@ export function SiteFooter() {
               alt="Prime Elec"
               width={140}
               height={56}
-              className="h-14 w-auto"
+              className="h-14 w-auto dark:invert-100 dark:brightness-0"
             />
           </Reveal>
           <Reveal>
             <p className="mt-4 max-w-md text-sm text-muted-foreground dark:text-accent-foreground">
-              The Engineer’s Choice precision-engineered components delivered
+              The Engineer's Choice precision engineered components delivered
               with uncompromising accuracy, fast turnaround times, and
               consistent reliability you can depend on for every project.
             </p>
@@ -70,19 +71,17 @@ export function SiteFooter() {
                                 ? "/blog"
                                 : link === "Prime News"
                                   ? "/blog"
-                                  : link === "Customer Service"
-                                    ? "/contact"
-                                    : link === "FAQ"
-                                      ? "/faq"
-                                      : link === "Contact Us"
-                                        ? "/contact"
-                                        : link === "Privacy Policy"
-                                          ? "/privacy-policy"
-                                          : link === "Terms of Service"
-                                            ? "/terms-of-service"
-                                            : link === "Cookie Policy"
-                                              ? "/cookie-policy"
-                                              : "#";
+                                  : link === "FAQ"
+                                    ? "/faq"
+                                    : link === "Contact Us"
+                                      ? "/contact"
+                                      : link === "Privacy Policy"
+                                        ? "/privacy-policy"
+                                        : link === "Terms of Service"
+                                          ? "/terms-of-service"
+                                          : link === "Cookie Policy"
+                                            ? "/cookie-policy"
+                                            : "#";
                   return (
                     <li key={link}>
                       <a className="hover:text-primary" href={href}>
@@ -98,7 +97,10 @@ export function SiteFooter() {
       </div>
 
       <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border/60 pt-6 text-xs text-muted-foreground sm:flex-row">
-        <span className="text-primary">Copyright © Prime Elec 2026</span>
+        <span className="flex items-center gap-1 text-primary">
+          <Copyright className="size-4" />
+          <span>2026 Prime Elec</span>
+        </span>
         <div className="flex items-center gap-3">
           {socials.map((social) => (
             <SocialIcon

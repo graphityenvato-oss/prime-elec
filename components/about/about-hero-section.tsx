@@ -8,12 +8,12 @@ const boardMembers = [
   },
   {
     name: "Ali Taki",
-    role: "Business Development Manager (Co Partner)",
+    role: "BDM, Co Partner",
     image: "/images/team/Ali-Taki-BDM.png",
   },
   {
     name: "Hassan Hussein",
-    role: "Sales Manager (Co Partner)",
+    role: "SM, Co Partner",
     image: "/images/team/Hassan-Hussein-SM.png",
   },
 ];

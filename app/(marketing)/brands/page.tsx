@@ -17,7 +17,15 @@ import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const brands = [
+type Brand = {
+  name: string;
+  logo: string;
+  href: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+};
+
+const brands: Brand[] = [
   {
     name: "Degson",
     logo: "/images/partners/degson-logo.png",
@@ -52,8 +60,6 @@ const brands = [
     name: "OBO",
     logo: "/images/partners/obo-logo.png",
     href: "https://www.obo.global/",
-    secondaryHref: "https://www.oboindia.com/en-in",
-    secondaryLabel: "OBO India",
   },
   {
     name: "Solway",
@@ -169,7 +175,7 @@ export default function BrandsPage() {
                       variant="outline"
                       className="rounded-full border-primary/30 px-4 text-xs text-primary hover:border-primary hover:bg-primary/10 dark:border-white/30 dark:text-white dark:hover:border-white dark:hover:bg-white/10"
                       onClick={() =>
-                        handleCatalogClick(brand.secondaryHref, brand.name)
+                        handleCatalogClick(brand.secondaryHref ?? "#", brand.name)
                       }
                     >
                       {brand.secondaryLabel ?? "Visit Website"}

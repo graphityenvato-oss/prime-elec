@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Mail, MapPin, Phone, AlarmClock } from "lucide-react";
 import { toast } from "sonner";
 
@@ -87,33 +88,46 @@ export default function ContactPage() {
       <section className="mt-10 grid items-stretch gap-6 lg:grid-cols-[1fr_1.2fr]">
         <div className="space-y-4 lg:flex lg:h-full lg:flex-col lg:gap-4 lg:space-y-0">
           <PrimeCard className="p-6 lg:flex-1">
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary">
-                <Phone className="size-5" />
-              </span>
-              <div>
-                <h2 className="text-lg font-semibold">Contact details</h2>
-                <p className="text-xs text-muted-foreground">
-                  Sales &amp; service lines
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary">
+                    <Phone className="size-5" />
+                  </span>
+                  <div>
+                    <h2 className="text-lg font-semibold">Contact details</h2>
+                    <p className="text-xs text-muted-foreground">
+                      Sales &amp; service lines
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-4 grid gap-1 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <Phone className="size-4 text-primary/70" />
+                    <span>+961 70 97 14 14</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="size-4 text-primary/70" />
+                    <span>info@prime-elec.co</span>
+                  </div>
+                </div>
+                <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  Response time
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Within one business day
                 </p>
               </div>
-            </div>
-            <div className="mt-4 grid gap-1 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Phone className="size-4 text-primary/70" />
-                <span>+961 70 97 14 14</span>
+              <div className="w-fit rounded-2xl border border-border/60 bg-background/60 p-2 sm:shrink-0">
+                <Image
+                  src="/images/qr/prime-whatsapp-qr-code.png"
+                  alt="Prime Elec WhatsApp QR code"
+                  width={120}
+                  height={120}
+                  className="h-auto w-28 sm:w-32"
+                />
               </div>
-              <div className="flex items-center gap-2">
-                <Mail className="size-4 text-primary/70" />
-                <span>info@prime-elec.co</span>
-              </div>
             </div>
-            <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Response time
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Within one business day
-            </p>
           </PrimeCard>
           <PrimeCard className="p-6 lg:flex-1">
             <div className="flex items-center gap-3">
