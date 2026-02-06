@@ -307,3 +307,9 @@ body {
   background-size: 200% 200%;
   animation: liquid 12s ease infinite;
 }
+
+@media (width: 1366px) and (height: 768px) {
+  .hero-screen-fix {
+    min-height: calc(100vh - 5rem);
+  }
+}

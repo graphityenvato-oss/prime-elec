@@ -33,15 +33,15 @@ export async function Hero() {
     : fallbackHero;
   const mainTitle = hero.mainTitle.replace("SWITCH TO ", "SWITCH TO\n");
   const heroImages = [
-    { src: "/images/hero/h1.svg", alt: "Prime Elec hero" },
-    { src: "/images/hero/h2.svg", alt: "Prime Elec panels" },
-    { src: "/images/hero/h3.svg", alt: "Prime Elec switchgear" },
-    { src: "/images/hero/h4.svg", alt: "Prime Elec switchgear" },
-    { src: "/images/hero/h5.svg", alt: "Prime Elec switchgear" },
+    { src: "/images/hero/h1.webp", alt: "Prime Elec hero" },
+    { src: "/images/hero/h3.webp", alt: "Prime Elec hero" },
+    { src: "/images/hero/h2.webp", alt: "Prime Elec hero" },
+    { src: "/images/hero/h4.webp", alt: "Prime Elec hero" },
+    { src: "/images/hero/h5.webp", alt: "Prime Elec hero" },
   ];
 
   return (
-    <section className="relative left-1/2 right-1/2 flex w-screen -mx-[50vw] min-h-[calc(100vh-4rem)] items-center overflow-hidden bg-white py-10 text-foreground dark:bg-[#0b1118] dark:text-white sm:py-14">
+    <section className="hero-screen-fix relative left-1/2 right-1/2 flex w-screen -mx-[50vw] min-h-[calc(100vh-5rem)] min-h-[calc(100dvh-5rem)] items-center overflow-hidden bg-white py-10 text-foreground dark:bg-[#0b1118] dark:text-white sm:py-14">
       <div className="pointer-events-none absolute inset-0 bg-[url('/images/hero/bgg.png')] bg-cover bg-[position:85%_center] opacity-40 dark:opacity-70 sm:bg-center" />
       <HeroArrows />
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6">
@@ -58,7 +58,7 @@ export async function Hero() {
               </h1>
             </Reveal>
           </div>
-          <div className="relative isolate mx-auto w-full max-w-xl overflow-hidden rounded-3xl border border-border/60 bg-muted/5 shadow-[0_25px_80px_rgba(0,0,0,0.2)] lg:max-w-none">
+          <div className="relative isolate mx-auto w-full max-w-xl max-h-[calc(100dvh-10rem)] overflow-hidden rounded-3xl border border-border/60 bg-muted/5 shadow-[0_25px_80px_rgba(0,0,0,0.2)] lg:max-w-none">
             <HeroImageRotator images={heroImages} intervalMs={5000} />
           </div>
         </div>
