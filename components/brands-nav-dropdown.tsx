@@ -32,7 +32,7 @@ const brands = [
   {
     key: "fec",
     name: "FEC Heliports equipment",
-    logo: "/images/partners/FEC Heliports equipment.png",
+    logo: "/images/partners/FEC-Heliports-Equipment-logo.png",
     href: "https://www.heliportsequipment.com/",
   },
   {

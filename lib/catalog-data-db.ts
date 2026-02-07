@@ -30,7 +30,7 @@ const brandLogoMap: Record<string, string> = {
   degson: "/images/partners/degson-logo.png",
   deltabox: "/images/partners/Deltabox.png",
   eaton: "/images/partners/Eaton-logo.png",
-  fecheliportsequipment: "/images/partners/FEC Heliports equipment.png",
+  fecheliportsequipment: "/images/partners/FEC-Heliports-Equipment-logo.png",
   indelec: "/images/partners/Indelec-logo.png",
   relpol: "/images/partners/Logo-Relpol.png",
   obo: "/images/partners/obo-logo.png",
