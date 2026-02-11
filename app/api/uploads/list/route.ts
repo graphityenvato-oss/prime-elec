@@ -12,10 +12,7 @@ export async function GET(request: Request) {
     .list(folder, { limit: 1000 });
 
   if (error) {
-    return NextResponse.json(
-      { message: error.message },
-      { status: 500 },
-    );
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 
   const files = (data ?? [])

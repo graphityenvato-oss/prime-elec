@@ -71,7 +71,11 @@ const brands: Brand[] = [
     logo: "/images/partners/teknoware-logo.png",
     href: "https://www.teknoware.com/",
   },
-  { name: "Tem", logo: "/images/partners/Tem-logo.png", href: "https://www.tem-si.com/" },
+  {
+    name: "Tem",
+    logo: "/images/partners/Tem-logo.png",
+    href: "https://www.tem-si.com/",
+  },
 ];
 
 export default function BrandsPage() {
@@ -175,7 +179,10 @@ export default function BrandsPage() {
                       variant="outline"
                       className="rounded-full border-primary/30 px-4 text-xs text-primary hover:border-primary hover:bg-primary/10 dark:border-white/30 dark:text-white dark:hover:border-white dark:hover:bg-white/10"
                       onClick={() =>
-                        handleCatalogClick(brand.secondaryHref ?? "#", brand.name)
+                        handleCatalogClick(
+                          brand.secondaryHref ?? "#",
+                          brand.name,
+                        )
                       }
                     >
                       {brand.secondaryLabel ?? "Visit Website"}

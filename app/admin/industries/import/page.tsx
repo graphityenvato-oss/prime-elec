@@ -16,49 +16,30 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNext,
-  PaginationNumbers,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { supabaseClient } from "@/lib/supabase/client";
 
-export default function AdminCategoriesImportPage() {
+type IndustryRow = {
+  industry: string;
+  description: string;
+  image_url: string;
+};
+
+export default function AdminIndustriesImportPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [checked, setChecked] = useState(false);
   const [token, setToken] = useState<string | null>(null);
-  const [rows, setRows] = useState<
-    Array<{
-      category_name: string;
-      brand_name: string;
-      subcategory_name: string;
-      page_url: string;
-      image_url: string;
-      main_image_url: string;
-      industries: string;
-    }>
-  >([]);
+  const [rows, setRows] = useState<IndustryRow[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<
     Array<{ row: number; field: string; message: string }>
   >([]);
   const [validated, setValidated] = useState(false);
-  const [page, setPage] = useState(1);
-  const pageSize = 20;
   const [isImporting, setIsImporting] = useState(false);
   const [importMessage, setImportMessage] = useState<string | null>(null);
   const [zipFile, setZipFile] = useState<File | null>(null);
   const [zipError, setZipError] = useState<string | null>(null);
   const [zipEntries, setZipEntries] = useState<
-    Array<{
-      name: string;
-      key: string;
-      size: number;
-      file: File;
-    }>
+    Array<{ name: string; key: string; size: number; file: File }>
   >([]);
   const [zipOversize, setZipOversize] = useState<string[]>([]);
   const [zipUploadMessage, setZipUploadMessage] = useState<string | null>(null);
@@ -112,11 +93,11 @@ export default function AdminCategoriesImportPage() {
     setImportLocked(false);
     const buffer = await file.arrayBuffer();
     const workbook = XLSX.read(buffer, { type: "array" });
-    const sheet = workbook.Sheets["catalog"];
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
     if (!sheet) {
       setRows([]);
-      setError('Sheet "catalog" not found.');
+      setError("Sheet not found.");
       return;
     }
 
@@ -138,23 +119,13 @@ export default function AdminCategoriesImportPage() {
     const indexOfAny = (keys: string[]) =>
       keys.map(indexOf).find((value) => value !== -1) ?? -1;
 
-    const required = [
-      "category_name",
-      "brand_name",
-      "subcategory_name",
-      "page_url",
-      "image_url",
-      "main_image_url",
-      "industries",
-    ];
+    const required = ["industry", "description", "image"];
     const missing = required.filter((key) => {
-      if (key === "main_image_url") {
-        return (
-          indexOfAny(["main_image_url", "main image", "main_image"]) === -1
-        );
+      if (key === "description") {
+        return indexOfAny(["description", "discription"]) === -1;
       }
-      if (key === "industries") {
-        return indexOfAny(["industries", "industry"]) === -1;
+      if (key === "image") {
+        return indexOfAny(["image", "image_url"]) === -1;
       }
       return indexOf(key) === -1;
     });
@@ -164,37 +135,20 @@ export default function AdminCategoriesImportPage() {
       return;
     }
 
-    const mainImageIndex = indexOfAny([
-      "main_image_url",
-      "main image",
-      "main_image",
-    ]);
-    const industriesIndex = indexOfAny(["industries", "industry"]);
+    const industryIndex = indexOfAny(["industry", "industries"]);
+    const descriptionIndex = indexOfAny(["description", "discription"]);
+    const imageIndex = indexOfAny(["image", "image_url"]);
 
     const parsed = data
       .slice(1)
       .map((row) => ({
-        category_name: String(row[indexOf("category_name")] ?? "").trim(),
-        brand_name: String(row[indexOf("brand_name")] ?? "").trim(),
-        subcategory_name: String(row[indexOf("subcategory_name")] ?? "").trim(),
-        page_url: String(row[indexOf("page_url")] ?? "").trim(),
-        image_url: String(row[indexOf("image_url")] ?? "").trim(),
-        main_image_url: String(row[mainImageIndex] ?? "").trim(),
-        industries: String(row[industriesIndex] ?? "").trim(),
+        industry: String(row[industryIndex] ?? "").trim(),
+        description: String(row[descriptionIndex] ?? "").trim(),
+        image_url: String(row[imageIndex] ?? "").trim(),
       }))
-      .filter(
-        (row) =>
-          row.category_name ||
-          row.brand_name ||
-          row.subcategory_name ||
-          row.page_url ||
-          row.image_url ||
-          row.main_image_url ||
-          row.industries,
-      );
+      .filter((row) => row.industry || row.description || row.image_url);
 
     setRows(parsed);
-    setPage(1);
     runValidation(parsed);
   };
 
@@ -235,7 +189,7 @@ export default function AdminCategoriesImportPage() {
   };
 
   const allowedImageExt = /\.(jpg|jpeg|png|webp|gif)$/i;
-  const maxImageSize = 10 * 1024;
+  const maxImageSize = 3 * 1024 * 1024;
 
   const parseZip = async (file: File) => {
     setZipError(null);
@@ -295,14 +249,10 @@ export default function AdminCategoriesImportPage() {
     }
   };
 
-  const totalPages = Math.max(1, Math.ceil(rows.length / pageSize));
-  const pageRows = rows.slice((page - 1) * pageSize, page * pageSize);
-
   const mappedCounts = useMemo(() => {
     const available = new Set(zipEntries.map((entry) => entry.key));
     const needed = rows
-      .flatMap((row) => [row.image_url, row.main_image_url])
-      .map((value) => getMatchKey(value))
+      .map((row) => getMatchKey(row.image_url))
       .filter(Boolean);
     const matched = needed.filter((key) => available.has(key));
     const missing = needed.filter((key) => !available.has(key));
@@ -314,23 +264,9 @@ export default function AdminCategoriesImportPage() {
   }, [rows, zipEntries, getMatchKey]);
 
   const summary = useMemo(() => {
-    const categories = new Set(rows.map((row) => row.category_name));
-    const brands = new Set(rows.map((row) => row.brand_name));
-    const subcategories = new Set(rows.map((row) => row.subcategory_name));
-    const industries = new Set(
-      rows
-        .flatMap((row) =>
-          row.industries
-            ? row.industries.split("/").map((value) => value.trim())
-            : [],
-        )
-        .filter(Boolean),
-    );
+    const industries = new Set(rows.map((row) => row.industry));
     return {
       rows: rows.length,
-      categories: categories.size,
-      brands: brands.size,
-      subcategories: subcategories.size,
       industries: industries.size,
     };
   }, [rows]);
@@ -341,12 +277,7 @@ export default function AdminCategoriesImportPage() {
     setIsUploadingZip(true);
     const available = new Map(zipEntries.map((entry) => [entry.key, entry]));
     const neededKeys = Array.from(
-      new Set(
-        rows
-          .flatMap((row) => [row.image_url, row.main_image_url])
-          .map((value) => getMatchKey(value))
-          .filter(Boolean),
-      ),
+      new Set(rows.map((row) => getMatchKey(row.image_url)).filter(Boolean)),
     );
 
     const nextMap = new Map<string, string>();
@@ -355,7 +286,9 @@ export default function AdminCategoriesImportPage() {
       const failures: string[] = [];
       let successCount = 0;
       let skippedCount = 0;
-      const existingResponse = await fetch("/api/uploads/list?folder=catalog");
+      const existingResponse = await fetch(
+        "/api/uploads/list?folder=industries",
+      );
       if (existingResponse.ok) {
         const existingData = (await existingResponse
           .json()
@@ -386,10 +319,13 @@ export default function AdminCategoriesImportPage() {
           type: entry.file.type,
         });
         formData.append("file", uploadFile);
-        const response = await fetch("/api/uploads?folder=catalog&preserve=1", {
-          method: "POST",
-          body: formData,
-        });
+        const response = await fetch(
+          "/api/uploads?folder=industries&preserve=1",
+          {
+            method: "POST",
+            body: formData,
+          },
+        );
 
         if (!response.ok) {
           const errorData = (await response.json().catch(() => null)) as {
@@ -428,16 +364,10 @@ export default function AdminCategoriesImportPage() {
   const applyUploadedImageUrls = () => {
     if (!uploadedImageMap.size) return;
     const nextRows = rows.map((row) => {
-      const imageKey = getMatchKey(row.image_url);
-      const mainKey = getMatchKey(row.main_image_url);
-      const imageMapped = imageKey ? uploadedImageMap.get(imageKey) : null;
-      const mainMapped = mainKey ? uploadedImageMap.get(mainKey) : null;
-      if (!imageMapped && !mainMapped) return row;
-      return {
-        ...row,
-        image_url: imageMapped ?? row.image_url,
-        main_image_url: mainMapped ?? row.main_image_url,
-      };
+      const key = getMatchKey(row.image_url);
+      const mapped = key ? uploadedImageMap.get(key) : null;
+      if (!mapped) return row;
+      return { ...row, image_url: mapped };
     });
     setRows(nextRows);
     runValidation(nextRows);
@@ -459,52 +389,22 @@ export default function AdminCategoriesImportPage() {
     URL.revokeObjectURL(url);
   };
 
-  const runValidation = (
-    nextRows: Array<{
-      category_name: string;
-      brand_name: string;
-      subcategory_name: string;
-      page_url: string;
-      image_url: string;
-      main_image_url: string;
-      industries: string;
-    }>,
-  ) => {
+  const runValidation = (nextRows: IndustryRow[]) => {
     const issues: Array<{ row: number; field: string; message: string }> = [];
     nextRows.forEach((row, index) => {
       const rowNumber = index + 2;
-      if (!row.category_name) {
+      if (!row.industry) {
         issues.push({
           row: rowNumber,
-          field: "category_name",
-          message: "Category name is required.",
+          field: "industry",
+          message: "Industry is required.",
         });
       }
-      if (!row.brand_name) {
+      if (!row.description) {
         issues.push({
           row: rowNumber,
-          field: "brand_name",
-          message: "Brand name is required.",
-        });
-      }
-      if (!row.subcategory_name) {
-        issues.push({
-          row: rowNumber,
-          field: "subcategory_name",
-          message: "Subcategory name is required.",
-        });
-      }
-      if (!row.page_url) {
-        issues.push({
-          row: rowNumber,
-          field: "page_url",
-          message: "Page URL is required.",
-        });
-      } else if (!/^https?:\/\//i.test(row.page_url)) {
-        issues.push({
-          row: rowNumber,
-          field: "page_url",
-          message: "Page URL must start with http or https.",
+          field: "description",
+          message: "Description is required.",
         });
       }
       if (!row.image_url) {
@@ -521,27 +421,6 @@ export default function AdminCategoriesImportPage() {
             "Image URL must include a valid extension (.jpg, .jpeg, .png, .webp, .gif).",
         });
       }
-      if (!row.main_image_url) {
-        issues.push({
-          row: rowNumber,
-          field: "main_image_url",
-          message: "Main image URL is required.",
-        });
-      } else if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(row.main_image_url)) {
-        issues.push({
-          row: rowNumber,
-          field: "main_image_url",
-          message:
-            "Main image URL must include a valid extension (.jpg, .jpeg, .png, .webp, .gif).",
-        });
-      }
-      if (!row.industries) {
-        issues.push({
-          row: rowNumber,
-          field: "industries",
-          message: "Industries is required.",
-        });
-      }
     });
 
     setValidationErrors(issues);
@@ -553,13 +432,19 @@ export default function AdminCategoriesImportPage() {
     setImportMessage(null);
     setIsImporting(true);
     try {
-      const response = await fetch("/api/admin/categories/import", {
+      const response = await fetch("/api/admin/industries/import", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: token ? `Bearer ${token}` : "",
         },
-        body: JSON.stringify({ rows }),
+        body: JSON.stringify({
+          rows: rows.map((row) => ({
+            industry: row.industry,
+            description: row.description,
+            image_url: row.image_url,
+          })),
+        }),
       });
 
       const result = (await response.json().catch(() => ({}))) as {
@@ -603,13 +488,13 @@ export default function AdminCategoriesImportPage() {
     <>
       <section>
         <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          Categories
+          Industries
         </p>
         <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
-          Import Categories
+          Import Industries
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Upload the Excel file to preview and import categories.
+          Upload the Excel file to preview and import industries.
         </p>
       </section>
 
@@ -626,7 +511,7 @@ export default function AdminCategoriesImportPage() {
             and may include suffix{" "}
             <code className="mx-1 rounded bg-muted px-1">_min</code>.
           </div>
-          <div>4. Images must be 68px × 68px and under 10KB.</div>
+          <div>4. Images must be 68px x 68px and under 10KB.</div>
           <div>5. Click Upload Images, then Apply URLs.</div>
           <div>6. Validate and Import.</div>
         </div>
@@ -761,7 +646,7 @@ export default function AdminCategoriesImportPage() {
               Excel upload
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Accepted format: .xlsx (sheet name: catalog)
+              Accepted format: .xlsx
             </p>
             <p className="mt-2 text-xs text-muted-foreground">
               {selectedFile ? `Selected: ${selectedFile.name}` : "No file yet."}
@@ -801,7 +686,7 @@ export default function AdminCategoriesImportPage() {
             </Button>
             <ConfirmationAlert
               title="Confirm import"
-              description={`This will import ${summary.rows} rows (${summary.categories} categories, ${summary.brands} brands, ${summary.subcategories} subcategories) and update existing rows.`}
+              description={`This will import ${summary.rows} rows (${summary.industries} industries) and update existing rows.`}
               confirmLabel={isImporting ? "Importing..." : "Import"}
               cancelLabel="Cancel"
               onConfirm={handleImport}
@@ -825,9 +710,7 @@ export default function AdminCategoriesImportPage() {
         <div className="mt-6">
           {rows.length ? (
             <div className="mb-4 rounded-2xl border border-border/60 bg-muted/10 px-4 py-3 text-sm text-foreground">
-              Summary: {summary.rows} rows, {summary.categories} categories,{" "}
-              {summary.brands} brands, {summary.subcategories} subcategories,{" "}
-              {summary.industries} industries.
+              Summary: {summary.rows} rows, {summary.industries} industries.
             </div>
           ) : null}
           {error ? (
@@ -854,92 +737,35 @@ export default function AdminCategoriesImportPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Category</TableHead>
-                <TableHead>Brand</TableHead>
-                <TableHead>Subcategory</TableHead>
-                <TableHead>Page URL</TableHead>
+                <TableHead>Industry</TableHead>
+                <TableHead>Description</TableHead>
                 <TableHead>Image URL</TableHead>
-                <TableHead>Main Image</TableHead>
-                <TableHead>Industries</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {rows.length ? (
-                pageRows.map((row, index) => (
-                  <TableRow
-                    key={`${row.category_name}-${row.subcategory_name}-${index + (page - 1) * pageSize}`}
-                  >
+                rows.map((row, index) => (
+                  <TableRow key={`${row.industry}-${index}`}>
                     <TableCell className="font-medium">
-                      {row.category_name || "-"}
+                      {row.industry || "-"}
                     </TableCell>
-                    <TableCell>{row.brand_name || "-"}</TableCell>
-                    <TableCell>{row.subcategory_name || "-"}</TableCell>
-                    <TableCell className="max-w-60 truncate">
-                      {row.page_url || "-"}
+                    <TableCell className="max-w-96 truncate">
+                      {row.description || "-"}
                     </TableCell>
                     <TableCell className="max-w-50 truncate">
                       {row.image_url || "-"}
-                    </TableCell>
-                    <TableCell className="max-w-50 truncate">
-                      {row.main_image_url || "-"}
-                    </TableCell>
-                    <TableCell className="max-w-60 truncate">
-                      {row.industries || "-"}
                     </TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center text-sm">
+                  <TableCell colSpan={3} className="text-center text-sm">
                     Upload a file to preview rows here.
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
-          {rows.length > pageSize ? (
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <span className="text-xs text-muted-foreground">
-                Showing {(page - 1) * pageSize + 1}-
-                {Math.min(page * pageSize, rows.length)} of {rows.length}
-              </span>
-              <Pagination className="sm:mx-0 sm:w-auto">
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      href="#top"
-                      className={
-                        page === 1 ? "pointer-events-none opacity-40" : ""
-                      }
-                      onClick={(event) => {
-                        event.preventDefault();
-                        setPage((prev) => Math.max(1, prev - 1));
-                      }}
-                    />
-                  </PaginationItem>
-                  <PaginationNumbers
-                    totalPages={totalPages}
-                    currentPage={page}
-                    onPageChange={setPage}
-                  />
-                  <PaginationItem>
-                    <PaginationNext
-                      href="#top"
-                      className={
-                        page >= totalPages
-                          ? "pointer-events-none opacity-40"
-                          : ""
-                      }
-                      onClick={(event) => {
-                        event.preventDefault();
-                        setPage((prev) => Math.min(totalPages, prev + 1));
-                      }}
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            </div>
-          ) : null}
 
           {validated && validationErrors.length ? (
             <div className="mt-6 rounded-2xl border border-border/60 bg-muted/10 p-4">

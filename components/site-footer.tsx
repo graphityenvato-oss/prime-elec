@@ -44,8 +44,8 @@ export function SiteFooter() {
           </Reveal>
           <Reveal>
             <p className="mt-4 max-w-md text-sm text-muted-foreground dark:text-accent-foreground">
-              The Engineer's Choice precision engineered components delivered
-              with uncompromising accuracy, fast turnaround times, and
+              The Engineer&apos;s Choice precision engineered components
+              delivered with uncompromising accuracy, fast turnaround times, and
               consistent reliability you can depend on for every project.
             </p>
           </Reveal>

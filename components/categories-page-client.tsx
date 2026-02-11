@@ -2,7 +2,10 @@
 
 import { useMemo, useState } from "react";
 
-import { CategoriesGrid, type CategoryCard } from "@/components/categories-grid";
+import {
+  CategoriesGrid,
+  type CategoryCard,
+} from "@/components/categories-grid";
 import { SearchInput } from "@/components/search-input";
 
 type CategoriesPageClientProps = {
@@ -20,9 +23,7 @@ export function CategoriesPageClient({
     return categories.filter((category) => {
       const title = category.title.toLowerCase();
       const description = category.description.toLowerCase();
-      return (
-        title.includes(normalized) || description.includes(normalized)
-      );
+      return title.includes(normalized) || description.includes(normalized);
     });
   }, [categories, query]);
 

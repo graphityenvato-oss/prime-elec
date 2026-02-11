@@ -77,9 +77,7 @@ type BrandsNavDropdownProps = {
   renderTrigger: (children: React.ReactNode) => React.ReactNode;
 };
 
-export function BrandsNavDropdown({
-  renderTrigger,
-}: BrandsNavDropdownProps) {
+export function BrandsNavDropdown({ renderTrigger }: BrandsNavDropdownProps) {
   const pathname = usePathname();
   const isBrandsPage = pathname?.startsWith("/brands");
   const [open, setOpen] = useState(false);

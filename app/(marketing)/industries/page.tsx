@@ -8,17 +8,17 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { IndustriesPageClient } from "@/components/industries-page-client";
 import { type CategoryCard } from "@/components/categories-grid";
-import { CategoriesPageClient } from "@/components/categories-page-client";
-import { getMainCategoriesDb } from "@/lib/catalog-data-db";
+import { getIndustriesDb } from "@/lib/industries-data-db";
 
-export default async function CategoriesPage() {
-  const categories = await getMainCategoriesDb();
-  const cards: CategoryCard[] = categories.map((category) => ({
-    title: category.title,
-    description: category.description,
-    href: `/categories/${category.slug}`,
-    logo: category.image ?? "/images/placeholder/imageholder.webp",
+export default async function IndustriesPage() {
+  const industries = await getIndustriesDb();
+  const cards: CategoryCard[] = industries.map((industry) => ({
+    title: industry.title,
+    description: industry.description,
+    href: `/industries/${industry.slug}`,
+    logo: industry.image ?? "/images/placeholder/imageholder.webp",
   }));
 
   return (
@@ -33,16 +33,16 @@ export default async function CategoriesPage() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>Categories</BreadcrumbPage>
+              <BreadcrumbPage>Industries</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
 
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl text-primary">
-          Browse Main Categories
+          Browse Industries
         </h1>
 
-        <CategoriesPageClient categories={cards} />
+        <IndustriesPageClient industries={cards} />
       </div>
     </section>
   );

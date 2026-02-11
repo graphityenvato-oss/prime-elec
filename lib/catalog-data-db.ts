@@ -21,6 +21,7 @@ export type DbMainCategory = {
   title: string;
   description: string;
   image?: string;
+  industries: string[];
   brands: DbBrand[];
 };
 
@@ -63,7 +64,12 @@ const normalizeImageUrl = (value?: string | null) => {
   return undefined;
 };
 
-const buildDescription = (title: string) => title;
+const buildDescription = (title: string, industries?: string[]) => {
+  if (industries && industries.length) {
+    return industries.join(" • ");
+  }
+  return title;
+};
 
 export const getMainCategoriesDb = async (): Promise<DbMainCategory[]> => {
   const { data, error } = await supabaseServer
@@ -73,6 +79,8 @@ export const getMainCategoriesDb = async (): Promise<DbMainCategory[]> => {
       id,
       name,
       slug,
+      main_image_url,
+      industries,
       subcategories (
         image_url,
         brand:brands ( id, name, slug )
@@ -88,6 +96,11 @@ export const getMainCategoriesDb = async (): Promise<DbMainCategory[]> => {
   return (data ?? []).map((category) => {
     const brandsMap = new Map<string, DbBrand>();
     let image: string | undefined;
+    const industries = Array.isArray(category.industries)
+      ? category.industries.filter((item) => typeof item === "string")
+      : [];
+
+    image = normalizeImageUrl(category.main_image_url);
 
     (category.subcategories ?? []).forEach((item) => {
       if (!image && item.image_url) {
@@ -108,8 +121,9 @@ export const getMainCategoriesDb = async (): Promise<DbMainCategory[]> => {
       id: category.id,
       slug: category.slug,
       title: category.name,
-      description: buildDescription(category.name),
+      description: buildDescription(category.name, industries),
       image: image ?? undefined,
+      industries,
       brands: Array.from(brandsMap.values()),
     };
   });
@@ -123,6 +137,8 @@ export const getMainCategoryBySlugDb = async (slug: string) => {
       id,
       name,
       slug,
+      main_image_url,
+      industries,
       subcategories (
         image_url,
         brand:brands ( id, name, slug )
@@ -139,6 +155,11 @@ export const getMainCategoryBySlugDb = async (slug: string) => {
 
   const brandsMap = new Map<string, DbBrand>();
   let image: string | undefined;
+  const industries = Array.isArray(data.industries)
+    ? data.industries.filter((item) => typeof item === "string")
+    : [];
+
+  image = normalizeImageUrl(data.main_image_url);
 
   (data.subcategories ?? []).forEach((item) => {
     if (!image && item.image_url) {
@@ -159,8 +180,9 @@ export const getMainCategoryBySlugDb = async (slug: string) => {
     id: data.id,
     slug: data.slug,
     title: data.name,
-    description: buildDescription(data.name),
-      image: image ?? undefined,
+    description: buildDescription(data.name, industries),
+    image: image ?? undefined,
+    industries,
     brands: Array.from(brandsMap.values()),
   } satisfies DbMainCategory;
 };
@@ -171,7 +193,7 @@ export const getBrandCategoryDb = async (
 ) => {
   const { data: category, error: categoryError } = await supabaseServer
     .from("categories")
-    .select("id, name, slug")
+    .select("id, name, slug, main_image_url, industries")
     .eq("slug", categorySlug)
     .limit(1)
     .single();
@@ -213,8 +235,16 @@ export const getBrandCategoryDb = async (
       id: category.id,
       slug: category.slug,
       title: category.name,
-      description: buildDescription(category.name),
-      image: undefined,
+      description: buildDescription(
+        category.name,
+        Array.isArray(category.industries)
+          ? category.industries.filter((item) => typeof item === "string")
+          : [],
+      ),
+      image: normalizeImageUrl(category.main_image_url),
+      industries: Array.isArray(category.industries)
+        ? category.industries.filter((item) => typeof item === "string")
+        : [],
       brands: [],
       subcategories: (items ?? []).map((item) => ({
         id: item.id,

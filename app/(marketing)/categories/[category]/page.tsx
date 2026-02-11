@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 
 import {
   Breadcrumb,
@@ -9,10 +10,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import {
-  CategoriesGrid,
-  type CategoryCard,
-} from "@/components/categories-grid";
+import { type CategoryCard } from "@/components/categories-grid";
 import { CategoryBrandsPageClient } from "@/components/category-brands-page-client";
 import { getMainCategoryBySlugDb } from "@/lib/catalog-data-db";
 
@@ -64,6 +62,24 @@ export default async function CategoryBrandsPage({
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
           {category.title} Brands
         </h1>
+        {category.image ? (
+          <div className="mt-4 flex items-center gap-4">
+            <Image
+              src={category.image}
+              alt={`${category.title} main`}
+              width={64}
+              height={64}
+              className="h-16 w-16 rounded-2xl object-contain"
+            />
+            <div className="text-sm text-muted-foreground">
+              {category.description}
+            </div>
+          </div>
+        ) : category.description ? (
+          <p className="mt-3 text-sm text-muted-foreground">
+            {category.description}
+          </p>
+        ) : null}
 
         <CategoryBrandsPageClient brands={cards} />
       </div>

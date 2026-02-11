@@ -17,7 +17,6 @@ const sections = [
     ],
   },
   {
-    
     title: "How we use your information",
     body: [
       "To respond to inquiries, prepare quotations, and provide technical support.",

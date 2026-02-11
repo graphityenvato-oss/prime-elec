@@ -56,15 +56,13 @@ export async function PATCH(
     return NextResponse.json({ message: "Missing id." }, { status: 400 });
   }
 
-  const body = (await request.json().catch(() => null)) as
-    | {
-        categoryName?: string;
-        brandName?: string;
-        subcategoryName?: string;
-        pageUrl?: string;
-        imageUrl?: string;
-      }
-    | null;
+  const body = (await request.json().catch(() => null)) as {
+    categoryName?: string;
+    brandName?: string;
+    subcategoryName?: string;
+    pageUrl?: string;
+    imageUrl?: string;
+  } | null;
 
   if (!body) {
     return NextResponse.json({ message: "Invalid payload." }, { status: 400 });
@@ -85,7 +83,10 @@ export async function PATCH(
 
   const { error: categoryError } = await supabaseAdmin
     .from("categories")
-    .upsert({ name: categoryName, slug: slugify(categoryName) }, { onConflict: "name" });
+    .upsert(
+      { name: categoryName, slug: slugify(categoryName) },
+      { onConflict: "name" },
+    );
   if (categoryError) {
     return NextResponse.json(
       { message: "Failed to update category." },
@@ -95,7 +96,10 @@ export async function PATCH(
 
   const { error: brandError } = await supabaseAdmin
     .from("brands")
-    .upsert({ name: brandName, slug: slugify(brandName) }, { onConflict: "name" });
+    .upsert(
+      { name: brandName, slug: slugify(brandName) },
+      { onConflict: "name" },
+    );
   if (brandError) {
     return NextResponse.json(
       { message: "Failed to update brand." },

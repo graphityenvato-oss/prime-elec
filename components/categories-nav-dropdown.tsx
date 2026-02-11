@@ -125,17 +125,17 @@ export function CategoriesNavDropdown({
               {columns.map((column, colIndex) => (
                 <div key={`col-${colIndex}`} className="space-y-2">
                   {column.map((category) => (
-                  <Link
-                    key={category.slug}
-                    href={`/categories/${category.slug}`}
-                    className="group flex items-start gap-2 rounded-lg px-2 py-1 text-sm text-foreground transition hover:bg-primary/5 dark:text-white/90 dark:hover:bg-white/5"
-                    onClick={() => setOpen(false)}
-                  >
-                    <ChevronRight className="mt-0.5 size-4 shrink-0 text-primary/70 transition group-hover:text-primary dark:text-white/60 dark:group-hover:text-white" />
-                    <span className="font-medium group-hover:text-primary dark:group-hover:text-white">
-                      {category.title}
-                    </span>
-                  </Link>
+                    <Link
+                      key={category.slug}
+                      href={`/categories/${category.slug}`}
+                      className="group flex items-start gap-2 rounded-lg px-2 py-1 text-sm text-foreground transition hover:bg-primary/5 dark:text-white/90 dark:hover:bg-white/5"
+                      onClick={() => setOpen(false)}
+                    >
+                      <ChevronRight className="mt-0.5 size-4 shrink-0 text-primary/70 transition group-hover:text-primary dark:text-white/60 dark:group-hover:text-white" />
+                      <span className="font-medium group-hover:text-primary dark:group-hover:text-white">
+                        {category.title}
+                      </span>
+                    </Link>
                   ))}
                 </div>
               ))}

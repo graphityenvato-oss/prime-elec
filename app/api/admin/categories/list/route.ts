@@ -63,5 +63,46 @@ export async function GET(request: Request) {
     );
   }
 
-  return NextResponse.json({ rows: data ?? [] });
+  const categories = new Set<string>();
+  const brands = new Set<string>();
+  (data ?? []).forEach((row) => {
+    const category = Array.isArray(row.category)
+      ? row.category[0]
+      : row.category;
+    const brand = Array.isArray(row.brand) ? row.brand[0] : row.brand;
+    if (category?.name) categories.add(category.name);
+    if (brand?.name) brands.add(brand.name);
+  });
+
+  const { data: categoryRows, error: categoryError } = await supabaseAdmin
+    .from("categories")
+    .select("id, industries");
+
+  if (categoryError) {
+    return NextResponse.json(
+      { message: "Failed to load category summary." },
+      { status: 500 },
+    );
+  }
+
+  const industries = new Set<string>();
+  (categoryRows ?? []).forEach((row) => {
+    if (Array.isArray(row.industries)) {
+      row.industries.forEach((item) => {
+        if (typeof item === "string" && item.trim()) {
+          industries.add(item.trim());
+        }
+      });
+    }
+  });
+
+  return NextResponse.json({
+    rows: data ?? [],
+    summary: {
+      categories: categories.size,
+      brands: brands.size,
+      subcategories: (data ?? []).length,
+      industries: industries.size,
+    },
+  });
 }

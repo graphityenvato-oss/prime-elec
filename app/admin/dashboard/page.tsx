@@ -100,38 +100,39 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     if (!token) return;
     let isMounted = true;
-    setMessagesLoading(true);
-    setMessagesError(null);
+    const run = async () => {
+      await Promise.resolve();
+      if (!isMounted) return;
+      setMessagesLoading(true);
+      setMessagesError(null);
 
-    fetch("/api/admin/messages", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then(async (response) => {
+      try {
+        const response = await fetch("/api/admin/messages", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         if (!response.ok) {
           throw new Error("Failed to load messages.");
         }
         const result = (await response.json().catch(() => ({}))) as {
           messages?: MessageRow[];
         };
-        return result.messages ?? [];
-      })
-      .then((data) => {
         if (isMounted) {
-          setMessages(data);
+          setMessages(result.messages ?? []);
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         if (isMounted) {
           setMessagesError(
             err instanceof Error ? err.message : "Failed to load messages.",
           );
         }
-      })
-      .finally(() => {
+      } finally {
         if (isMounted) {
           setMessagesLoading(false);
         }
-      });
+      }
+    };
+
+    void run();
 
     return () => {
       isMounted = false;
@@ -141,38 +142,39 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     if (!token) return;
     let isMounted = true;
-    setBoqLoading(true);
-    setBoqError(null);
+    const run = async () => {
+      await Promise.resolve();
+      if (!isMounted) return;
+      setBoqLoading(true);
+      setBoqError(null);
 
-    fetch("/api/admin/boq", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then(async (response) => {
+      try {
+        const response = await fetch("/api/admin/boq", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         if (!response.ok) {
           throw new Error("Failed to load BOQ requests.");
         }
         const result = (await response.json().catch(() => ({}))) as {
           requests?: BoqRow[];
         };
-        return result.requests ?? [];
-      })
-      .then((data) => {
         if (isMounted) {
-          setBoqRequests(data);
+          setBoqRequests(result.requests ?? []);
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         if (isMounted) {
           setBoqError(
             err instanceof Error ? err.message : "Failed to load BOQ requests.",
           );
         }
-      })
-      .finally(() => {
+      } finally {
         if (isMounted) {
           setBoqLoading(false);
         }
-      });
+      }
+    };
+
+    void run();
 
     return () => {
       isMounted = false;
@@ -405,9 +407,7 @@ export default function AdminDashboardPage() {
                       <TableRow
                         key={request.id}
                         className={
-                          request.read_at
-                            ? "bg-emerald-500/5"
-                            : undefined
+                          request.read_at ? "bg-emerald-500/5" : undefined
                         }
                       >
                         <TableCell className="font-medium">
@@ -460,7 +460,10 @@ export default function AdminDashboardPage() {
         </TabsContent>
       </Tabs>
 
-      <Dialog open={Boolean(activeMessage)} onOpenChange={() => setActiveMessage(null)}>
+      <Dialog
+        open={Boolean(activeMessage)}
+        onOpenChange={() => setActiveMessage(null)}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Message details</DialogTitle>

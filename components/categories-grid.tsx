@@ -27,6 +27,7 @@ export type CategoryCard = {
 type CategoriesGridProps = {
   categories: CategoryCard[];
   buttonLabel?: string;
+  imageFillTopHalf?: boolean;
 };
 
 const ITEMS_PER_PAGE = 9;
@@ -34,6 +35,7 @@ const ITEMS_PER_PAGE = 9;
 export function CategoriesGrid({
   categories,
   buttonLabel = "View Categories",
+  imageFillTopHalf = false,
 }: CategoriesGridProps) {
   const [page, setPage] = useState(1);
   const totalPages = Math.max(1, Math.ceil(categories.length / ITEMS_PER_PAGE));
@@ -59,15 +61,28 @@ export function CategoriesGrid({
               className="min-h-[14rem] p-6 text-foreground dark:text-white"
               contentClassName="flex h-full flex-col justify-between pb-2"
             >
-              <div className="h-[68px] w-[68px]">
-                <Image
-                  src={category.logo}
-                  alt={`${category.title} logo`}
-                  width={68}
-                  height={68}
-                  className="h-full w-full object-contain"
-                />
-              </div>
+              {imageFillTopHalf ? (
+                <div className="-mx-6 -mt-6 overflow-hidden">
+                  <div className="relative h-32 w-full">
+                    <Image
+                      src={category.logo}
+                      alt={`${category.title} image`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="h-[68px] w-[68px]">
+                  <Image
+                    src={category.logo}
+                    alt={`${category.title} logo`}
+                    width={68}
+                    height={68}
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+              )}
               <Link
                 href={category.href}
                 className="mt-5 min-h-[3.25rem] text-lg font-semibold leading-snug text-foreground transition-colors line-clamp-2 hover:text-primary dark:text-white"

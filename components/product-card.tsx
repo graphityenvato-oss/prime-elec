@@ -67,10 +67,7 @@ export function ProductCard({
 
       <div className="py-2">
         {href ? (
-          <Link
-            href={href}
-            className="line-clamp-2 text-lg font-semibold"
-          >
+          <Link href={href} className="line-clamp-2 text-lg font-semibold">
             {title}
           </Link>
         ) : (

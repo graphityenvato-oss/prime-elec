@@ -8,24 +8,24 @@ import {
 } from "@/components/categories-grid";
 import { SearchInput } from "@/components/search-input";
 
-type CategoryBrandsPageClientProps = {
-  brands: CategoryCard[];
+type IndustriesPageClientProps = {
+  industries: CategoryCard[];
 };
 
-export function CategoryBrandsPageClient({
-  brands,
-}: CategoryBrandsPageClientProps) {
+export function IndustriesPageClient({
+  industries,
+}: IndustriesPageClientProps) {
   const [query, setQuery] = useState("");
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
-    if (!normalized) return brands;
-    return brands.filter((brand) => {
-      const title = brand.title.toLowerCase();
-      const description = brand.description.toLowerCase();
+    if (!normalized) return industries;
+    return industries.filter((industry) => {
+      const title = industry.title.toLowerCase();
+      const description = industry.description.toLowerCase();
       return title.includes(normalized) || description.includes(normalized);
     });
-  }, [brands, query]);
+  }, [industries, query]);
 
   const hasQuery = query.trim().length > 0;
 
@@ -33,7 +33,7 @@ export function CategoryBrandsPageClient({
     <>
       <div className="mt-4 max-w-md">
         <SearchInput
-          placeholder="Search brands"
+          placeholder="Search industries"
           value={query}
           onValueChange={setQuery}
         />
@@ -42,13 +42,14 @@ export function CategoryBrandsPageClient({
         <CategoriesGrid
           key={query}
           categories={filtered}
-          buttonLabel="View Subcategories"
+          buttonLabel="View Categories"
+          imageFillTopHalf
         />
       ) : (
         <div className="mt-10 rounded-2xl border border-border/60 bg-muted/10 p-6 text-sm text-muted-foreground">
           {hasQuery
-            ? `No brands match "${query.trim()}".`
-            : "No brands available for this category yet."}
+            ? `No industries match "${query.trim()}".`
+            : "No industries available yet."}
         </div>
       )}
     </>

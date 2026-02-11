@@ -8,6 +8,8 @@ type ImportRow = {
   subcategory_name: string;
   page_url: string;
   image_url: string;
+  main_image_url: string;
+  industries: string;
 };
 
 type ValidationIssue = {
@@ -62,9 +64,9 @@ export async function POST(request: Request) {
     );
   }
 
-  const body = (await request.json().catch(() => null)) as
-    | { rows?: ImportRow[] }
-    | null;
+  const body = (await request.json().catch(() => null)) as {
+    rows?: ImportRow[];
+  } | null;
 
   if (!body?.rows || !Array.isArray(body.rows)) {
     return NextResponse.json(
@@ -74,6 +76,10 @@ export async function POST(request: Request) {
   }
 
   const issues: ValidationIssue[] = [];
+  const categoryMeta = new Map<
+    string,
+    { mainImageUrl: string | null; industries: Set<string> }
+  >();
   const cleaned = body.rows
     .map((row, index) => {
       const rowNumber = index + 2;
@@ -82,6 +88,12 @@ export async function POST(request: Request) {
       const subcategoryName = String(row.subcategory_name ?? "").trim();
       const pageUrl = String(row.page_url ?? "").trim();
       const imageUrl = String(row.image_url ?? "").trim();
+      const mainImageUrl = String(row.main_image_url ?? "").trim();
+      const industriesRaw = String(row.industries ?? "").trim();
+      const industries = industriesRaw
+        .split("/")
+        .map((value) => value.trim())
+        .filter(Boolean);
 
       if (!categoryName) {
         issues.push({
@@ -131,6 +143,47 @@ export async function POST(request: Request) {
             "Image URL must include a valid extension (.jpg, .jpeg, .png, .webp, .gif).",
         });
       }
+      if (!mainImageUrl) {
+        issues.push({
+          row: rowNumber,
+          field: "main_image_url",
+          message: "Main image URL is required.",
+        });
+      } else if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(mainImageUrl)) {
+        issues.push({
+          row: rowNumber,
+          field: "main_image_url",
+          message:
+            "Main image URL must include a valid extension (.jpg, .jpeg, .png, .webp, .gif).",
+        });
+      }
+      if (!industries.length) {
+        issues.push({
+          row: rowNumber,
+          field: "industries",
+          message: "Industries is required.",
+        });
+      }
+
+      if (categoryName) {
+        const meta = categoryMeta.get(categoryName) ?? {
+          mainImageUrl: null,
+          industries: new Set<string>(),
+        };
+        if (mainImageUrl) {
+          if (meta.mainImageUrl && meta.mainImageUrl !== mainImageUrl) {
+            issues.push({
+              row: rowNumber,
+              field: "main_image_url",
+              message: "Main image URL must be the same for this category.",
+            });
+          } else {
+            meta.mainImageUrl = mainImageUrl;
+          }
+        }
+        industries.forEach((item) => meta.industries.add(item));
+        categoryMeta.set(categoryName, meta);
+      }
 
       return {
         rowNumber,
@@ -139,6 +192,8 @@ export async function POST(request: Request) {
         subcategoryName,
         pageUrl,
         imageUrl,
+        mainImageUrl,
+        industries,
       };
     })
     .filter(
@@ -147,7 +202,9 @@ export async function POST(request: Request) {
         row.brandName ||
         row.subcategoryName ||
         row.pageUrl ||
-        row.imageUrl,
+        row.imageUrl ||
+        row.mainImageUrl ||
+        row.industries.length,
     );
 
   if (!cleaned.length) {
@@ -174,10 +231,15 @@ export async function POST(request: Request) {
   );
   const uniqueBrands = Array.from(new Set(cleaned.map((row) => row.brandName)));
 
-  const categoryPayload = uniqueCategories.map((name) => ({
-    name,
-    slug: slugify(name),
-  }));
+  const categoryPayload = uniqueCategories.map((name) => {
+    const meta = categoryMeta.get(name);
+    return {
+      name,
+      slug: slugify(name),
+      main_image_url: meta?.mainImageUrl ?? null,
+      industries: meta ? Array.from(meta.industries) : [],
+    };
+  });
   const brandPayload = uniqueBrands.map((name) => ({
     name,
     slug: slugify(name),
@@ -188,7 +250,10 @@ export async function POST(request: Request) {
     .upsert(categoryPayload, { onConflict: "name" });
   if (categoryError) {
     return NextResponse.json(
-      { message: "Failed to upsert categories." },
+      {
+        message: "Failed to upsert categories.",
+        details: categoryError.message,
+      },
       { status: 500 },
     );
   }
@@ -198,16 +263,15 @@ export async function POST(request: Request) {
     .upsert(brandPayload, { onConflict: "name" });
   if (brandError) {
     return NextResponse.json(
-      { message: "Failed to upsert brands." },
+      { message: "Failed to upsert brands.", details: brandError.message },
       { status: 500 },
     );
   }
 
-  const { data: categoryRows, error: categoryFetchError } =
-    await supabaseAdmin
-      .from("categories")
-      .select("id, name")
-      .in("name", uniqueCategories);
+  const { data: categoryRows, error: categoryFetchError } = await supabaseAdmin
+    .from("categories")
+    .select("id, name")
+    .in("name", uniqueCategories);
   if (categoryFetchError || !categoryRows) {
     return NextResponse.json(
       { message: "Failed to load categories." },
@@ -253,7 +317,10 @@ export async function POST(request: Request) {
 
   if (subcategoryError) {
     return NextResponse.json(
-      { message: "Failed to upsert subcategories." },
+      {
+        message: "Failed to upsert subcategories.",
+        details: subcategoryError.message,
+      },
       { status: 500 },
     );
   }

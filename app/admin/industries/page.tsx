@@ -22,54 +22,32 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNext,
-  PaginationNumbers,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { supabaseClient } from "@/lib/supabase/client";
 import { ActionsMenu } from "@/components/admin/actions-menu";
 
-type SubcategoryRow = {
+type IndustryRow = {
   id: string;
   name: string;
   slug: string;
-  page_url: string;
+  description: string;
   image_url: string;
-  category: { name: string; slug: string } | null;
-  brand: { name: string; slug: string } | null;
 };
 
-type CategoriesSummary = {
-  categories: number;
-  brands: number;
-  subcategories: number;
-  industries: number;
-};
-
-export default function AdminCategoriesPage() {
+export default function AdminIndustriesPage() {
   const [checked, setChecked] = useState(false);
   const [token, setToken] = useState<string | null>(null);
-  const [rows, setRows] = useState<SubcategoryRow[]>([]);
-  const [summary, setSummary] = useState<CategoriesSummary | null>(null);
+  const [rows, setRows] = useState<IndustryRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const [activeEdit, setActiveEdit] = useState<SubcategoryRow | null>(null);
-  const [editCategory, setEditCategory] = useState("");
-  const [editBrand, setEditBrand] = useState("");
+  const [activeEdit, setActiveEdit] = useState<IndustryRow | null>(null);
   const [editName, setEditName] = useState("");
-  const [editPageUrl, setEditPageUrl] = useState("");
+  const [editDescription, setEditDescription] = useState("");
   const [editImageUrl, setEditImageUrl] = useState("");
   const [editError, setEditError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
   const [clearMessage, setClearMessage] = useState<string | null>(null);
-  const pageSize = 20;
   const router = useRouter();
 
   useEffect(() => {
@@ -102,30 +80,25 @@ export default function AdminCategoriesPage() {
     setLoading(true);
     setError(null);
 
-    fetch("/api/admin/categories/list", {
+    fetch("/api/admin/industries/list", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(async (response) => {
         if (response.status === 401) {
           router.replace("/ns-admin");
-          return { rows: [] as SubcategoryRow[], summary: null };
+          return [];
         }
         if (!response.ok) {
-          throw new Error("Failed to load categories.");
+          throw new Error("Failed to load industries.");
         }
         const result = (await response.json().catch(() => ({}))) as {
-          rows?: SubcategoryRow[];
-          summary?: CategoriesSummary;
+          rows?: IndustryRow[];
         };
-        return {
-          rows: result.rows ?? [],
-          summary: result.summary ?? null,
-        };
+        return result.rows ?? [];
       })
-      .then((result) => {
+      .then((data) => {
         if (isMounted) {
-          setRows(result.rows);
-          if (result.summary) setSummary(result.summary);
+          setRows(data);
         }
       })
       .catch((err) => {
@@ -148,23 +121,12 @@ export default function AdminCategoriesPage() {
     const query = search.trim().toLowerCase();
     if (!query) return rows;
     return rows.filter((row) => {
-      const category = row.category?.name?.toLowerCase() ?? "";
-      const brand = row.brand?.name?.toLowerCase() ?? "";
-      const subcategory = row.name.toLowerCase();
       return (
-        category.includes(query) ||
-        brand.includes(query) ||
-        subcategory.includes(query)
+        row.name.toLowerCase().includes(query) ||
+        row.description.toLowerCase().includes(query)
       );
     });
   }, [rows, search]);
-
-  const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
-  const pageRows = filteredRows.slice((page - 1) * pageSize, page * pageSize);
-
-  useEffect(() => {
-    setPage(1);
-  }, [search]);
 
   if (!checked) {
     return null;
@@ -174,48 +136,20 @@ export default function AdminCategoriesPage() {
     <>
       <section>
         <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          Categories
+          Industries
         </p>
         <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
-          Categories
+          Industries
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          View the imported catalog categories, brands, and subcategories.
+          Manage the industries list and descriptions shown on the website.
         </p>
       </section>
 
       <PrimeCard className="mt-6 p-6">
-        {summary ? (
-          <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-2xl border border-border/60 bg-muted/10 px-4 py-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                Main Categories
-              </p>
-              <p className="mt-2 text-2xl font-bold">{summary.categories}</p>
-            </div>
-            <div className="rounded-2xl border border-border/60 bg-muted/10 px-4 py-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                Brands
-              </p>
-              <p className="mt-2 text-2xl font-bold">{summary.brands}</p>
-            </div>
-            <div className="rounded-2xl border border-border/60 bg-muted/10 px-4 py-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                Subcategories
-              </p>
-              <p className="mt-2 text-2xl font-bold">{summary.subcategories}</p>
-            </div>
-            <div className="rounded-2xl border border-border/60 bg-muted/10 px-4 py-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                Industries
-              </p>
-              <p className="mt-2 text-2xl font-bold">{summary.industries}</p>
-            </div>
-          </div>
-        ) : null}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <Input
-            placeholder="Search category, brand, or subcategory"
+            placeholder="Search industries"
             className="w-full sm:max-w-md"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
@@ -224,21 +158,21 @@ export default function AdminCategoriesPage() {
             <Button
               variant="outline"
               className="rounded-full"
-              onClick={() => router.push("/admin/categories/import")}
+              onClick={() => router.push("/admin/industries/import")}
             >
-              Import Categories
+              Import Industries
             </Button>
             <ConfirmationAlert
-              title="Clear all categories?"
-              description="This will permanently remove all categories, brands, subcategories, and their catalog images."
-              confirmLabel={isClearing ? "Clearing..." : "Clear Categories"}
+              title="Clear all industries?"
+              description="This will permanently remove all industries and their images."
+              confirmLabel={isClearing ? "Clearing..." : "Clear Industries"}
               cancelLabel="Cancel"
               onConfirm={async () => {
                 if (!token) return;
                 setIsClearing(true);
                 setClearMessage(null);
                 try {
-                  const response = await fetch("/api/admin/categories/clear", {
+                  const response = await fetch("/api/admin/industries/clear", {
                     method: "POST",
                     headers: {
                       Authorization: `Bearer ${token}`,
@@ -249,24 +183,18 @@ export default function AdminCategoriesPage() {
                   };
                   if (!response.ok) {
                     throw new Error(
-                      result.message || "Failed to clear categories.",
+                      result.message || "Failed to clear industries.",
                     );
                   }
                   setRows([]);
-                  setSummary({
-                    categories: 0,
-                    brands: 0,
-                    subcategories: 0,
-                    industries: 0,
-                  });
                   setClearMessage(
-                    result.message || "Categories cleared successfully.",
+                    result.message || "Industries cleared successfully.",
                   );
                 } catch (err) {
                   setClearMessage(
                     err instanceof Error
                       ? err.message
-                      : "Failed to clear categories.",
+                      : "Failed to clear industries.",
                   );
                 } finally {
                   setIsClearing(false);
@@ -278,7 +206,7 @@ export default function AdminCategoriesPage() {
                 className="rounded-full"
                 disabled={isClearing || loading}
               >
-                Clear Categories
+                Clear Industries
               </Button>
             </ConfirmationAlert>
           </div>
@@ -299,10 +227,8 @@ export default function AdminCategoriesPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Category</TableHead>
-                <TableHead>Brand</TableHead>
-                <TableHead>Subcategory</TableHead>
-                <TableHead>Page URL</TableHead>
+                <TableHead>Industry</TableHead>
+                <TableHead>Description</TableHead>
                 <TableHead>Image URL</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
@@ -310,39 +236,33 @@ export default function AdminCategoriesPage() {
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center text-sm">
+                  <TableCell colSpan={4} className="text-center text-sm">
                     Loading...
                   </TableCell>
                 </TableRow>
-              ) : pageRows.length ? (
-                pageRows.map((row) => (
+              ) : filteredRows.length ? (
+                filteredRows.map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell className="font-medium">
-                      {row.category?.name ?? "-"}
+                    <TableCell className="font-medium">{row.name}</TableCell>
+                    <TableCell className="max-w-96 truncate">
+                      {row.description}
                     </TableCell>
-                    <TableCell>{row.brand?.name ?? "-"}</TableCell>
-                    <TableCell>{row.name}</TableCell>
                     <TableCell className="max-w-60 truncate">
-                      {row.page_url}
-                    </TableCell>
-                    <TableCell className="max-w-50 truncate">
                       {row.image_url}
                     </TableCell>
                     <TableCell className="text-right">
                       <ActionsMenu
                         onEdit={() => {
                           setActiveEdit(row);
-                          setEditCategory(row.category?.name ?? "");
-                          setEditBrand(row.brand?.name ?? "");
                           setEditName(row.name);
-                          setEditPageUrl(row.page_url);
+                          setEditDescription(row.description);
                           setEditImageUrl(row.image_url);
                           setEditError(null);
                         }}
                         onDelete={async () => {
                           if (!token) return;
                           const response = await fetch(
-                            `/api/admin/categories/${row.id}`,
+                            `/api/admin/industries/${row.id}`,
                             {
                               method: "DELETE",
                               headers: {
@@ -351,7 +271,7 @@ export default function AdminCategoriesPage() {
                             },
                           );
                           if (!response.ok) {
-                            setError("Failed to delete category.");
+                            setError("Failed to delete industry.");
                             return;
                           }
                           setRows((current) =>
@@ -364,58 +284,13 @@ export default function AdminCategoriesPage() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center text-sm">
-                    No rows found.
+                  <TableCell colSpan={4} className="text-center text-sm">
+                    No industries found.
                   </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
-
-          {filteredRows.length > pageSize ? (
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <span className="text-xs text-muted-foreground">
-                Showing {(page - 1) * pageSize + 1}-
-                {Math.min(page * pageSize, filteredRows.length)} of{" "}
-                {filteredRows.length}
-              </span>
-              <Pagination className="sm:mx-0 sm:w-auto">
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      href="#top"
-                      className={
-                        page === 1 ? "pointer-events-none opacity-40" : ""
-                      }
-                      onClick={(event) => {
-                        event.preventDefault();
-                        setPage((prev) => Math.max(1, prev - 1));
-                      }}
-                    />
-                  </PaginationItem>
-                  <PaginationNumbers
-                    totalPages={totalPages}
-                    currentPage={page}
-                    onPageChange={setPage}
-                  />
-                  <PaginationItem>
-                    <PaginationNext
-                      href="#top"
-                      className={
-                        page >= totalPages
-                          ? "pointer-events-none opacity-40"
-                          : ""
-                      }
-                      onClick={(event) => {
-                        event.preventDefault();
-                        setPage((prev) => Math.min(totalPages, prev + 1));
-                      }}
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            </div>
-          ) : null}
         </div>
       </PrimeCard>
 
@@ -425,7 +300,7 @@ export default function AdminCategoriesPage() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit category item</DialogTitle>
+            <DialogTitle>Edit industry</DialogTitle>
           </DialogHeader>
           {editError ? (
             <div className="rounded-2xl border border-destructive/40 bg-destructive/5 px-4 py-3 text-sm text-destructive">
@@ -435,25 +310,7 @@ export default function AdminCategoriesPage() {
           <div className="grid gap-4">
             <div className="grid gap-2">
               <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                Category
-              </label>
-              <Input
-                value={editCategory}
-                onChange={(e) => setEditCategory(e.target.value)}
-              />
-            </div>
-            <div className="grid gap-2">
-              <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                Brand
-              </label>
-              <Input
-                value={editBrand}
-                onChange={(e) => setEditBrand(e.target.value)}
-              />
-            </div>
-            <div className="grid gap-2">
-              <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                Subcategory
+                Industry
               </label>
               <Input
                 value={editName}
@@ -462,11 +319,11 @@ export default function AdminCategoriesPage() {
             </div>
             <div className="grid gap-2">
               <label className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                Page URL
+                Description
               </label>
               <Input
-                value={editPageUrl}
-                onChange={(e) => setEditPageUrl(e.target.value)}
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
               />
             </div>
             <div className="grid gap-2">
@@ -495,7 +352,7 @@ export default function AdminCategoriesPage() {
                 setIsSaving(true);
                 setEditError(null);
                 const response = await fetch(
-                  `/api/admin/categories/${activeEdit.id}`,
+                  `/api/admin/industries/${activeEdit.id}`,
                   {
                     method: "PATCH",
                     headers: {
@@ -503,11 +360,9 @@ export default function AdminCategoriesPage() {
                       "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                      categoryName: editCategory,
-                      brandName: editBrand,
-                      subcategoryName: editName,
-                      pageUrl: editPageUrl,
-                      imageUrl: editImageUrl,
+                      name: editName,
+                      description: editDescription,
+                      image_url: editImageUrl,
                     }),
                   },
                 );
@@ -523,23 +378,12 @@ export default function AdminCategoriesPage() {
                     item.id === activeEdit.id
                       ? {
                           ...item,
-                          name: updated?.subcategory?.name ?? editName,
-                          page_url:
-                            updated?.subcategory?.page_url ?? editPageUrl,
+                          name: updated?.industry?.name ?? editName,
+                          slug: updated?.industry?.slug ?? item.slug,
+                          description:
+                            updated?.industry?.description ?? editDescription,
                           image_url:
-                            updated?.subcategory?.image_url ?? editImageUrl,
-                          category: {
-                            name: updated?.category?.name ?? editCategory,
-                            slug:
-                              updated?.category?.slug ??
-                              item.category?.slug ??
-                              "",
-                          },
-                          brand: {
-                            name: updated?.brand?.name ?? editBrand,
-                            slug:
-                              updated?.brand?.slug ?? item.brand?.slug ?? "",
-                          },
+                            updated?.industry?.image_url ?? editImageUrl,
                         }
                       : item,
                   ),

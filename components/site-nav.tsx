@@ -51,9 +51,12 @@ function NavLink({
   const linkClassName = isActive
     ? "text-primary-foreground font-semibold"
     : "text-primary-foreground/80 hover:text-primary-foreground transition-colors";
+  const combinedClassName = className
+    ? `${linkClassName} ${className}`
+    : linkClassName;
 
   return (
-    <Link href={href} className={linkClassName} onClick={onClick}>
+    <Link href={href} className={combinedClassName} onClick={onClick}>
       <motion.span
         className="relative inline-flex flex-col items-center"
         whileHover="hover"
@@ -103,11 +106,9 @@ export function SiteNav() {
     <div className="relative w-full">
       {/* FIXED CONTAINER */}
       <div className="fixed inset-x-0 top-0 z-50 bg-white shadow-lg">
-        
         {/* NAVBAR VISUAL WRAPPER */}
         <div className="relative z-20 h-20 w-full overflow-hidden bg-white">
           <nav className="mx-auto flex h-full w-full max-w-7xl items-stretch">
-            
             {/* LEFT SIDE: Logo Area */}
             {/* z-10 ensures logo stays above the background shadow */}
             <div className="relative z-10 flex shrink-0 items-center px-4 lg:pl-8">
@@ -125,32 +126,37 @@ export function SiteNav() {
 
             {/* RIGHT SIDE: Navigation Area */}
             <div className="relative ml-2 flex flex-1 items-center justify-end md:ml-12">
-              
               {/* --- UPDATED BACKGROUND LAYER --- */}
               <div className="absolute inset-0 z-0 pointer-events-none">
-                 {/* Curve Shape:
+                {/* Curve Shape:
                     - Removed borders
                     - Adjusted shadow to cast heavily to the LEFT (-15px x-offset)
                  */}
-                 <div className="absolute inset-y-0 left-0 right-0 
+                <div
+                  className="absolute inset-y-0 left-0 right-0 
                       rounded-tl-[60px] md:rounded-tl-[80px] 
                       bg-primary 
-                      shadow-[-15px_0_30px_-5px_rgba(0,0,0,0.25)]" 
-                  />
-                 
-                 {/* Extension to right screen edge */}
-                 <div className="absolute left-full top-0 h-full w-screen bg-primary" />
+                      shadow-[-15px_0_30px_-5px_rgba(0,0,0,0.25)]"
+                />
+
+                {/* Extension to right screen edge */}
+                <div className="absolute left-full top-0 h-full w-screen bg-primary" />
               </div>
               {/* -------------------------------- */}
 
               {/* CONTENT LAYER */}
               <div className="relative z-10 flex h-full w-full items-center justify-between pl-8 pr-2 lg:pl-12 lg:pr-8">
-                
                 {/* Desktop Links */}
                 <div className="hidden flex-1 items-center justify-center gap-6 lg:gap-8 md:flex">
-                  <NavLink href="/" isActive={isActiveLink("/")}>Home</NavLink>
-                  <NavLink href="/about" isActive={isActiveLink("/about")}>About Us</NavLink>
-                  <NavLink href="/stock" isActive={isActiveLink("/stock")}>Stock</NavLink>
+                  <NavLink href="/" isActive={isActiveLink("/")}>
+                    Home
+                  </NavLink>
+                  <NavLink href="/about" isActive={isActiveLink("/about")}>
+                    About Us
+                  </NavLink>
+                  <NavLink href="/stock" isActive={isActiveLink("/stock")}>
+                    Stock
+                  </NavLink>
                   <CategoriesNavDropdown
                     renderTrigger={(children) => (
                       <NavLink
@@ -171,7 +177,9 @@ export function SiteNav() {
                       </NavLink>
                     )}
                   />
-                  <NavLink href="#" isActive={false}>Industries</NavLink>
+                  <NavLink href="/industries" isActive={false}>
+                    Industries
+                  </NavLink>
                 </div>
 
                 {/* Desktop Actions (Hidden on Mobile) */}
@@ -250,7 +258,6 @@ export function SiteNav() {
                     )}
                   </Button>
                 </div>
-
               </div>
             </div>
           </nav>
@@ -267,31 +274,64 @@ export function SiteNav() {
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
               <div className="flex flex-col p-6 space-y-4">
-                <Link href="/" onClick={closeMenu} className="text-lg font-medium hover:text-white/80">Home</Link>
-                <Link href="/about" onClick={closeMenu} className="text-lg font-medium hover:text-white/80">About Us</Link>
-                <Link href="/stock" onClick={closeMenu} className="text-lg font-medium hover:text-white/80">Stock</Link>
-                <Link href="/categories" onClick={closeMenu} className="text-lg font-medium hover:text-white/80">Categories</Link>
-                <Link href="/brands" onClick={closeMenu} className="text-lg font-medium hover:text-white/80">Brands</Link>
-                
+                <Link
+                  href="/"
+                  onClick={closeMenu}
+                  className="text-lg font-medium hover:text-white/80"
+                >
+                  Home
+                </Link>
+                <Link
+                  href="/about"
+                  onClick={closeMenu}
+                  className="text-lg font-medium hover:text-white/80"
+                >
+                  About Us
+                </Link>
+                <Link
+                  href="/stock"
+                  onClick={closeMenu}
+                  className="text-lg font-medium hover:text-white/80"
+                >
+                  Stock
+                </Link>
+                <Link
+                  href="/categories"
+                  onClick={closeMenu}
+                  className="text-lg font-medium hover:text-white/80"
+                >
+                  Categories
+                </Link>
+                <Link
+                  href="/brands"
+                  onClick={closeMenu}
+                  className="text-lg font-medium hover:text-white/80"
+                >
+                  Brands
+                </Link>
+
                 <div className="my-4 h-px w-full bg-white/20" />
-                
+
                 <div className="flex items-center justify-between">
-                    <div className="flex gap-4">
-                        <div onClick={toggleTheme} className="flex items-center gap-2 cursor-pointer">
-                            <span className="text-sm font-medium">Theme</span>
-                            <Sun className="size-5 hidden dark:block" />
-                            <Moon className="size-5 dark:hidden" />
-                        </div>
-                    </div>
-                     <Button
-                        className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-primary"
-                        onClick={() => {
-                            setIsUploadOpen(true);
-                            closeMenu();
-                        }}
+                  <div className="flex gap-4">
+                    <div
+                      onClick={toggleTheme}
+                      className="flex items-center gap-2 cursor-pointer"
                     >
-                        Upload BOQ
-                    </Button>
+                      <span className="text-sm font-medium">Theme</span>
+                      <Sun className="size-5 hidden dark:block" />
+                      <Moon className="size-5 dark:hidden" />
+                    </div>
+                  </div>
+                  <Button
+                    className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-primary"
+                    onClick={() => {
+                      setIsUploadOpen(true);
+                      closeMenu();
+                    }}
+                  >
+                    Upload BOQ
+                  </Button>
                 </div>
               </div>
             </motion.div>

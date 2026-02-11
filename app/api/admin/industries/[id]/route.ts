@@ -2,6 +2,13 @@ import { NextResponse } from "next/server";
 
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
 const getAdminUser = async (request: Request) => {
   const authHeader = request.headers.get("authorization");
   const token = authHeader?.startsWith("Bearer ")
@@ -50,26 +57,49 @@ export async function PATCH(
   }
 
   const body = (await request.json().catch(() => null)) as {
-    read?: boolean;
+    name?: string;
+    description?: string;
+    image_url?: string;
   } | null;
-  const shouldMarkRead = body?.read !== false;
-  const updatePayload = {
-    read_at: shouldMarkRead ? new Date().toISOString() : null,
-  };
 
-  const { error } = await supabaseAdmin
-    .from("contact_messages")
-    .update(updatePayload)
-    .eq("id", id);
+  const name = String(body?.name ?? "").trim();
+  const description = String(body?.description ?? "").trim();
+  const imageUrl = String(body?.image_url ?? "").trim();
 
-  if (error) {
+  if (!name || !description || !imageUrl) {
     return NextResponse.json(
-      { message: "Failed to update message." },
+      { message: "Name, description, and image URL are required." },
+      { status: 400 },
+    );
+  }
+
+  if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(imageUrl)) {
+    return NextResponse.json(
+      { message: "Image URL must include a valid extension." },
+      { status: 400 },
+    );
+  }
+
+  const { data, error } = await supabaseAdmin
+    .from("industries")
+    .update({
+      name,
+      slug: slugify(name),
+      description,
+      image_url: imageUrl,
+    })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error || !data) {
+    return NextResponse.json(
+      { message: "Failed to update industry.", details: error?.message },
       { status: 500 },
     );
   }
 
-  return NextResponse.json({ status: "ok" });
+  return NextResponse.json({ industry: data });
 }
 
 export async function DELETE(
@@ -90,13 +120,13 @@ export async function DELETE(
   }
 
   const { error } = await supabaseAdmin
-    .from("contact_messages")
+    .from("industries")
     .delete()
     .eq("id", id);
 
   if (error) {
     return NextResponse.json(
-      { message: "Failed to delete message." },
+      { message: "Failed to delete industry.", details: error.message },
       { status: 500 },
     );
   }
