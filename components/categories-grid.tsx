@@ -28,6 +28,10 @@ type CategoriesGridProps = {
   categories: CategoryCard[];
   buttonLabel?: string;
   imageFillTopHalf?: boolean;
+  gridClassName?: string;
+  itemsPerPage?: number;
+  topImageContain?: boolean;
+  topImageHeightClass?: string;
 };
 
 const ITEMS_PER_PAGE = 9;
@@ -36,14 +40,18 @@ export function CategoriesGrid({
   categories,
   buttonLabel = "View Categories",
   imageFillTopHalf = false,
+  gridClassName,
+  itemsPerPage = ITEMS_PER_PAGE,
+  topImageContain = false,
+  topImageHeightClass = "h-32",
 }: CategoriesGridProps) {
   const [page, setPage] = useState(1);
-  const totalPages = Math.max(1, Math.ceil(categories.length / ITEMS_PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(categories.length / itemsPerPage));
 
   const visible = useMemo(() => {
-    const start = (page - 1) * ITEMS_PER_PAGE;
-    return categories.slice(start, start + ITEMS_PER_PAGE);
-  }, [categories, page]);
+    const start = (page - 1) * itemsPerPage;
+    return categories.slice(start, start + itemsPerPage);
+  }, [categories, itemsPerPage, page]);
 
   const goToPage = (next: number) => {
     setPage(Math.min(Math.max(next, 1), totalPages));
@@ -51,7 +59,9 @@ export function CategoriesGrid({
 
   return (
     <div className="mt-10">
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        className={`grid gap-6 sm:grid-cols-2 ${gridClassName ?? "lg:grid-cols-3"}`}
+      >
         {visible.map((category, index) => (
           <Reveal
             key={`${category.title}-${category.logo}`}
@@ -63,12 +73,16 @@ export function CategoriesGrid({
             >
               {imageFillTopHalf ? (
                 <div className="-mx-6 -mt-6 overflow-hidden">
-                  <div className="relative h-32 w-full">
+                  <div
+                    className={`relative w-full bg-muted/10 p-2 ${topImageHeightClass}`}
+                  >
                     <Image
                       src={category.logo}
                       alt={`${category.title} image`}
                       fill
-                      className="object-cover"
+                      className={
+                        topImageContain ? "object-contain" : "object-cover"
+                      }
                     />
                   </div>
                 </div>

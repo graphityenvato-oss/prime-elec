@@ -8,20 +8,71 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SearchInput } from "@/components/search-input";
-import { StockFilterAside } from "@/components/stock-filter-aside";
-import { StockProducts } from "@/components/stock-products";
+import { type CategoryCard } from "@/components/categories-grid";
+import { StockCategoriesPageClient } from "@/components/stock-categories-page-client";
+import { products as fallbackProducts } from "@/lib/products";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
-import { products } from "@/lib/products";
+  getCategoryPreviewImage,
+  getStockBrowseRowsDb,
+  toStockSegment,
+} from "@/lib/stock-products-db";
 
-export default function StockPage() {
+export default async function StockPage() {
+  const rows = await getStockBrowseRowsDb();
+
+  const categoryMap = new Map<
+    string,
+    {
+      name: string;
+      image: string;
+      productsCount: number;
+      subcategories: Set<string>;
+    }
+  >();
+
+  if (rows.length) {
+    rows.forEach((row) => {
+      const key = row.category.trim().toLowerCase();
+      const existing = categoryMap.get(key);
+      if (existing) {
+        existing.productsCount += 1;
+        existing.subcategories.add(row.subcategory);
+        return;
+      }
+      categoryMap.set(key, {
+        name: row.category,
+        image: getCategoryPreviewImage(row),
+        productsCount: 1,
+        subcategories: new Set([row.subcategory]),
+      });
+    });
+  } else {
+    fallbackProducts.forEach((product) => {
+      const key = product.category.trim().toLowerCase();
+      const existing = categoryMap.get(key);
+      if (existing) {
+        existing.productsCount += 1;
+        existing.subcategories.add("General");
+        return;
+      }
+      categoryMap.set(key, {
+        name: product.category,
+        image: product.image,
+        productsCount: 1,
+        subcategories: new Set(["General"]),
+      });
+    });
+  }
+
+  const categories: CategoryCard[] = Array.from(categoryMap.values()).map(
+    (category) => ({
+      title: category.name,
+      description: `${category.subcategories.size} subcategories · ${category.productsCount} products`,
+      href: `/stock/${toStockSegment(category.name)}`,
+      logo: category.image,
+    }),
+  );
+
   return (
     <section id="top" className="py-10 sm:py-14">
       <Breadcrumb className="text-foreground/70">
@@ -39,37 +90,19 @@ export default function StockPage() {
       </Breadcrumb>
 
       <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-        Stock Products
+        Stock Categories
       </h1>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Browse stock by category, then subcategory, then product.
+      </p>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
-        <StockFilterAside />
-        <div className="space-y-4">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <SearchInput
-              placeholder="Search stock products"
-              className="w-full"
-            />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="w-full justify-between rounded-full px-4 text-sm sm:w-56"
-                >
-                  Filter
-                  <ChevronDown className="size-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuItem>Newest</DropdownMenuItem>
-                <DropdownMenuItem>Price: Low to High</DropdownMenuItem>
-                <DropdownMenuItem>Price: High to Low</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-          <StockProducts products={products} perPage={12} />
+      {categories.length ? (
+        <StockCategoriesPageClient categories={categories} />
+      ) : (
+        <div className="mt-8 rounded-2xl border border-border/60 bg-muted/10 p-6 text-sm text-muted-foreground">
+          No stock categories found.
         </div>
-      </div>
+      )}
     </section>
   );
 }

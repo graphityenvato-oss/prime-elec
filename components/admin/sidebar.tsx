@@ -22,10 +22,10 @@ const groups = [
     label: "Catalog",
     defaultOpen: true,
     links: [
-      { label: "Brands", href: "/admin/brandspage" },
       { label: "Blogs", href: "/admin/blogs" },
       { label: "Industries", href: "/admin/industries" },
       { label: "Products", href: "/admin/products" },
+      { label: "Import Stock", href: "/admin/products/import" },
       { label: "Categories", href: "/admin/categories" },
       { label: "Import Categories", href: "/admin/categories/import" },
     ],
@@ -73,7 +73,7 @@ export function AdminSidebar() {
     <aside className="flex w-full flex-col border-border/60 bg-linear-to-br from-background/80 via-background/60 to-muted/30 px-4 py-6 text-sm text-muted-foreground shadow-[0_20px_60px_rgba(0,0,0,0.08)] backdrop-blur lg:min-h-[calc(100vh-3rem)] lg:w-72 lg:rounded-2xl lg:border">
       <div className="flex items-center justify-between gap-3">
         <Image
-          src="/images/logo/prime-elec-logo-black.png"
+          src="/images/logo/logo-original.svg"
           alt="Prime Elec"
           width={140}
           height={36}

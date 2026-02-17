@@ -16,7 +16,14 @@ import {
 
 type StockProduct = Pick<
   Product,
-  "id" | "image" | "title" | "partNumber" | "description" | "inStock"
+  | "id"
+  | "image"
+  | "title"
+  | "partNumber"
+  | "codeNo"
+  | "brand"
+  | "category"
+  | "description"
 >;
 
 type StockProductsProps = {
@@ -43,12 +50,15 @@ export function StockProducts({ products, perPage = 12 }: StockProductsProps) {
         {visible.map((product, index) => (
           <Reveal key={product.partNumber} delay={index * 0.06}>
             <ProductCard
+              id={product.id}
               href={`/products/${product.id}`}
               image={product.image}
               title={product.title}
               partNumber={product.partNumber}
+              codeNo={product.codeNo}
+              brand={product.brand}
+              category={product.category}
               description={product.description}
-              inStock={product.inStock}
             />
           </Reveal>
         ))}

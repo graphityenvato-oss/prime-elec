@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,9 +13,11 @@ import FileUpload03 from "@/components/file-upload-03";
 import { Menu, Moon, Search, ShoppingCart, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { BrandsNavDropdown } from "@/components/brands-nav-dropdown";
 import { CategoriesNavDropdown } from "@/components/categories-nav-dropdown";
+import { getQuoteCartCount, QUOTE_CART_UPDATED_EVENT } from "@/lib/quote-cart";
+import { Input } from "@/components/ui/input";
 
 const THEME_KEY = "theme";
 
@@ -80,14 +82,155 @@ function NavLink({
 
 export function SiteNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [searchResults, setSearchResults] = useState<{
+    stockProducts: Array<{
+      id: string;
+      title: string;
+      brand: string;
+      category: string;
+      image: string;
+      href: string;
+    }>;
+    stockCategories: Array<{ title: string; image: string; href: string }>;
+    stockSubcategories: Array<{
+      title: string;
+      category: string;
+      image: string;
+      href: string;
+    }>;
+    external: Array<{ title: string; brand: string; pageUrl: string }>;
+  }>({
+    stockProducts: [],
+    stockCategories: [],
+    stockSubcategories: [],
+    external: [],
+  });
+  const searchPanelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
+
+  useEffect(() => {
+    const syncCartCount = () => {
+      setCartCount(getQuoteCartCount());
+    };
+
+    syncCartCount();
+    window.addEventListener(QUOTE_CART_UPDATED_EVENT, syncCartCount);
+    window.addEventListener("storage", syncCartCount);
+    return () => {
+      window.removeEventListener(QUOTE_CART_UPDATED_EVENT, syncCartCount);
+      window.removeEventListener("storage", syncCartCount);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isSearchOpen) return;
+    const query = searchQuery.trim();
+    if (query.length < 2) {
+      setSearchResults({
+        stockProducts: [],
+        stockCategories: [],
+        stockSubcategories: [],
+        external: [],
+      });
+      setSearchLoading(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(async () => {
+      setSearchLoading(true);
+      try {
+        const response = await fetch(
+          `/api/search?q=${encodeURIComponent(query)}&limit=5`,
+          { cache: "no-store", signal: controller.signal },
+        );
+        if (!response.ok) {
+          throw new Error("Failed to search.");
+        }
+        const data = (await response.json()) as {
+          stockProducts?: Array<{
+            id: string;
+            title: string;
+            brand: string;
+            category: string;
+            image: string;
+            href: string;
+          }>;
+          stockCategories?: Array<{
+            title: string;
+            image: string;
+            href: string;
+          }>;
+          stockSubcategories?: Array<{
+            title: string;
+            category: string;
+            image: string;
+            href: string;
+          }>;
+          external?: Array<{ title: string; brand: string; pageUrl: string }>;
+        };
+        setSearchResults({
+          stockProducts: data.stockProducts ?? [],
+          stockCategories: data.stockCategories ?? [],
+          stockSubcategories: data.stockSubcategories ?? [],
+          external: data.external ?? [],
+        });
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") {
+          return;
+        }
+        setSearchResults({
+          stockProducts: [],
+          stockCategories: [],
+          stockSubcategories: [],
+          external: [],
+        });
+      } finally {
+        setSearchLoading(false);
+      }
+    }, 250);
+
+    return () => {
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, [isSearchOpen, searchQuery]);
+
+  useEffect(() => {
+    setIsSearchOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isSearchOpen) return;
+
+    const handlePointerDown = (event: MouseEvent) => {
+      const target = event.target as Node | null;
+      if (!target) return;
+
+      const isToggle = (target as Element).closest?.(
+        '[data-search-toggle="true"]',
+      );
+      if (isToggle) return;
+
+      if (searchPanelRef.current?.contains(target)) return;
+      setIsSearchOpen(false);
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, [isSearchOpen]);
 
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";
@@ -101,6 +244,13 @@ export function SiteNav() {
   };
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  const submitSearch = () => {
+    const query = searchQuery.trim();
+    if (!query) return;
+    router.push(`/search?q=${encodeURIComponent(query)}`);
+    setIsSearchOpen(false);
+  };
 
   return (
     <div className="relative w-full">
@@ -189,6 +339,8 @@ export function SiteNav() {
                     size="icon"
                     className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-white"
                     aria-label="Search"
+                    data-search-toggle="true"
+                    onClick={() => setIsSearchOpen((open) => !open)}
                   >
                     <Search className="size-5" />
                   </Button>
@@ -196,9 +348,14 @@ export function SiteNav() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-white"
+                      className="relative text-primary-foreground hover:bg-primary-foreground/10 hover:text-white"
                     >
                       <ShoppingCart className="size-5" />
+                      {cartCount > 0 ? (
+                        <span className="absolute -right-1 -top-1 inline-flex min-w-5 items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-primary">
+                          {cartCount > 99 ? "99+" : cartCount}
+                        </span>
+                      ) : null}
                     </Button>
                   </Link>
                   <Button
@@ -228,6 +385,8 @@ export function SiteNav() {
                     size="icon"
                     className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-white"
                     aria-label="Search"
+                    data-search-toggle="true"
+                    onClick={() => setIsSearchOpen((open) => !open)}
                   >
                     <Search className="size-5" />
                   </Button>
@@ -237,9 +396,14 @@ export function SiteNav() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-white"
+                      className="relative text-primary-foreground hover:bg-primary-foreground/10 hover:text-white"
                     >
                       <ShoppingCart className="size-5" />
+                      {cartCount > 0 ? (
+                        <span className="absolute -right-1 -top-1 inline-flex min-w-5 items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-primary">
+                          {cartCount > 99 ? "99+" : cartCount}
+                        </span>
+                      ) : null}
                     </Button>
                   </Link>
 
@@ -249,7 +413,13 @@ export function SiteNav() {
                     size="icon"
                     className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-white"
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                    onClick={() => setIsMenuOpen((open) => !open)}
+                    onClick={() =>
+                      setIsMenuOpen((open) => {
+                        const next = !open;
+                        if (next) setIsSearchOpen(false);
+                        return next;
+                      })
+                    }
                   >
                     {isMenuOpen ? (
                       <X className="size-6" />
@@ -265,13 +435,203 @@ export function SiteNav() {
 
         {/* Mobile Menu Content */}
         <AnimatePresence>
+          {isSearchOpen ? (
+            <motion.div
+              ref={searchPanelRef}
+              className="absolute left-0 top-20 z-0 w-full border-t border-border/60 bg-background py-4 shadow-xl"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.16, ease: "easeOut" }}
+            >
+              <div className="mx-auto flex w-full max-w-7xl items-center gap-2 px-6">
+                <Input
+                  placeholder="Search products, categories, brands..."
+                  className="h-10"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      submitSearch();
+                    }
+                  }}
+                />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  aria-label="Close search"
+                  onClick={() => setIsSearchOpen(false)}
+                >
+                  <X className="size-4" />
+                </Button>
+              </div>
+
+              <div className="mx-auto mt-3 w-full max-w-7xl px-6">
+                {searchQuery.trim().length < 2 ? (
+                  <p className="text-xs text-muted-foreground">
+                    Type at least 2 characters to search.
+                  </p>
+                ) : searchLoading ? (
+                  <div className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                    <span>Searching</span>
+                    <span
+                      className="inline-flex items-end gap-1"
+                      aria-hidden="true"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.2s]" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.1s]" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce" />
+                    </span>
+                  </div>
+                ) : (
+                  <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+                    <div className="rounded-xl border border-border/60 bg-background p-3">
+                      <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+                        In Stock Products
+                      </p>
+                      <div className="mt-2 space-y-2">
+                        {searchResults.stockProducts.length ? (
+                          searchResults.stockProducts.map((item) => (
+                            <Link
+                              key={item.id}
+                              href={item.href}
+                              className="flex items-center gap-2 text-sm hover:text-primary"
+                            >
+                              <Image
+                                src={item.image}
+                                alt={item.title}
+                                width={32}
+                                height={32}
+                                className="h-8 w-8 rounded-md object-cover"
+                              />
+                              <span>
+                                <span className="block font-medium">
+                                  {item.title}
+                                </span>
+                                <span className="block text-xs text-muted-foreground">
+                                  {item.brand} • {item.category}
+                                </span>
+                              </span>
+                            </Link>
+                          ))
+                        ) : (
+                          <p className="text-xs text-muted-foreground">
+                            No matches.
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="rounded-xl border border-border/60 bg-background p-3">
+                      <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+                        Stock Categories
+                      </p>
+                      <div className="mt-2 space-y-2">
+                        {searchResults.stockCategories.length ? (
+                          searchResults.stockCategories.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              className="flex items-center gap-2 text-sm hover:text-primary"
+                            >
+                              <Image
+                                src={item.image}
+                                alt={item.title}
+                                width={32}
+                                height={32}
+                                className="h-8 w-8 rounded-md object-cover"
+                              />
+                              <span>{item.title}</span>
+                            </Link>
+                          ))
+                        ) : (
+                          <p className="text-xs text-muted-foreground">
+                            No matches.
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="rounded-xl border border-border/60 bg-background p-3">
+                      <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+                        Stock Subcategories
+                      </p>
+                      <div className="mt-2 space-y-2">
+                        {searchResults.stockSubcategories.length ? (
+                          searchResults.stockSubcategories.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              className="flex items-center gap-2 text-sm hover:text-primary"
+                            >
+                              <Image
+                                src={item.image}
+                                alt={item.title}
+                                width={32}
+                                height={32}
+                                className="h-8 w-8 rounded-md object-cover"
+                              />
+                              <span>
+                                <span className="block font-medium">
+                                  {item.title}
+                                </span>
+                                <span className="block text-xs text-muted-foreground">
+                                  {item.category}
+                                </span>
+                              </span>
+                            </Link>
+                          ))
+                        ) : (
+                          <p className="text-xs text-muted-foreground">
+                            No matches.
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="rounded-xl border border-border/60 bg-background p-3">
+                      <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+                        External Catalog
+                      </p>
+                      <div className="mt-2 space-y-2">
+                        {searchResults.external.length ? (
+                          searchResults.external.map((item, index) => (
+                            <a
+                              key={`${item.pageUrl}-${index}`}
+                              href={item.pageUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block text-sm hover:text-primary"
+                            >
+                              <span className="font-medium">{item.title}</span>
+                              <span className="block text-xs text-muted-foreground">
+                                {item.brand}
+                              </span>
+                            </a>
+                          ))
+                        ) : (
+                          <p className="text-xs text-muted-foreground">
+                            No matches.
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
+
+        <AnimatePresence>
           {isMenuOpen ? (
             <motion.div
-              className="absolute left-0 top-20 z-10 w-full overflow-hidden border-t border-white/20 bg-primary text-primary-foreground shadow-xl md:hidden"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="absolute left-0 top-20 z-10 w-full overflow-hidden border-t border-white/20 bg-primary text-primary-foreground shadow-xl md:hidden will-change-transform"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
             >
               <div className="flex flex-col p-6 space-y-4">
                 <Link

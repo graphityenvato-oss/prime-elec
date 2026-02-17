@@ -1,5 +1,6 @@
 ﻿"use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "sonner";
+import { addExternalItemToQuoteCart } from "@/lib/quote-cart";
 
 type Brand = {
   name: string;
@@ -79,10 +82,17 @@ const brands: Brand[] = [
 ];
 
 export default function BrandsPage() {
+  const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [quoteValue, setQuoteValue] = useState("");
   const [quoteItems, setQuoteItems] = useState<string[]>([]);
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
+
+  const parseEntries = (value: string) =>
+    value
+      .split(/\r?\n|,/)
+      .map((entry) => entry.trim())
+      .filter(Boolean);
 
   const handleCatalogClick = (href: string, brandName: string) => {
     if (href && href !== "#") {
@@ -93,9 +103,9 @@ export default function BrandsPage() {
   };
 
   const handleAddQuoteItem = () => {
-    const trimmed = quoteValue.trim();
-    if (!trimmed) return;
-    setQuoteItems((items) => [...items, trimmed]);
+    const entries = parseEntries(quoteValue);
+    if (!entries.length) return;
+    setQuoteItems((items) => [...items, ...entries]);
     setQuoteValue("");
   };
 
@@ -104,12 +114,20 @@ export default function BrandsPage() {
   };
 
   const handleSubmitQuote = () => {
-    if (quoteValue.trim()) {
-      handleAddQuoteItem();
-    }
+    const directEntries = parseEntries(quoteValue);
+    const allEntries = [...quoteItems, ...directEntries];
+    if (!allEntries.length) return;
+
+    allEntries.forEach((entry) => addExternalItemToQuoteCart(entry));
+    toast.success(
+      allEntries.length === 1
+        ? "Item added to quote cart."
+        : `${allEntries.length} items added to quote cart.`,
+    );
     setIsDialogOpen(false);
     setQuoteItems([]);
     setQuoteValue("");
+    router.push("/cart");
   };
 
   const handleDialogKeyDown = (event: React.KeyboardEvent) => {
@@ -205,14 +223,14 @@ export default function BrandsPage() {
             </DialogDescription>
           </DialogHeader>
           <Input
-            placeholder="Paste Link Here"
+            placeholder="Paste link or part number (comma/new line supported)"
             value={quoteValue}
             onChange={(event) => setQuoteValue(event.target.value)}
           />
           {quoteItems.length > 0 ? (
             <div className="rounded-md border border-border/60 p-2">
               <p className="text-xs font-semibold text-muted-foreground">
-                Links to add
+                Items to add
               </p>
               <div className="mt-2 space-y-2">
                 {quoteItems.map((item, index) => (

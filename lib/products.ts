@@ -1,6 +1,8 @@
 export type Product = {
   id: string;
   title: string;
+  codeNo?: string;
+  subcategory?: string;
   partNumber: string;
   description: string;
   longDescription: string;

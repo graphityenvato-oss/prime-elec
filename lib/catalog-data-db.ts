@@ -48,7 +48,7 @@ const normalizeBrandKey = (value: string) =>
     .replace(/[^a-z0-9]/g, "")
     .trim();
 
-const resolveBrandLogo = (name: string) => {
+export const resolveBrandLogo = (name: string) => {
   const key = normalizeBrandKey(name);
   if (brandLogoMap[key]) return brandLogoMap[key];
   if (key.includes("obo")) return brandLogoMap.obo;

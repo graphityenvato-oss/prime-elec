@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -11,9 +12,15 @@ import {
 } from "@/components/ui/breadcrumb";
 import { ProductImageGallery } from "@/components/product-image-gallery";
 import { RelatedProducts } from "@/components/related-products";
+import { AddToQuoteButton } from "@/components/add-to-quote-button";
 import { Button } from "@/components/ui/button";
-import { getProductById } from "@/lib/products";
-import { products } from "@/lib/products";
+import { resolveBrandLogo } from "@/lib/catalog-data-db";
+import { getProductById as getFallbackProductById } from "@/lib/products";
+import { products as fallbackProducts } from "@/lib/products";
+import {
+  getStockProductByIdDb,
+  getStockProductsDb,
+} from "@/lib/stock-products-db";
 
 export default async function ProductPage({
   params,
@@ -24,15 +31,21 @@ export default async function ProductPage({
   if (!resolvedParams?.id) {
     notFound();
   }
-  const product = getProductById(resolvedParams.id);
+  const product =
+    (await getStockProductByIdDb(resolvedParams.id)) ??
+    getFallbackProductById(resolvedParams.id);
   if (!product) {
     notFound();
   }
+  const dbProducts = await getStockProductsDb();
+  const products = dbProducts.length ? dbProducts : fallbackProducts;
+  const brandLogo = resolveBrandLogo(product.brand);
   const relatedProducts = products
     .filter((item) => item.id !== product.id)
     .filter(
       (item) =>
-        item.brand === product.brand || item.category === product.category,
+        item.category === product.category &&
+        item.subcategory === product.subcategory,
     )
     .slice(0, 3);
 
@@ -68,11 +81,26 @@ export default async function ProductPage({
               <span className="h-1 w-1 rounded-full bg-foreground/30" />
               <span>{product.category}</span>
             </div>
-            <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              {product.title}
-            </h1>
+            <div className="mt-4 flex items-center justify-between gap-4">
+              <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+                {product.title}
+              </h1>
+              <Image
+                src={brandLogo}
+                alt={`${product.brand} logo`}
+                width={128}
+                height={128}
+                className="h-32 w-32 rounded-2xl object-contain"
+              />
+            </div>
             <p className="mt-2 text-sm text-muted-foreground">
               Part No.{" "}
+              <span className="font-semibold text-primary">
+                {product.codeNo ?? product.title}
+              </span>
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Code No.{" "}
               <span className="font-semibold text-primary">
                 {product.partNumber}
               </span>
@@ -93,27 +121,24 @@ export default async function ProductPage({
           </div>
 
           <div className="rounded-2xl border border-border/60 bg-background p-5">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-foreground">
-                Availability
-              </span>
-              <span
-                className={`rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] ${
-                  product.inStock
-                    ? "badge-radar bg-primary/10 text-primary"
-                    : "bg-muted text-muted-foreground"
-                }`}
-              >
-                {product.inStock ? "In Stock" : "Out of Stock"}
-              </span>
-            </div>
-            <div className="mt-4 grid gap-2">
+            <div className="grid gap-2">
               <Button className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
                 Request Price Quotation
               </Button>
-              <Button variant="outline" className="w-full rounded-full">
-                Add to Quote List
-              </Button>
+              <AddToQuoteButton
+                product={{
+                  id: product.id,
+                  name: product.title,
+                  partNumber: product.partNumber,
+                  codeNo: product.codeNo,
+                  image: product.image,
+                  brand: product.brand,
+                  category: product.category,
+                }}
+                variant="outline"
+                label="Add to Quote List"
+                className="w-full rounded-full"
+              />
             </div>
           </div>
         </div>

@@ -53,18 +53,15 @@ export async function PATCH(
     read?: boolean;
   } | null;
   const shouldMarkRead = body?.read !== false;
-  const updatePayload = {
-    read_at: shouldMarkRead ? new Date().toISOString() : null,
-  };
 
   const { error } = await supabaseAdmin
-    .from("boq_requests")
-    .update(updatePayload)
+    .from("quotation_requests")
+    .update({ read_at: shouldMarkRead ? new Date().toISOString() : null })
     .eq("id", id);
 
   if (error) {
     return NextResponse.json(
-      { message: "Failed to update BOQ." },
+      { message: "Failed to update quotation request." },
       { status: 500 },
     );
   }
@@ -89,40 +86,14 @@ export async function DELETE(
     return NextResponse.json({ message: "Missing id." }, { status: 400 });
   }
 
-  const { data, error: loadError } = await supabaseAdmin
-    .from("boq_requests")
-    .select("file_path")
-    .eq("id", id)
-    .maybeSingle();
-
-  if (loadError) {
-    return NextResponse.json(
-      { message: "Failed to load BOQ request." },
-      { status: 500 },
-    );
-  }
-
-  const bucket = process.env.SUPABASE_STORAGE_BUCKET || "uploads";
-  if (data?.file_path) {
-    const { error: removeError } = await supabaseAdmin.storage
-      .from(bucket)
-      .remove([data.file_path]);
-    if (removeError) {
-      return NextResponse.json(
-        { message: "Failed to delete BOQ file from storage." },
-        { status: 500 },
-      );
-    }
-  }
-
-  const { error: deleteError } = await supabaseAdmin
-    .from("boq_requests")
+  const { error } = await supabaseAdmin
+    .from("quotation_requests")
     .delete()
     .eq("id", id);
 
-  if (deleteError) {
+  if (error) {
     return NextResponse.json(
-      { message: "Failed to delete BOQ request." },
+      { message: "Failed to delete quotation request." },
       { status: 500 },
     );
   }

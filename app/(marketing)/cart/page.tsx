@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 import {
   Breadcrumb,
@@ -17,31 +18,49 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-
-const initialItems: Array<{
-  name: string;
-  partNumber: string;
-  image: string;
-  quantity: number;
-  source: "stock" | "external";
-}> = [];
+import {
+  QUOTE_CART_UPDATED_EVENT,
+  addExternalItemToQuoteCart,
+  readQuoteCart,
+  removeQuoteCartItem,
+  type QuoteCartItem,
+  updateQuoteCartItemQuantity,
+  clearQuoteCart,
+} from "@/lib/quote-cart";
 
 export default function CartPage() {
-  const [items, setItems] = useState(initialItems);
+  const [items, setItems] = useState<QuoteCartItem[]>([]);
   const [externalInput, setExternalInput] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [projectNotes, setProjectNotes] = useState("");
+  const [needsConsultation, setNeedsConsultation] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const updateQuantity = (partNumber: string, delta: number) => {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.partNumber === partNumber
-          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-          : item,
-      ),
-    );
+  useEffect(() => {
+    const sync = () => {
+      setItems(readQuoteCart());
+    };
+
+    sync();
+    window.addEventListener(QUOTE_CART_UPDATED_EVENT, sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener(QUOTE_CART_UPDATED_EVENT, sync);
+      window.removeEventListener("storage", sync);
+    };
+  }, []);
+
+  const updateQuantity = (id: string, delta: number) => {
+    const item = items.find((row) => row.id === id);
+    if (!item) return;
+    updateQuoteCartItemQuantity(id, item.quantity + delta);
   };
 
-  const removeItem = (partNumber: string) => {
-    setItems((prev) => prev.filter((item) => item.partNumber !== partNumber));
+  const removeItem = (id: string) => {
+    removeQuoteCartItem(id);
   };
 
   const addExternalItem = () => {
@@ -49,18 +68,69 @@ export default function CartPage() {
     if (!trimmed) {
       return;
     }
-
-    setItems((prev) => [
-      ...prev,
-      {
-        name: "External Request",
-        partNumber: trimmed,
-        image: "/images/placeholder/imageholder.webp",
-        quantity: 1,
-        source: "external",
-      },
-    ]);
+    addExternalItemToQuoteCart(trimmed);
     setExternalInput("");
+  };
+
+  const handleSubmitQuote = async () => {
+    if (!fullName.trim()) {
+      toast.error("Full name is required.");
+      return;
+    }
+    if (!email.trim()) {
+      toast.error("Email address is required.");
+      return;
+    }
+    if (!items.length) {
+      toast.error("Your quote list is empty.");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const response = await fetch("/api/quotations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: fullName.trim(),
+          company: companyName.trim() || null,
+          email: email.trim(),
+          phone: phone.trim() || null,
+          projectNotes: projectNotes.trim() || null,
+          needsConsultation,
+          cartItems: items.map((item) => ({
+            id: item.id,
+            name: item.name,
+            partNumber: item.partNumber,
+            codeNo: item.codeNo,
+            image: item.image,
+            quantity: item.quantity,
+            source: item.source,
+            brand: item.brand,
+            category: item.category,
+          })),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit quotation request.");
+      }
+
+      clearQuoteCart();
+      setFullName("");
+      setCompanyName("");
+      setEmail("");
+      setPhone("");
+      setProjectNotes("");
+      setNeedsConsultation(false);
+      toast.success("Quotation request sent.");
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to submit request.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -116,7 +186,7 @@ export default function CartPage() {
               ) : (
                 items.map((item) => (
                   <div
-                    key={item.partNumber}
+                    key={item.id}
                     className="flex flex-col gap-4 rounded-2xl border border-border/60 bg-background p-5 shadow-[0_12px_30px_rgba(12,28,60,0.08)] sm:flex-row sm:items-center sm:justify-between"
                   >
                     <div className="flex min-w-0 flex-1 items-center gap-4">
@@ -136,7 +206,7 @@ export default function CartPage() {
                         <div className="text-xs text-muted-foreground">
                           {item.source === "external"
                             ? "External Request | "
-                            : "Stock | Part No."}
+                            : "Stock | Code No."}
                           <span className="block break-all font-semibold text-foreground">
                             {item.partNumber}
                           </span>
@@ -149,7 +219,7 @@ export default function CartPage() {
                         variant="outline"
                         size="icon"
                         className="h-9 w-9"
-                        onClick={() => updateQuantity(item.partNumber, -1)}
+                        onClick={() => updateQuantity(item.id, -1)}
                       >
                         -
                       </Button>
@@ -162,7 +232,7 @@ export default function CartPage() {
                         variant="outline"
                         size="icon"
                         className="h-9 w-9"
-                        onClick={() => updateQuantity(item.partNumber, 1)}
+                        onClick={() => updateQuantity(item.id, 1)}
                       >
                         +
                       </Button>
@@ -171,7 +241,7 @@ export default function CartPage() {
                         size="icon"
                         className="h-9 w-9 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                         aria-label={`Remove ${item.name}`}
-                        onClick={() => removeItem(item.partNumber)}
+                        onClick={() => removeItem(item.id)}
                       >
                         <Trash2 className="size-4" />
                       </Button>
@@ -190,34 +260,62 @@ export default function CartPage() {
               <label className="text-xs font-medium text-muted-foreground">
                 Full name
               </label>
-              <Input placeholder="Enter your full name" />
+              <Input
+                placeholder="Enter your full name"
+                value={fullName}
+                onChange={(event) => setFullName(event.target.value)}
+              />
             </div>
             <div className="space-y-2">
               <label className="text-xs font-medium text-muted-foreground">
                 Company name
               </label>
-              <Input placeholder="Enter your company" />
+              <Input
+                placeholder="Enter your company"
+                value={companyName}
+                onChange={(event) => setCompanyName(event.target.value)}
+              />
             </div>
             <div className="space-y-2">
               <label className="text-xs font-medium text-muted-foreground">
                 Email address
               </label>
-              <Input type="email" placeholder="you@company.com" />
+              <Input
+                type="email"
+                placeholder="you@company.com"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
             </div>
             <div className="space-y-2">
               <label className="text-xs font-medium text-muted-foreground">
                 Phone number
               </label>
-              <Input placeholder="+961 76 345 678" />
+              <Input
+                placeholder="+961 76 345 678"
+                value={phone}
+                onChange={(event) => setPhone(event.target.value)}
+              />
             </div>
             <div className="space-y-2">
               <label className="text-xs font-medium text-muted-foreground">
                 Project location / notes
               </label>
-              <Textarea rows={4} placeholder="City, project scope, or notes" />
+              <Textarea
+                rows={4}
+                placeholder="City, project scope, or notes"
+                value={projectNotes}
+                onChange={(event) => setProjectNotes(event.target.value)}
+              />
             </div>
             <div className="flex items-center gap-2">
-              <Checkbox id="consultation" />
+              <Checkbox
+                id="consultation"
+                checked={needsConsultation}
+                onCheckedChange={(checked) =>
+                  setNeedsConsultation(checked === true)
+                }
+              />
               <label
                 htmlFor="consultation"
                 className="text-xs text-muted-foreground"
@@ -226,8 +324,12 @@ export default function CartPage() {
               </label>
             </div>
           </div>
-          <Button className="mt-5 w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
-            REQUEST PRICE QUOTATION
+          <Button
+            className="mt-5 w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+            onClick={() => void handleSubmitQuote()}
+            disabled={submitting}
+          >
+            {submitting ? "Submitting..." : "REQUEST PRICE QUOTATION"}
           </Button>
         </aside>
       </div>
