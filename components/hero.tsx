@@ -58,7 +58,7 @@ export async function Hero() {
               </h1>
             </Reveal>
           </div>
-          <div className="relative isolate mx-auto w-full max-w-xl max-h-[calc(100dvh-10rem)] overflow-hidden rounded-3xl border border-border/60 bg-muted/5 shadow-[0_25px_80px_rgba(0,0,0,0.2)] lg:max-w-none">
+          <div className="relative isolate mx-auto h-[clamp(20rem,60vh,42rem)] w-full max-w-xl overflow-hidden rounded-3xl border border-border/60 bg-muted/5 shadow-[0_25px_80px_rgba(0,0,0,0.2)] lg:max-w-none">
             <HeroImageRotator images={heroImages} intervalMs={5000} />
           </div>
         </div>

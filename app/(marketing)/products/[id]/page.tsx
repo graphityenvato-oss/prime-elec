@@ -48,6 +48,7 @@ export default async function ProductPage({
         item.subcategory === product.subcategory,
     )
     .slice(0, 3);
+  const viewAllRelatedHref = `/products/related?category=${encodeURIComponent(product.category)}&subcategory=${encodeURIComponent(product.subcategory ?? "")}&exclude=${encodeURIComponent(product.id)}`;
 
   return (
     <section className="py-10 sm:py-14">
@@ -150,7 +151,10 @@ export default async function ProductPage({
         </div>
       </div>
 
-      <RelatedProducts products={relatedProducts} />
+      <RelatedProducts
+        products={relatedProducts}
+        viewAllHref={viewAllRelatedHref}
+      />
     </section>
   );
 }

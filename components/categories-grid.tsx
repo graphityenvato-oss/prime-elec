@@ -164,7 +164,7 @@ export function CategoriesGrid({
   return (
     <div className="mt-10">
       <div
-        className={`grid gap-6 sm:grid-cols-2 ${gridClassName ?? "lg:grid-cols-3"}`}
+        className={`grid items-stretch gap-6 sm:grid-cols-2 ${gridClassName ?? "lg:grid-cols-3"}`}
       >
         {visible.map((category, index) => (
           <Reveal
@@ -175,21 +175,18 @@ export function CategoriesGrid({
                 : index * 0.06
             }
           >
-            <GlowCard
-              className={
-                cardLayout === "image-left"
-                  ? "h-[14rem] p-6 text-foreground dark:text-white"
-                  : "min-h-[14rem] p-6 text-foreground dark:text-white"
-              }
-              contentClassName={
-                cardLayout === "image-left"
-                  ? "grid h-full grid-cols-[96px_minmax(0,1fr)] items-center gap-4"
-                  : "flex h-full flex-col justify-between pb-2"
-              }
-            >
+            <div className="h-full">
+              <GlowCard
+                className="h-full min-h-[14rem] p-6 text-foreground dark:text-white"
+                contentClassName={
+                  cardLayout === "image-left"
+                    ? "grid h-full grid-cols-1 items-center gap-4 sm:grid-cols-[96px_minmax(0,1fr)]"
+                    : "flex h-full flex-col justify-between pb-2"
+                }
+              >
               {cardLayout === "image-left" ? (
                 <>
-                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white">
+                  <div className="relative mx-auto h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white sm:mx-0">
                     <CardTopImage
                       title={category.title}
                       logo={category.logo}
@@ -197,7 +194,7 @@ export function CategoriesGrid({
                       topImageContain={false}
                     />
                   </div>
-                  <div className="flex flex-col justify-center">
+                  <div className="flex flex-col items-center justify-center text-center sm:items-start sm:text-left">
                     <Link
                       href={category.href}
                       className="text-lg font-semibold leading-snug text-foreground transition-colors line-clamp-2 hover:text-primary dark:text-white"
@@ -206,7 +203,7 @@ export function CategoriesGrid({
                     </Link>
                     <Link
                       href={category.href}
-                      className="mt-2 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
+                      className="mt-2 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 sm:text-xs sm:tracking-[0.2em] dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
                     >
                       <span>{buttonLabel}</span>
                       <ArrowRight className="size-3" aria-hidden="true" />
@@ -245,14 +242,15 @@ export function CategoriesGrid({
                   </Link>
                   <Link
                     href={category.href}
-                    className="mt-3 mb-1 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
+                    className="mt-3 mb-1 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 sm:text-xs sm:tracking-[0.2em] dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
                   >
                     <span>{buttonLabel}</span>
                     <ArrowRight className="size-3" aria-hidden="true" />
                   </Link>
                 </>
               )}
-            </GlowCard>
+              </GlowCard>
+            </div>
           </Reveal>
         ))}
       </div>

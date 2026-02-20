@@ -8,9 +8,13 @@ import type { Product } from "@/lib/products";
 
 type RelatedProductsProps = {
   products: Product[];
+  viewAllHref?: string;
 };
 
-export function RelatedProducts({ products }: RelatedProductsProps) {
+export function RelatedProducts({
+  products,
+  viewAllHref = "/stock",
+}: RelatedProductsProps) {
   if (products.length === 0) {
     return null;
   }
@@ -20,7 +24,7 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-primary">Related products</h2>
         <Link
-          href="/stock"
+          href={viewAllHref}
           className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/70 hover:text-primary"
         >
           View all

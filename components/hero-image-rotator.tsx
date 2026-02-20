@@ -26,21 +26,21 @@ export function HeroImageRotator({
   const current = images[index];
 
   return (
-    <div className="relative aspect-[3/4] w-full bg-[#0b1118]">
+    <div className="relative h-full w-full bg-[#0b1118]">
       <AnimatePresence mode="sync">
         <motion.div
           key={current.src}
           className="absolute inset-0 bg-[#0b1118]"
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.02 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <Image
             src={current.src}
             alt={current.alt}
             fill
-            className="object-cover"
+            className="object-cover object-center"
             priority
           />
         </motion.div>

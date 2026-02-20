@@ -137,13 +137,14 @@ export function SubcategoryPageClient({ items }: SubcategoryPageClientProps) {
       </div>
 
       {filtered.length ? (
-        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.06}>
-              <HoverCard
-                className="p-4 text-foreground dark:text-white sm:p-5"
-                contentClassName="flex min-h-[120px] items-center gap-4"
-              >
+              <div className="h-full">
+                <HoverCard
+                  className="h-full p-4 text-foreground dark:text-white sm:p-5"
+                  contentClassName="flex h-full min-h-[120px] flex-col items-center gap-3 text-center sm:flex-row sm:items-center sm:gap-4 sm:text-left"
+                >
                 <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white">
                   <Image
                     src={item.image ?? "/images/placeholder/imageholder.webp"}
@@ -174,13 +175,14 @@ export function SubcategoryPageClient({ items }: SubcategoryPageClientProps) {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => handleExternalOpen(item.title)}
-                      className="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
+                      className="mt-3 inline-flex w-fit self-center items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 sm:self-start sm:text-xs sm:tracking-[0.2em] dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
                     >
                       View Products
                     </Link>
                   ) : null}
                 </div>
-              </HoverCard>
+                </HoverCard>
+              </div>
             </Reveal>
           ))}
         </div>
