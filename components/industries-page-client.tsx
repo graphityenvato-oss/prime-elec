@@ -44,6 +44,9 @@ export function IndustriesPageClient({
           categories={filtered}
           buttonLabel="View Categories"
           imageFillTopHalf
+          topImageContain={false}
+          topImageHeightClass="h-56"
+          pagination={false}
         />
       ) : (
         <div className="mt-10 rounded-2xl border border-border/60 bg-muted/10 p-6 text-sm text-muted-foreground">

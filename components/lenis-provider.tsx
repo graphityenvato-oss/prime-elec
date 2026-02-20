@@ -13,6 +13,7 @@ export function LenisProvider({ children }: LenisProviderProps) {
       duration: 1.2,
       smoothWheel: true,
     });
+    (window as { __lenis?: Lenis }).__lenis = lenis;
 
     const handleDialogState = () => {
       const openCount = Number(
@@ -43,6 +44,7 @@ export function LenisProvider({ children }: LenisProviderProps) {
     return () => {
       observer.disconnect();
       cancelAnimationFrame(rafId);
+      delete (window as { __lenis?: Lenis }).__lenis;
       lenis.destroy();
     };
   }, []);

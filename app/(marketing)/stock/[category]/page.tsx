@@ -100,19 +100,23 @@ export default async function StockCategoryPage({
   const categoryName = matchedRows[0]?.category ?? "Category";
   const subcategoryMap = new Map<
     string,
-    { name: string; image: string; productsCount: number }
+    { name: string; images: string[]; productsCount: number }
   >();
 
   matchedRows.forEach((row) => {
     const key = row.subcategory.trim().toLowerCase();
+    const rowImage = resolveRowImage(row.subcategory_image_url);
     const existing = subcategoryMap.get(key);
     if (existing) {
       existing.productsCount += 1;
+      if (!existing.images.includes(rowImage)) {
+        existing.images.push(rowImage);
+      }
       return;
     }
     subcategoryMap.set(key, {
       name: row.subcategory,
-      image: resolveRowImage(row.subcategory_image_url),
+      images: [rowImage],
       productsCount: 1,
     });
   });
@@ -122,7 +126,8 @@ export default async function StockCategoryPage({
       title: item.name,
       description: `${item.productsCount} products`,
       href: `/stock/${segment}/${toStockSegment(item.name)}`,
-      logo: item.image,
+      logo: item.images[0] ?? "/images/placeholder/imageholder.webp",
+      logoSlides: item.images,
     }),
   );
 

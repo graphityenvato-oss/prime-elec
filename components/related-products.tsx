@@ -47,7 +47,7 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
                   {item.title}
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Part No.{" "}
+                  Code{" "}
                   <span className="font-semibold text-primary">
                     {item.partNumber}
                   </span>

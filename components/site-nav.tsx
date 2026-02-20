@@ -107,11 +107,23 @@ export function SiteNav() {
       href: string;
     }>;
     external: Array<{ title: string; brand: string; pageUrl: string }>;
+    totals: {
+      stockProducts: number;
+      stockCategories: number;
+      stockSubcategories: number;
+      external: number;
+    };
   }>({
     stockProducts: [],
     stockCategories: [],
     stockSubcategories: [],
     external: [],
+    totals: {
+      stockProducts: 0,
+      stockCategories: 0,
+      stockSubcategories: 0,
+      external: 0,
+    },
   });
   const searchPanelRef = useRef<HTMLDivElement | null>(null);
 
@@ -143,6 +155,12 @@ export function SiteNav() {
         stockCategories: [],
         stockSubcategories: [],
         external: [],
+        totals: {
+          stockProducts: 0,
+          stockCategories: 0,
+          stockSubcategories: 0,
+          external: 0,
+        },
       });
       setSearchLoading(false);
       return;
@@ -180,12 +198,29 @@ export function SiteNav() {
             href: string;
           }>;
           external?: Array<{ title: string; brand: string; pageUrl: string }>;
+          totals?: {
+            stockProducts: number;
+            stockCategories: number;
+            stockSubcategories: number;
+            external: number;
+          };
         };
         setSearchResults({
           stockProducts: data.stockProducts ?? [],
           stockCategories: data.stockCategories ?? [],
           stockSubcategories: data.stockSubcategories ?? [],
           external: data.external ?? [],
+          totals: {
+            stockProducts:
+              data.totals?.stockProducts ?? data.stockProducts?.length ?? 0,
+            stockCategories:
+              data.totals?.stockCategories ?? data.stockCategories?.length ?? 0,
+            stockSubcategories:
+              data.totals?.stockSubcategories ??
+              data.stockSubcategories?.length ??
+              0,
+            external: data.totals?.external ?? data.external?.length ?? 0,
+          },
         });
       } catch (error) {
         if (error instanceof DOMException && error.name === "AbortError") {
@@ -196,6 +231,12 @@ export function SiteNav() {
           stockCategories: [],
           stockSubcategories: [],
           external: [],
+          totals: {
+            stockProducts: 0,
+            stockCategories: 0,
+            stockSubcategories: 0,
+            external: 0,
+          },
         });
       } finally {
         setSearchLoading(false);
@@ -520,6 +561,16 @@ export function SiteNav() {
                             No matches.
                           </p>
                         )}
+                        {searchResults.totals.stockProducts >
+                        searchResults.stockProducts.length ? (
+                          <Link
+                            href={`/search/stock?q=${encodeURIComponent(searchQuery.trim())}`}
+                            className="mt-3 inline-flex items-center rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-primary hover:border-primary hover:bg-primary/10"
+                            onClick={() => setIsSearchOpen(false)}
+                          >
+                            View More
+                          </Link>
+                        ) : null}
                       </div>
                     </div>
 
@@ -668,6 +719,13 @@ export function SiteNav() {
                   className="text-lg font-medium hover:text-white/80"
                 >
                   Brands
+                </Link>
+                <Link
+                  href="/industries"
+                  onClick={closeMenu}
+                  className="text-lg font-medium hover:text-white/80"
+                >
+                  Industries
                 </Link>
 
                 <div className="my-4 h-px w-full bg-white/20" />

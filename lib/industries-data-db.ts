@@ -26,6 +26,12 @@ const normalizeImageUrl = (value?: string | null) => {
   return undefined;
 };
 
+const normalizeIndustryKey = (value?: string | null) =>
+  String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+
 export const getIndustriesDb = async (): Promise<DbIndustry[]> => {
   const { data, error } = await supabaseServer
     .from("industries")
@@ -62,12 +68,19 @@ export const getIndustryBySlugDb = async (
   const { data: categories, error: categoriesError } = await supabaseServer
     .from("categories")
     .select("id, name, slug, main_image_url, industries")
-    .contains("industries", [data.name])
     .order("name", { ascending: true });
 
   if (categoriesError) {
     return null;
   }
+
+  const targetIndustry = normalizeIndustryKey(data.name);
+  const filteredCategories = (categories ?? []).filter((category) => {
+    if (!Array.isArray(category.industries)) return false;
+    return category.industries.some(
+      (industry) => normalizeIndustryKey(industry) === targetIndustry,
+    );
+  });
 
   return {
     id: data.id,
@@ -75,7 +88,7 @@ export const getIndustryBySlugDb = async (
     title: data.name,
     description: data.description,
     image: normalizeImageUrl(data.image_url),
-    categories: (categories ?? []).map((category) => ({
+    categories: filteredCategories.map((category) => ({
       id: category.id,
       slug: category.slug,
       title: category.name,

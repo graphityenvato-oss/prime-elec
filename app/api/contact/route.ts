@@ -8,9 +8,7 @@ const contactSchema = z.object({
   company: z.string().optional().nullable(),
   email: z.string().email(),
   phone: z.string().optional().nullable(),
-  partNumber: z.string().optional().nullable(),
-  quantity: z.string().optional().nullable(),
-  details: z.string().optional().nullable(),
+  message: z.string().optional().nullable(),
 });
 
 export async function POST(request: Request) {
@@ -30,9 +28,7 @@ export async function POST(request: Request) {
     company: payload.company ?? null,
     email: payload.email,
     phone: payload.phone ?? null,
-    part_number: payload.partNumber ?? null,
-    quantity: payload.quantity ?? null,
-    details: payload.details ?? null,
+    message: payload.message ?? null,
   });
 
   if (error) {

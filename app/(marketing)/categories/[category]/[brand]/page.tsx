@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 
 import {
   Breadcrumb,
@@ -69,25 +68,6 @@ export default async function SubcategoryPage({
           {brand.name} <span className="text-primary">&bull;</span>{" "}
           {category.title}
         </h1>
-        {category.image ? (
-          <div className="mt-4 flex items-center gap-4">
-            <Image
-              src={category.image}
-              alt={`${category.title} main`}
-              width={64}
-              height={64}
-              className="h-16 w-16 rounded-2xl object-contain"
-            />
-            <div className="text-sm text-muted-foreground">
-              {category.description}
-            </div>
-          </div>
-        ) : category.description ? (
-          <p className="mt-3 text-sm text-muted-foreground">
-            {category.description}
-          </p>
-        ) : null}
-
         <SubcategoryPageClient items={items} />
       </div>
     </section>

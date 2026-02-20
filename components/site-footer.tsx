@@ -7,7 +7,7 @@ import { Copyright } from "lucide-react";
 const columns = [
   {
     title: "Company",
-    links: ["About Us", "Products", "Categories", "Brands"],
+    links: ["About Us", "Stock", "Categories", "Brands"],
   },
   {
     title: "Resources",
@@ -43,10 +43,10 @@ export function SiteFooter() {
             />
           </Reveal>
           <Reveal>
-            <p className="mt-4 max-w-md text-sm text-muted-foreground dark:text-accent-foreground">
-              The Engineer&apos;s Choice precision engineered components
-              delivered with uncompromising accuracy, fast turnaround times, and
-              consistent reliability you can depend on for every project.
+            <p className="text-shimmer mt-4 max-w-md text-2xl font-extrabold leading-tight">
+              SWITCH TO
+              <br />
+              PERFECTION
             </p>
           </Reveal>
         </div>
@@ -61,7 +61,7 @@ export function SiteFooter() {
                       ? "/"
                       : link === "About Us"
                         ? "/about"
-                        : link === "Products"
+                        : link === "Stock"
                           ? "/stock"
                           : link === "Categories"
                             ? "/categories"

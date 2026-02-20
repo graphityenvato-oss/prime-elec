@@ -9,6 +9,11 @@ import { Separator } from "@/components/ui/separator";
 import { SearchInput } from "@/components/search-input";
 import type { Product } from "@/lib/products";
 
+const naturalSort = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: "base",
+});
+
 type StockSubcategoryProductsClientProps = {
   products: Product[];
 };
@@ -30,7 +35,7 @@ export function StockSubcategoryProductsClient({
             .map((product) => product.brand)
             .filter((brand) => Boolean(brand?.trim())),
         ),
-      ).sort((a, b) => a.localeCompare(b)),
+      ).sort((a, b) => naturalSort.compare(a, b)),
     [products],
   );
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
@@ -61,9 +66,9 @@ export function StockSubcategoryProductsClient({
         label,
         values: Array.from(valuesMap.entries())
           .map(([value, count]) => ({ value, count }))
-          .sort((a, b) => a.value.localeCompare(b.value)),
+          .sort((a, b) => naturalSort.compare(a.value, b.value)),
       }))
-      .sort((a, b) => a.label.localeCompare(b.label));
+      .sort((a, b) => naturalSort.compare(a.label, b.label));
   }, [products]);
 
   const toggleBrand = (brand: string, checked: boolean | "indeterminate") => {

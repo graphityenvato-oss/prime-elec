@@ -11,9 +11,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { ProductImageGallery } from "@/components/product-image-gallery";
+import { ProductSpecTags } from "@/components/product-spec-tags";
 import { RelatedProducts } from "@/components/related-products";
 import { AddToQuoteButton } from "@/components/add-to-quote-button";
-import { Button } from "@/components/ui/button";
 import { resolveBrandLogo } from "@/lib/catalog-data-db";
 import { getProductById as getFallbackProductById } from "@/lib/products";
 import { products as fallbackProducts } from "@/lib/products";
@@ -94,13 +94,13 @@ export default async function ProductPage({
               />
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
-              Part No.{" "}
+              Code{" "}
               <span className="font-semibold text-primary">
                 {product.codeNo ?? product.title}
               </span>
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Code No.{" "}
+              Order#{" "}
               <span className="font-semibold text-primary">
                 {product.partNumber}
               </span>
@@ -108,23 +108,11 @@ export default async function ProductPage({
             <p className="mt-4 text-base text-foreground/75">
               {product.longDescription}
             </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {product.specs.slice(0, 3).map((spec) => (
-                <span
-                  key={`${product.id}-tag-${spec.label}`}
-                  className="rounded-full border border-border/60 dark:border-primary bg-muted/30 px-3 py-1 text-xs font-semibold text-foreground/80"
-                >
-                  {spec.label}: {spec.value}
-                </span>
-              ))}
-            </div>
+            <ProductSpecTags productId={product.id} specs={product.specs} />
           </div>
 
           <div className="rounded-2xl border border-border/60 bg-background p-5">
             <div className="grid gap-2">
-              <Button className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
-                Request Price Quotation
-              </Button>
               <AddToQuoteButton
                 product={{
                   id: product.id,
@@ -135,9 +123,8 @@ export default async function ProductPage({
                   brand: product.brand,
                   category: product.category,
                 }}
-                variant="outline"
                 label="Add to Quote List"
-                className="w-full rounded-full"
+                className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
               />
             </div>
           </div>

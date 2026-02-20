@@ -43,6 +43,7 @@ export function CategoriesPageClient({
           key={query}
           categories={filtered}
           buttonLabel="View Brands"
+          cardLayout="image-left"
         />
       ) : (
         <div className="mt-10 rounded-2xl border border-border/60 bg-muted/10 p-6 text-sm text-muted-foreground">

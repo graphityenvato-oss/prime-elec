@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 
 import {
   Breadcrumb,
@@ -60,27 +59,8 @@ export default async function CategoryBrandsPage({
         </Breadcrumb>
 
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-          {category.title} Brands
+          {category.title}
         </h1>
-        {category.image ? (
-          <div className="mt-4 flex items-center gap-4">
-            <Image
-              src={category.image}
-              alt={`${category.title} main`}
-              width={64}
-              height={64}
-              className="h-16 w-16 rounded-2xl object-contain"
-            />
-            <div className="text-sm text-muted-foreground">
-              {category.description}
-            </div>
-          </div>
-        ) : category.description ? (
-          <p className="mt-3 text-sm text-muted-foreground">
-            {category.description}
-          </p>
-        ) : null}
-
         <CategoryBrandsPageClient brands={cards} />
       </div>
     </section>

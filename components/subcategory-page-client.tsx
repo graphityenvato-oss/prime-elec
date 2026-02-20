@@ -141,44 +141,45 @@ export function SubcategoryPageClient({ items }: SubcategoryPageClientProps) {
           {filtered.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.06}>
               <HoverCard
-                className="h-55 p-4 text-foreground dark:text-white sm:h-50 sm:p-6"
-                contentClassName="flex h-full flex-col justify-between"
+                className="p-4 text-foreground dark:text-white sm:p-5"
+                contentClassName="flex min-h-[120px] items-center gap-4"
               >
-                <div className="h-14 w-32 sm:h-16 sm:w-36">
+                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white">
                   <Image
                     src={item.image ?? "/images/placeholder/imageholder.webp"}
                     alt={`${item.title} product`}
-                    width={180}
-                    height={120}
-                    className="h-full w-auto object-contain"
+                    fill
+                    className="object-contain"
                   />
                 </div>
-                <div>
+                <div className="flex min-h-[84px] flex-1 flex-col justify-between">
+                  <div>
+                    {item.pageUrl ? (
+                      <Link
+                        href={item.pageUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => handleExternalOpen(item.title)}
+                        className="text-lg font-semibold text-foreground transition-colors hover:text-primary dark:text-white"
+                      >
+                        {item.title}
+                      </Link>
+                    ) : (
+                      <h2 className="text-lg font-semibold">{item.title}</h2>
+                    )}
+                  </div>
                   {item.pageUrl ? (
                     <Link
                       href={item.pageUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => handleExternalOpen(item.title)}
-                      className="text-lg font-semibold text-foreground transition-colors hover:text-primary dark:text-white"
+                      className="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
                     >
-                      {item.title}
+                      View Products
                     </Link>
-                  ) : (
-                    <h2 className="text-lg font-semibold">{item.title}</h2>
-                  )}
+                  ) : null}
                 </div>
-                {item.pageUrl ? (
-                  <Link
-                    href={item.pageUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => handleExternalOpen(item.title)}
-                    className="mt-4 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
-                  >
-                    View Products
-                  </Link>
-                ) : null}
               </HoverCard>
             </Reveal>
           ))}

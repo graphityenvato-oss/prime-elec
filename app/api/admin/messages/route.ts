@@ -44,7 +44,7 @@ export async function GET(request: Request) {
   const { data, error } = await supabaseAdmin
     .from("contact_messages")
     .select(
-      "id, full_name, company, email, phone, part_number, quantity, details, read_at, created_at",
+      "id, full_name, company, email, phone, message, read_at, created_at",
     )
     .order("created_at", { ascending: false });
 

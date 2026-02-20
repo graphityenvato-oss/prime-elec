@@ -206,7 +206,7 @@ export default function CartPage() {
                         <div className="text-xs text-muted-foreground">
                           {item.source === "external"
                             ? "External Request | "
-                            : "Stock | Code No."}
+                            : "Stock | Order#"}
                           <span className="block break-all font-semibold text-foreground">
                             {item.partNumber}
                           </span>

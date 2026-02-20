@@ -93,7 +93,7 @@ export default async function SearchPage({
                     {item.brand} • {item.category} • {item.subcategory}
                   </p>
                   <p className="mt-1 text-xs text-primary">
-                    Code No. {item.partNumber}
+                    Order# {item.partNumber}
                   </p>
                 </div>
               </Link>

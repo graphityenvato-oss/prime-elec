@@ -33,9 +33,7 @@ type MessageRow = {
   company: string | null;
   email: string;
   phone: string | null;
-  part_number: string | null;
-  quantity: string | null;
-  details: string | null;
+  message: string | null;
   read_at: string | null;
   created_at: string;
 };
@@ -791,16 +789,9 @@ export default function AdminDashboardPage() {
               </div>
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                  Part / Quantity
+                  Message
                 </p>
-                <p>{activeMessage.part_number ?? "-"}</p>
-                <p>{activeMessage.quantity ?? "-"}</p>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                  Details
-                </p>
-                <p>{activeMessage.details ?? "-"}</p>
+                <p>{activeMessage.message ?? "-"}</p>
               </div>
             </div>
           ) : null}
@@ -866,7 +857,7 @@ export default function AdminDashboardPage() {
                       >
                         <p className="font-medium">{item.name}</p>
                         <p className="text-xs text-muted-foreground">
-                          Code No. {item.partNumber} • Qty {item.quantity} •{" "}
+                          Order# {item.partNumber} • Qty {item.quantity} •{" "}
                           {item.source}
                         </p>
                       </div>

@@ -4,6 +4,7 @@ import {
   ChevronRightIcon,
   MoreHorizontalIcon,
 } from "lucide-react";
+import type Lenis from "@studio-freight/lenis";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants, type Button } from "@/components/ui/button";
@@ -46,6 +47,7 @@ function PaginationLink({
   className,
   isActive,
   size = "icon",
+  onClick,
   ...props
 }: PaginationLinkProps) {
   return (
@@ -60,6 +62,23 @@ function PaginationLink({
         }),
         className,
       )}
+      onClick={(event) => {
+        onClick?.(event);
+        if (typeof window !== "undefined") {
+          const lenis = (window as { __lenis?: Lenis }).__lenis;
+          if (lenis) {
+            lenis.stop();
+            lenis.scrollTo(0, {
+              duration: 0.85,
+              lock: true,
+              force: true,
+              onComplete: () => lenis.start(),
+            });
+          } else {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        }
+      }}
       {...props}
     />
   );

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Mail, MapPin, Phone, AlarmClock } from "lucide-react";
+import { Mail, MapPin, Phone, PhoneCall, AlarmClock } from "lucide-react";
 import { toast } from "sonner";
 
 import { Reveal } from "@/components/reveal";
@@ -17,9 +17,7 @@ export default function ContactPage() {
   const [company, setCompany] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [partNumber, setPartNumber] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [details, setDetails] = useState("");
+  const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,9 +36,7 @@ export default function ContactPage() {
           company: company.trim() || null,
           email: email.trim(),
           phone: phone.trim() || null,
-          partNumber: partNumber.trim() || null,
-          quantity: quantity.trim() || null,
-          details: details.trim() || null,
+          message: message.trim() || null,
         }),
       });
 
@@ -53,9 +49,7 @@ export default function ContactPage() {
       setCompany("");
       setEmail("");
       setPhone("");
-      setPartNumber("");
-      setQuantity("");
-      setDetails("");
+      setMessage("");
     } catch {
       toast.error("Could not submit request.");
     } finally {
@@ -78,9 +72,8 @@ export default function ContactPage() {
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-4 max-w-2xl text-sm text-muted-foreground sm:text-base">
-            Share your project details, part numbers, or required specs. Our
-            team will respond with pricing, availability, and engineering
-            support.
+            Share your requirements and project scope. Our team will respond
+            with pricing, availability, and engineering support.
           </p>
         </Reveal>
       </section>
@@ -105,6 +98,10 @@ export default function ContactPage() {
                   <div className="flex items-center gap-2">
                     <Phone className="size-4 text-primary/70" />
                     <span>+961 70 97 14 14</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <PhoneCall className="size-4 text-primary/70" />
+                    <span>+961 7 22 08 07</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Mail className="size-4 text-primary/70" />
@@ -164,10 +161,6 @@ export default function ContactPage() {
               Monday - Friday
             </p>
             <p className="text-sm text-muted-foreground">8:00 AM - 5:00 PM</p>
-            <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Emergency
-            </p>
-            <p className="text-sm text-muted-foreground">24/7 dispatch</p>
           </PrimeCard>
         </div>
 
@@ -221,31 +214,13 @@ export default function ContactPage() {
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="contact-part">Part number or link</Label>
-              <Input
-                id="contact-part"
-                placeholder="Part number or link"
-                value={partNumber}
-                onChange={(event) => setPartNumber(event.target.value)}
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="contact-qty">Estimated quantity</Label>
-              <Input
-                id="contact-qty"
-                placeholder="e.g. 120 units"
-                value={quantity}
-                onChange={(event) => setQuantity(event.target.value)}
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="contact-details">Project details</Label>
+              <Label htmlFor="contact-message">Message</Label>
               <Textarea
-                id="contact-details"
+                id="contact-message"
                 className="min-h-35"
-                placeholder="Tell us about your project..."
-                value={details}
-                onChange={(event) => setDetails(event.target.value)}
+                placeholder="Tell us about your request..."
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
               />
             </div>
             <Button

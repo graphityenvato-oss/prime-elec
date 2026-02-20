@@ -26,6 +26,7 @@ export function FeaturedStockClient({ categories }: FeaturedStockClientProps) {
   const [slots, setSlots] = useState(4);
   const [isMobile, setIsMobile] = useState(false);
   const [index, setIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const gap = 16;
 
   useEffect(() => {
@@ -71,9 +72,20 @@ export function FeaturedStockClient({ categories }: FeaturedStockClientProps) {
   }, [isMobile]);
 
   const maxIndex = Math.max(0, categories.length - slots);
+  const safeIndex = Math.min(Math.max(index, 0), maxIndex);
   const step = cardWidth + gap;
   const goPrev = () => setIndex((prev) => Math.max(0, prev - 1));
   const goNext = () => setIndex((prev) => Math.min(maxIndex, prev + 1));
+
+  useEffect(() => {
+    if (isMobile || categories.length <= slots || isPaused) return;
+
+    const timer = window.setInterval(() => {
+      setIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    }, 3200);
+
+    return () => window.clearInterval(timer);
+  }, [categories.length, isMobile, isPaused, maxIndex, slots]);
 
   return (
     <div className="mt-8">
@@ -127,12 +139,16 @@ export function FeaturedStockClient({ categories }: FeaturedStockClientProps) {
           </div>
         </div>
       ) : (
-        <div className="grid items-center gap-4 md:grid-cols-[auto_minmax(0,1fr)_auto]">
+        <div
+          className="grid items-center gap-4 md:grid-cols-[auto_minmax(0,1fr)_auto]"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
           <button
             type="button"
             aria-label="Scroll left"
             onClick={goPrev}
-            disabled={index === 0}
+            disabled={safeIndex === 0}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/60 bg-primary text-white shadow-[0_8px_20px_rgba(0,0,0,0.12)] transition-opacity hover:bg-primary/90 disabled:opacity-40"
           >
             <ChevronLeft className="size-5" />
@@ -142,7 +158,7 @@ export function FeaturedStockClient({ categories }: FeaturedStockClientProps) {
             <motion.div
               className="flex"
               style={{ gap }}
-              animate={{ x: -(index * step) }}
+              animate={{ x: -(safeIndex * step) }}
               transition={{ duration: 0.45, ease: "easeInOut" }}
             >
               {categories.map((category, itemIndex) => (
@@ -185,7 +201,7 @@ export function FeaturedStockClient({ categories }: FeaturedStockClientProps) {
             type="button"
             aria-label="Scroll right"
             onClick={goNext}
-            disabled={index >= maxIndex}
+            disabled={safeIndex >= maxIndex}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/60 bg-primary text-white shadow-[0_8px_20px_rgba(0,0,0,0.12)] transition-opacity hover:bg-primary/90 disabled:opacity-40"
           >
             <ChevronRight className="size-5" />

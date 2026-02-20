@@ -61,7 +61,7 @@ export default async function IndustryDetailPage({
           </BreadcrumbList>
         </Breadcrumb>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_460px]">
           <div className="rounded-3xl border border-border/60 bg-muted/10 p-6 sm:p-8">
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
               Industry Overview
@@ -78,10 +78,12 @@ export default async function IndustryDetailPage({
               {industry.description}
             </p>
           </div>
-          <div className="rounded-3xl border border-border/60 bg-linear-to-br from-muted/30 via-muted/10 to-transparent p-6 sm:p-8">
+          <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-linear-to-br from-muted/30 via-muted/10 to-transparent">
+            <div className="pointer-events-none absolute -right-12 -top-12 h-52 w-52 rounded-full bg-primary/15 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-16 -left-10 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
             {industry.image ? (
-              <div className="mt-4 overflow-hidden rounded-2xl border border-border/60 bg-background/60">
-                <div className="relative h-48 w-full">
+              <div className="overflow-hidden rounded-2xl border border-border/60 bg-background/80 shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
+                <div className="relative h-[340px] w-full sm:h-[420px]">
                   <Image
                     src={industry.image}
                     alt={`${industry.title} image`}
@@ -91,7 +93,7 @@ export default async function IndustryDetailPage({
                 </div>
               </div>
             ) : (
-              <div className="mt-4 rounded-2xl border border-dashed border-border/60 bg-background/40 p-6 text-sm text-muted-foreground">
+              <div className="rounded-2xl border border-dashed border-border/60 bg-background/40 p-6 text-sm text-muted-foreground">
                 No image available for this industry yet.
               </div>
             )}

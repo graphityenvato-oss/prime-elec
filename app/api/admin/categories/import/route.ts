@@ -25,6 +25,18 @@ const slugify = (value: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
+const normalizeIndustryName = (value: string) => {
+  const trimmed = value.trim();
+  if (!trimmed) return trimmed;
+
+  const normalized = trimmed.toLowerCase();
+  if (normalized === "data centres" || normalized === "data centre") {
+    return "Data Centers";
+  }
+
+  return trimmed;
+};
+
 const getAdminUser = async (request: Request) => {
   const authHeader = request.headers.get("authorization");
   const token = authHeader?.startsWith("Bearer ")
@@ -92,7 +104,7 @@ export async function POST(request: Request) {
       const industriesRaw = String(row.industries ?? "").trim();
       const industries = industriesRaw
         .split("/")
-        .map((value) => value.trim())
+        .map((value) => normalizeIndustryName(value))
         .filter(Boolean);
 
       if (!categoryName) {

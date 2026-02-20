@@ -7,37 +7,52 @@ const partners = [
   {
     name: "Degson",
     src: "/images/partners/degson-logo.png",
-    href: "#",
+    href: "https://www.degson.com/?lang=en",
   },
   {
     name: "Eaton",
     src: "/images/partners/Eaton-logo.png",
-    href: "#",
+    href: "https://www.eaton.com/ae/en-gb.html",
+  },
+  {
+    name: "Deltabox",
+    src: "/images/partners/Deltabox.png",
+    href: "https://www.delta-box.com/en/",
+  },
+  {
+    name: "FEC Heliports Equipment",
+    src: "/images/partners/FEC-Heliports-Equipment-logo.png",
+    href: "https://www.heliportsequipment.com/",
   },
   {
     name: "Indelec",
     src: "/images/partners/Indelec-logo.png",
-    href: "#",
+    href: "https://indelec.com/",
   },
   {
     name: "Relpol",
     src: "/images/partners/Logo-Relpol.png",
-    href: "#",
+    href: "https://www.relpol.pl/en",
   },
   {
     name: "OBO",
     src: "/images/partners/obo-logo.png",
-    href: "#",
+    href: "https://www.obo.global/",
   },
   {
     name: "Teknoware",
     src: "/images/partners/teknoware-logo.png",
-    href: "#",
+    href: "https://www.teknoware.com/",
   },
   {
     name: "Tem",
     src: "/images/partners/Tem-logo.png",
-    href: "#",
+    href: "https://www.tem-si.com/",
+  },
+  {
+    name: "Solway",
+    src: "/images/partners/Solway.png",
+    href: "https://www.ledsolway.com/",
   },
 ];
 

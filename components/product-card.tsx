@@ -6,6 +6,33 @@ import { AddToQuoteButton } from "@/components/add-to-quote-button";
 import { Button } from "@/components/ui/button";
 import { GlowCard } from "@/components/ui/glow-card";
 
+const brandLogoMap: Record<string, string> = {
+  degson: "/images/partners/degson-logo.png",
+  deltabox: "/images/partners/Deltabox.png",
+  eaton: "/images/partners/Eaton-logo.png",
+  fecheliportsequipment: "/images/partners/FEC-Heliports-Equipment-logo.png",
+  indelec: "/images/partners/Indelec-logo.png",
+  relpol: "/images/partners/Logo-Relpol.png",
+  obo: "/images/partners/obo-logo.png",
+  obobetterman: "/images/partners/obo-logo.png",
+  obobettermann: "/images/partners/obo-logo.png",
+  solway: "/images/partners/Solway.png",
+  teknoware: "/images/partners/teknoware-logo.png",
+  tem: "/images/partners/Tem-logo.png",
+};
+
+const normalizeBrandKey = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "")
+    .trim();
+
+const resolveBrandLogo = (name?: string) => {
+  if (!name) return null;
+  const key = normalizeBrandKey(name);
+  return brandLogoMap[key] ?? (key.includes("obo") ? brandLogoMap.obo : null);
+};
+
 type ProductCardProps = {
   id: string;
   image: string;
@@ -16,6 +43,7 @@ type ProductCardProps = {
   category?: string;
   description: string;
   href?: string;
+  showBrandTopRight?: boolean;
 };
 
 export function ProductCard({
@@ -28,19 +56,21 @@ export function ProductCard({
   category,
   description,
   href,
+  showBrandTopRight = false,
 }: ProductCardProps) {
   const safeImage =
     image && (image.startsWith("/") || image.startsWith("http"))
       ? image
       : "/images/placeholder/imageholder.webp";
+  const brandLogo = resolveBrandLogo(brand);
 
   return (
     <GlowCard
       className="h-full p-5 text-foreground dark:text-white"
       contentClassName="flex h-full flex-col"
     >
-      <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-start sm:gap-4">
-        <div className="order-2 h-20 w-24 sm:order-1">
+      <div className="flex items-start justify-between gap-3">
+        <div className="h-20 w-24">
           {href ? (
             <Link href={href} aria-label={`${title} details`}>
               <Image
@@ -61,6 +91,23 @@ export function ProductCard({
             />
           )}
         </div>
+        {showBrandTopRight && brand ? (
+          brandLogo ? (
+            <div className="flex h-10 w-28 items-center justify-end">
+              <Image
+                src={brandLogo}
+                alt={`${brand} logo`}
+                width={112}
+                height={32}
+                className="h-8 w-auto object-contain"
+              />
+            </div>
+          ) : (
+            <p className="max-w-[60%] text-right text-xs font-semibold uppercase tracking-[0.08em] text-primary">
+              {brand}
+            </p>
+          )
+        ) : null}
       </div>
 
       <div className="py-2">
@@ -75,7 +122,7 @@ export function ProductCard({
           <h3 className="line-clamp-2 text-lg font-semibold">{title}</h3>
         )}
         <p className="mt-1 text-xs text-muted-foreground dark:text-white/60">
-          Code No.{" "}
+          Order#{" "}
           <span className="font-semibold text-foreground dark:text-white">
             {partNumber}
           </span>
