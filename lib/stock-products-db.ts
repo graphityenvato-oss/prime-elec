@@ -2,13 +2,32 @@ import { supabaseServer } from "@/lib/supabase/server";
 import type { Product } from "@/lib/products";
 
 const PLACEHOLDER_IMAGE = "/images/placeholder/imageholder.webp";
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/+$/, "");
+const STORAGE_BUCKET = process.env.SUPABASE_STORAGE_BUCKET || "uploads";
+const STOCK_FOLDER = "stock";
+const IMAGE_FILENAME_EXT = /\.(jpg|jpeg|png|webp|gif)$/i;
+
+const buildSupabaseStockImageUrl = (value: string) => {
+  if (!SUPABASE_URL) return null;
+  const filename = value.replace(/\\/g, "/").split("/").pop()?.trim();
+  if (!filename || !IMAGE_FILENAME_EXT.test(filename)) return null;
+  return `${SUPABASE_URL}/storage/v1/object/public/${encodeURIComponent(STORAGE_BUCKET)}/${encodeURIComponent(STOCK_FOLDER)}/${encodeURIComponent(filename)}`;
+};
 
 const normalizeImageUrl = (value?: string | null) => {
   const trimmed = value?.trim();
   if (!trimmed) return PLACEHOLDER_IMAGE;
   if (/^https?:\/\//i.test(trimmed)) return trimmed;
   if (trimmed.startsWith("/")) return trimmed;
-  if (trimmed.startsWith("images/")) return `/${trimmed}`;
+  if (trimmed.startsWith("images/")) {
+    return buildSupabaseStockImageUrl(trimmed) ?? `/${trimmed}`;
+  }
+  if (trimmed.startsWith("/images/")) {
+    return buildSupabaseStockImageUrl(trimmed) ?? trimmed;
+  }
+  if (IMAGE_FILENAME_EXT.test(trimmed)) {
+    return buildSupabaseStockImageUrl(trimmed) ?? PLACEHOLDER_IMAGE;
+  }
   return PLACEHOLDER_IMAGE;
 };
 

@@ -3,6 +3,17 @@ import "server-only";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 const PLACEHOLDER_IMAGE = "/images/placeholder/imageholder.webp";
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/+$/, "");
+const STORAGE_BUCKET = process.env.SUPABASE_STORAGE_BUCKET || "uploads";
+const STOCK_FOLDER = "stock";
+const IMAGE_FILENAME_EXT = /\.(jpg|jpeg|png|webp|gif)$/i;
+
+const buildSupabaseImageUrl = (value: string, folder = STOCK_FOLDER) => {
+  if (!SUPABASE_URL) return null;
+  const filename = value.replace(/\\/g, "/").split("/").pop()?.trim();
+  if (!filename || !IMAGE_FILENAME_EXT.test(filename)) return null;
+  return `${SUPABASE_URL}/storage/v1/object/public/${encodeURIComponent(STORAGE_BUCKET)}/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`;
+};
 
 const normalizeText = (value: string) =>
   value
@@ -23,12 +34,20 @@ const slugify = (value: string) =>
     .replace(/\s+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-const normalizeImageUrl = (value?: string | null) => {
+const normalizeImageUrl = (value?: string | null, folder = STOCK_FOLDER) => {
   const trimmed = value?.trim();
   if (!trimmed) return PLACEHOLDER_IMAGE;
   if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (trimmed.startsWith("/images/")) {
+    return buildSupabaseImageUrl(trimmed, folder) ?? trimmed;
+  }
+  if (trimmed.startsWith("images/")) {
+    return buildSupabaseImageUrl(trimmed, folder) ?? `/${trimmed}`;
+  }
   if (trimmed.startsWith("/")) return trimmed;
-  if (trimmed.startsWith("images/")) return `/${trimmed}`;
+  if (IMAGE_FILENAME_EXT.test(trimmed)) {
+    return buildSupabaseImageUrl(trimmed, folder) ?? PLACEHOLDER_IMAGE;
+  }
   return PLACEHOLDER_IMAGE;
 };
 
@@ -356,7 +375,7 @@ export const performSearch = async (
         title: row.name,
         brand: brand?.name ?? "Brand",
         category: category?.name ?? "Category",
-        image: normalizeImageUrl(row.image_url),
+        image: normalizeImageUrl(row.image_url, "catalog"),
         pageUrl: row.page_url,
         score,
       };

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -37,6 +38,7 @@ type CategoriesGridProps = {
   topImageContain?: boolean;
   topImageHeightClass?: string;
   pagination?: boolean;
+  stateKey?: string;
 };
 
 const ITEMS_PER_PAGE = 9;
@@ -123,17 +125,54 @@ export function CategoriesGrid({
   topImageContain = true,
   topImageHeightClass = "h-32",
   pagination = true,
+  stateKey = "cg",
 }: CategoriesGridProps) {
-  const [page, setPage] = useState(1);
-  const [loadedPages, setLoadedPages] = useState(1);
-  const [mode, setMode] = useState<"pagination" | "load-more">("pagination");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const pageParamKey = `${stateKey}_page`;
+  const modeParamKey = `${stateKey}_mode`;
+  const loadedParamKey = `${stateKey}_loaded`;
+
+  const parsedPage = Number(searchParams.get(pageParamKey) ?? "1");
+  const parsedLoadedPages = Number(searchParams.get(loadedParamKey) ?? "1");
+  const parsedMode =
+    searchParams.get(modeParamKey) === "load-more" ? "load-more" : "pagination";
   const totalPages = pagination
     ? Math.max(1, Math.ceil(categories.length / itemsPerPage))
     : 1;
-  const safePage = Math.min(Math.max(page, 1), totalPages);
-  const safeLoadedPages = Math.min(Math.max(loadedPages, 1), totalPages);
-  const safeMode = pagination ? mode : "pagination";
+  const safePage = Math.min(
+    Math.max(Number.isFinite(parsedPage) ? parsedPage : 1, 1),
+    totalPages,
+  );
+  const safeLoadedPages = Math.min(
+    Math.max(Number.isFinite(parsedLoadedPages) ? parsedLoadedPages : 1, 1),
+    totalPages,
+  );
+  const safeMode = pagination ? parsedMode : "pagination";
   const currentPage = safeMode === "load-more" ? safeLoadedPages : safePage;
+
+  const updateState = (
+    nextMode: "pagination" | "load-more",
+    nextPage: number,
+    nextLoadedPages: number,
+  ) => {
+    const params = new URLSearchParams(searchParams.toString());
+    const clampedPage = Math.min(Math.max(nextPage, 1), totalPages);
+    const clampedLoaded = Math.min(Math.max(nextLoadedPages, 1), totalPages);
+
+    if (nextMode === "load-more") params.set(modeParamKey, "load-more");
+    else params.delete(modeParamKey);
+
+    if (clampedPage > 1) params.set(pageParamKey, String(clampedPage));
+    else params.delete(pageParamKey);
+
+    if (clampedLoaded > 1) params.set(loadedParamKey, String(clampedLoaded));
+    else params.delete(loadedParamKey);
+
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  };
 
   const visible = useMemo(() => {
     if (!pagination) return categories;
@@ -152,13 +191,12 @@ export function CategoriesGrid({
   ]);
 
   const goToPage = (next: number) => {
-    setMode("pagination");
-    setPage(Math.min(Math.max(next, 1), totalPages));
+    updateState("pagination", next, 1);
   };
 
   const loadMore = () => {
-    setMode("load-more");
-    setLoadedPages((prev) => Math.min(totalPages, prev + 1));
+    const base = Math.max(safeLoadedPages, safePage);
+    updateState("load-more", safePage, base + 1);
   };
 
   return (
@@ -170,7 +208,7 @@ export function CategoriesGrid({
           <Reveal
             key={`${category.title}-${category.logo}`}
             delay={
-              mode === "load-more"
+              safeMode === "load-more"
                 ? (index % itemsPerPage) * 0.02
                 : index * 0.06
             }

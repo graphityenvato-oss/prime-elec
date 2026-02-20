@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { ChevronRight } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -11,8 +12,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type CategoriesNavDropdownProps = {
+type IndustriesNavDropdownProps = {
   renderTrigger: (children: React.ReactNode) => React.ReactNode;
+};
+
+type IndustryItem = {
+  slug: string;
+  title: string;
+  image: string;
 };
 
 const chunkArray = <T,>(items: T[], columns: number) => {
@@ -23,31 +30,29 @@ const chunkArray = <T,>(items: T[], columns: number) => {
   return result;
 };
 
-export function CategoriesNavDropdown({
+export function IndustriesNavDropdown({
   renderTrigger,
-}: CategoriesNavDropdownProps) {
+}: IndustriesNavDropdownProps) {
   const pathname = usePathname();
-  const isCategoriesPage = pathname?.startsWith("/categories");
+  const isIndustriesPage = pathname?.startsWith("/industries");
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<number | null>(null);
-  const [categories, setCategories] = useState<
-    { slug: string; title: string }[]
-  >([]);
+  const [items, setItems] = useState<IndustryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let active = true;
     const load = async () => {
       try {
-        const response = await fetch("/api/categories/list");
-        const data = await response.json();
-        if (active && Array.isArray(data?.categories)) {
-          setCategories(data.categories);
+        const response = await fetch("/api/industries/list");
+        const data = (await response.json().catch(() => null)) as {
+          industries?: IndustryItem[];
+        } | null;
+        if (active && Array.isArray(data?.industries)) {
+          setItems(data.industries);
         }
       } catch {
-        if (active) {
-          setCategories([]);
-        }
+        if (active) setItems([]);
       } finally {
         if (active) setIsLoading(false);
       }
@@ -57,10 +62,11 @@ export function CategoriesNavDropdown({
       active = false;
     };
   }, []);
-  const columns = useMemo(() => chunkArray(categories, 3), [categories]);
+
+  const columns = useMemo(() => chunkArray(items, 2), [items]);
 
   const openMenu = () => {
-    if (isCategoriesPage) return;
+    if (isIndustriesPage) return;
     if (closeTimer.current) {
       window.clearTimeout(closeTimer.current);
       closeTimer.current = null;
@@ -82,7 +88,7 @@ export function CategoriesNavDropdown({
     <DropdownMenu
       open={open}
       onOpenChange={(next) => {
-        if (isCategoriesPage) return;
+        if (isIndustriesPage) return;
         setOpen(next);
       }}
       modal={false}
@@ -98,14 +104,14 @@ export function CategoriesNavDropdown({
             onPointerLeave={scheduleClose}
           >
             {renderTrigger(
-              <span className="inline-flex items-center">Categories</span>,
+              <span className="inline-flex items-center">Industries</span>,
             )}
           </span>
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="center"
           sideOffset={14}
-          className="w-[900px] rounded-2xl border border-border/60 bg-white p-6 text-foreground shadow-[0_24px_70px_rgba(0,0,0,0.22)] dark:border-white/10 dark:bg-[#0b1118] dark:text-white"
+          className="w-[640px] rounded-2xl border border-border/60 bg-white p-6 text-foreground shadow-[0_24px_70px_rgba(0,0,0,0.22)] dark:border-white/10 dark:bg-[#0b1118] dark:text-white"
           onMouseEnter={openMenu}
           onMouseMove={openMenu}
           onMouseLeave={scheduleClose}
@@ -115,37 +121,45 @@ export function CategoriesNavDropdown({
           <div className="mb-5 flex items-center justify-between">
             <div>
               <p className="text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
-                Categories
+                Industries
               </p>
-              <p className="text-sm font-semibold">Explore by category</p>
+              <p className="text-sm font-semibold">Browse industries</p>
             </div>
             <Link
-              href="/categories"
+              href="/industries"
               className="text-xs font-semibold text-primary hover:text-primary/80"
               onClick={() => setOpen(false)}
             >
-              All Categories
+              All Industries
             </Link>
           </div>
           {isLoading ? (
             <div className="py-6 text-sm text-muted-foreground">
-              Loading categories...
+              Loading industries...
             </div>
-          ) : categories.length ? (
-            <div className="grid grid-cols-3 gap-4">
+          ) : items.length ? (
+            <div className="grid grid-cols-2 gap-4">
               {columns.map((column, colIndex) => (
                 <div key={`col-${colIndex}`} className="space-y-2">
-                  {column.map((category) => (
+                  {column.map((item) => (
                     <Link
-                      key={category.slug}
-                      href={`/categories/${category.slug}`}
-                      className="group flex items-start gap-2 rounded-lg px-2 py-1 text-sm text-foreground transition hover:bg-primary/5 dark:text-white/90 dark:hover:bg-white/5"
+                      key={item.slug}
+                      href={`/industries/${item.slug}`}
+                      className="group flex items-center gap-3 rounded-lg px-2 py-2 text-sm text-foreground transition hover:bg-primary/5 dark:text-white/90 dark:hover:bg-white/5"
                       onClick={() => setOpen(false)}
                     >
-                      <ChevronRight className="mt-0.5 size-4 shrink-0 text-primary/70 transition group-hover:text-primary dark:text-white/60 dark:group-hover:text-white" />
-                      <span className="font-medium group-hover:text-primary dark:group-hover:text-white">
-                        {category.title}
+                      <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md border border-border/60 bg-muted/10">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <span className="min-w-0 flex-1 truncate font-medium group-hover:text-primary dark:group-hover:text-white">
+                        {item.title}
                       </span>
+                      <ChevronRight className="size-4 shrink-0 text-primary/70 transition group-hover:text-primary dark:text-white/60 dark:group-hover:text-white" />
                     </Link>
                   ))}
                 </div>
@@ -153,7 +167,7 @@ export function CategoriesNavDropdown({
             </div>
           ) : (
             <div className="py-6 text-sm text-muted-foreground">
-              No categories available.
+              No industries available.
             </div>
           )}
         </DropdownMenuContent>

@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { ProductCard } from "@/components/product-card";
 import { Reveal } from "@/components/reveal";
@@ -33,14 +34,48 @@ type StockProductsProps = {
 };
 
 export function StockProducts({ products, perPage = 12 }: StockProductsProps) {
-  const [page, setPage] = useState(1);
-  const [loadedPages, setLoadedPages] = useState(1);
-  const [mode, setMode] = useState<"pagination" | "load-more">("pagination");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const parsedPage = Number(searchParams.get("sp_page") ?? "1");
+  const parsedLoadedPages = Number(searchParams.get("sp_loaded") ?? "1");
+  const parsedMode =
+    searchParams.get("sp_mode") === "load-more" ? "load-more" : "pagination";
+
   const totalPages = Math.max(1, Math.ceil(products.length / perPage));
-  const safePage = Math.min(Math.max(page, 1), totalPages);
-  const safeLoadedPages = Math.min(Math.max(loadedPages, 1), totalPages);
-  const safeMode = mode;
+  const safePage = Math.min(
+    Math.max(Number.isFinite(parsedPage) ? parsedPage : 1, 1),
+    totalPages,
+  );
+  const safeLoadedPages = Math.min(
+    Math.max(Number.isFinite(parsedLoadedPages) ? parsedLoadedPages : 1, 1),
+    totalPages,
+  );
+  const safeMode = parsedMode;
   const currentPage = safeMode === "load-more" ? safeLoadedPages : safePage;
+
+  const updateState = (
+    nextMode: "pagination" | "load-more",
+    nextPage: number,
+    nextLoadedPages: number,
+  ) => {
+    const params = new URLSearchParams(searchParams.toString());
+    const clampedPage = Math.min(Math.max(nextPage, 1), totalPages);
+    const clampedLoaded = Math.min(Math.max(nextLoadedPages, 1), totalPages);
+
+    if (nextMode === "load-more") params.set("sp_mode", "load-more");
+    else params.delete("sp_mode");
+
+    if (clampedPage > 1) params.set("sp_page", String(clampedPage));
+    else params.delete("sp_page");
+
+    if (clampedLoaded > 1) params.set("sp_loaded", String(clampedLoaded));
+    else params.delete("sp_loaded");
+
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  };
 
   const visible = useMemo(() => {
     if (safeMode === "load-more") {
@@ -51,13 +86,12 @@ export function StockProducts({ products, perPage = 12 }: StockProductsProps) {
   }, [perPage, products, safeLoadedPages, safeMode, safePage]);
 
   const goToPage = (next: number) => {
-    setMode("pagination");
-    setPage(Math.min(Math.max(next, 1), totalPages));
+    updateState("pagination", next, 1);
   };
 
   const loadMore = () => {
-    setMode("load-more");
-    setLoadedPages((prev) => Math.min(totalPages, prev + 1));
+    const base = Math.max(safeLoadedPages, safePage);
+    updateState("load-more", safePage, base + 1);
   };
 
   return (
@@ -67,7 +101,7 @@ export function StockProducts({ products, perPage = 12 }: StockProductsProps) {
           <Reveal
             key={product.partNumber}
             delay={
-              mode === "load-more" ? (index % perPage) * 0.02 : index * 0.06
+              safeMode === "load-more" ? (index % perPage) * 0.02 : index * 0.06
             }
           >
             <ProductCard

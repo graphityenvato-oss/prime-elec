@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -11,43 +12,38 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type CategoriesNavDropdownProps = {
+type StockNavDropdownProps = {
   renderTrigger: (children: React.ReactNode) => React.ReactNode;
 };
 
-const chunkArray = <T,>(items: T[], columns: number) => {
-  const result: T[][] = Array.from({ length: columns }, () => []);
-  items.forEach((item, index) => {
-    result[index % columns].push(item);
-  });
-  return result;
+type StockCategoryItem = {
+  slug: string;
+  title: string;
+  image: string;
+  products: number;
 };
 
-export function CategoriesNavDropdown({
-  renderTrigger,
-}: CategoriesNavDropdownProps) {
+export function StockNavDropdown({ renderTrigger }: StockNavDropdownProps) {
   const pathname = usePathname();
-  const isCategoriesPage = pathname?.startsWith("/categories");
+  const isStockPage = pathname?.startsWith("/stock");
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<number | null>(null);
-  const [categories, setCategories] = useState<
-    { slug: string; title: string }[]
-  >([]);
+  const [items, setItems] = useState<StockCategoryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let active = true;
     const load = async () => {
       try {
-        const response = await fetch("/api/categories/list");
-        const data = await response.json();
+        const response = await fetch("/api/stock/categories");
+        const data = (await response.json().catch(() => null)) as {
+          categories?: StockCategoryItem[];
+        } | null;
         if (active && Array.isArray(data?.categories)) {
-          setCategories(data.categories);
+          setItems(data.categories);
         }
       } catch {
-        if (active) {
-          setCategories([]);
-        }
+        if (active) setItems([]);
       } finally {
         if (active) setIsLoading(false);
       }
@@ -57,10 +53,11 @@ export function CategoriesNavDropdown({
       active = false;
     };
   }, []);
-  const columns = useMemo(() => chunkArray(categories, 3), [categories]);
+
+  const visibleItems = items.slice(0, 8);
 
   const openMenu = () => {
-    if (isCategoriesPage) return;
+    if (isStockPage) return;
     if (closeTimer.current) {
       window.clearTimeout(closeTimer.current);
       closeTimer.current = null;
@@ -82,7 +79,7 @@ export function CategoriesNavDropdown({
     <DropdownMenu
       open={open}
       onOpenChange={(next) => {
-        if (isCategoriesPage) return;
+        if (isStockPage) return;
         setOpen(next);
       }}
       modal={false}
@@ -97,15 +94,13 @@ export function CategoriesNavDropdown({
             onPointerEnter={openMenu}
             onPointerLeave={scheduleClose}
           >
-            {renderTrigger(
-              <span className="inline-flex items-center">Categories</span>,
-            )}
+            {renderTrigger(<span className="inline-flex items-center">Stock</span>)}
           </span>
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="center"
           sideOffset={14}
-          className="w-[900px] rounded-2xl border border-border/60 bg-white p-6 text-foreground shadow-[0_24px_70px_rgba(0,0,0,0.22)] dark:border-white/10 dark:bg-[#0b1118] dark:text-white"
+          className="w-[680px] rounded-2xl border border-border/60 bg-white p-6 text-foreground shadow-[0_24px_70px_rgba(0,0,0,0.22)] dark:border-white/10 dark:bg-[#0b1118] dark:text-white"
           onMouseEnter={openMenu}
           onMouseMove={openMenu}
           onMouseLeave={scheduleClose}
@@ -115,45 +110,54 @@ export function CategoriesNavDropdown({
           <div className="mb-5 flex items-center justify-between">
             <div>
               <p className="text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
-                Categories
+                Stock
               </p>
-              <p className="text-sm font-semibold">Explore by category</p>
+              <p className="text-sm font-semibold">Browse stock categories</p>
             </div>
             <Link
-              href="/categories"
+              href="/stock"
               className="text-xs font-semibold text-primary hover:text-primary/80"
               onClick={() => setOpen(false)}
             >
-              All Categories
+              All Stock
             </Link>
           </div>
           {isLoading ? (
             <div className="py-6 text-sm text-muted-foreground">
-              Loading categories...
+              Loading stock categories...
             </div>
-          ) : categories.length ? (
-            <div className="grid grid-cols-3 gap-4">
-              {columns.map((column, colIndex) => (
-                <div key={`col-${colIndex}`} className="space-y-2">
-                  {column.map((category) => (
-                    <Link
-                      key={category.slug}
-                      href={`/categories/${category.slug}`}
-                      className="group flex items-start gap-2 rounded-lg px-2 py-1 text-sm text-foreground transition hover:bg-primary/5 dark:text-white/90 dark:hover:bg-white/5"
-                      onClick={() => setOpen(false)}
-                    >
-                      <ChevronRight className="mt-0.5 size-4 shrink-0 text-primary/70 transition group-hover:text-primary dark:text-white/60 dark:group-hover:text-white" />
-                      <span className="font-medium group-hover:text-primary dark:group-hover:text-white">
-                        {category.title}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
+          ) : items.length ? (
+            <div className="grid grid-cols-2 gap-3">
+              {visibleItems.map((item) => (
+                <Link
+                  key={item.slug}
+                  href={`/stock/${item.slug}`}
+                  className="group flex items-center gap-3 rounded-lg px-2 py-2 text-sm text-foreground transition hover:bg-primary/5 dark:text-white/90 dark:hover:bg-white/5"
+                  onClick={() => setOpen(false)}
+                >
+                  <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md border border-border/60 bg-muted/10">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate font-medium group-hover:text-primary dark:group-hover:text-white">
+                      {item.title}
+                    </span>
+                    <span className="block text-xs text-muted-foreground">
+                      {item.products} products
+                    </span>
+                  </span>
+                  <ChevronRight className="size-4 shrink-0 text-primary/70 transition group-hover:text-primary dark:text-white/60 dark:group-hover:text-white" />
+                </Link>
               ))}
             </div>
           ) : (
             <div className="py-6 text-sm text-muted-foreground">
-              No categories available.
+              No stock categories available.
             </div>
           )}
         </DropdownMenuContent>

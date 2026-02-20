@@ -16,6 +16,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { BrandsNavDropdown } from "@/components/brands-nav-dropdown";
 import { CategoriesNavDropdown } from "@/components/categories-nav-dropdown";
+import { IndustriesNavDropdown } from "@/components/industries-nav-dropdown";
+import { StockNavDropdown } from "@/components/stock-nav-dropdown";
 import { getQuoteCartCount, QUOTE_CART_UPDATED_EVENT } from "@/lib/quote-cart";
 import { Input } from "@/components/ui/input";
 
@@ -345,9 +347,13 @@ export function SiteNav() {
                   <NavLink href="/about" isActive={isActiveLink("/about")}>
                     About Us
                   </NavLink>
-                  <NavLink href="/stock" isActive={isActiveLink("/stock")}>
-                    Stock
-                  </NavLink>
+                  <StockNavDropdown
+                    renderTrigger={(children) => (
+                      <NavLink href="/stock" isActive={isActiveLink("/stock")}>
+                        {children}
+                      </NavLink>
+                    )}
+                  />
                   <CategoriesNavDropdown
                     renderTrigger={(children) => (
                       <NavLink
@@ -368,9 +374,16 @@ export function SiteNav() {
                       </NavLink>
                     )}
                   />
-                  <NavLink href="/industries" isActive={false}>
-                    Industries
-                  </NavLink>
+                  <IndustriesNavDropdown
+                    renderTrigger={(children) => (
+                      <NavLink
+                        href="/industries"
+                        isActive={isActiveLink("/industries")}
+                      >
+                        {children}
+                      </NavLink>
+                    )}
+                  />
                 </div>
 
                 {/* Desktop Actions (Hidden on Mobile) */}
