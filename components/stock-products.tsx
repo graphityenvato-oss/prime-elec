@@ -74,7 +74,9 @@ export function StockProducts({ products, perPage = 12 }: StockProductsProps) {
     else params.delete("sp_loaded");
 
     const query = params.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    router.replace(query ? `${pathname}?${query}` : pathname, {
+      scroll: false,
+    });
   };
 
   const visible = useMemo(() => {

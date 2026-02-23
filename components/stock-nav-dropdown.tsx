@@ -94,7 +94,9 @@ export function StockNavDropdown({ renderTrigger }: StockNavDropdownProps) {
             onPointerEnter={openMenu}
             onPointerLeave={scheduleClose}
           >
-            {renderTrigger(<span className="inline-flex items-center">Stock</span>)}
+            {renderTrigger(
+              <span className="inline-flex items-center">Stock</span>,
+            )}
           </span>
         </DropdownMenuTrigger>
         <DropdownMenuContent

@@ -145,42 +145,42 @@ export function SubcategoryPageClient({ items }: SubcategoryPageClientProps) {
                   className="h-full p-4 text-foreground dark:text-white sm:p-5"
                   contentClassName="flex h-full min-h-[120px] flex-col items-center gap-3 text-center sm:flex-row sm:items-center sm:gap-4 sm:text-left"
                 >
-                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white">
-                  <Image
-                    src={item.image ?? "/images/placeholder/imageholder.webp"}
-                    alt={`${item.title} product`}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <div className="flex min-h-[84px] flex-1 flex-col justify-between">
-                  <div>
+                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white">
+                    <Image
+                      src={item.image ?? "/images/placeholder/imageholder.webp"}
+                      alt={`${item.title} product`}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="flex min-h-[84px] flex-1 flex-col justify-between">
+                    <div>
+                      {item.pageUrl ? (
+                        <Link
+                          href={item.pageUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => handleExternalOpen(item.title)}
+                          className="text-lg font-semibold text-foreground transition-colors hover:text-primary dark:text-white"
+                        >
+                          {item.title}
+                        </Link>
+                      ) : (
+                        <h2 className="text-lg font-semibold">{item.title}</h2>
+                      )}
+                    </div>
                     {item.pageUrl ? (
                       <Link
                         href={item.pageUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => handleExternalOpen(item.title)}
-                        className="text-lg font-semibold text-foreground transition-colors hover:text-primary dark:text-white"
+                        className="mt-3 inline-flex w-fit self-center items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 sm:self-start sm:text-xs sm:tracking-[0.2em] dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
                       >
-                        {item.title}
+                        View Products
                       </Link>
-                    ) : (
-                      <h2 className="text-lg font-semibold">{item.title}</h2>
-                    )}
+                    ) : null}
                   </div>
-                  {item.pageUrl ? (
-                    <Link
-                      href={item.pageUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => handleExternalOpen(item.title)}
-                      className="mt-3 inline-flex w-fit self-center items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 sm:self-start sm:text-xs sm:tracking-[0.2em] dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
-                    >
-                      View Products
-                    </Link>
-                  ) : null}
-                </div>
                 </HoverCard>
               </div>
             </Reveal>

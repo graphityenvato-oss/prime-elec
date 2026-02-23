@@ -171,7 +171,9 @@ export function CategoriesGrid({
     else params.delete(loadedParamKey);
 
     const query = params.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    router.replace(query ? `${pathname}?${query}` : pathname, {
+      scroll: false,
+    });
   };
 
   const visible = useMemo(() => {
@@ -222,71 +224,73 @@ export function CategoriesGrid({
                     : "flex h-full flex-col justify-between pb-2"
                 }
               >
-              {cardLayout === "image-left" ? (
-                <>
-                  <div className="relative mx-auto h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white sm:mx-0">
-                    <CardTopImage
-                      title={category.title}
-                      logo={category.logo}
-                      logoSlides={category.logoSlides}
-                      topImageContain={false}
-                    />
-                  </div>
-                  <div className="flex flex-col items-center justify-center text-center sm:items-start sm:text-left">
+                {cardLayout === "image-left" ? (
+                  <>
+                    <div className="relative mx-auto h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white sm:mx-0">
+                      <CardTopImage
+                        title={category.title}
+                        logo={category.logo}
+                        logoSlides={category.logoSlides}
+                        topImageContain={false}
+                      />
+                    </div>
+                    <div className="flex flex-col items-center justify-center text-center sm:items-start sm:text-left">
+                      <Link
+                        href={category.href}
+                        className="text-lg font-semibold leading-snug text-foreground transition-colors line-clamp-2 hover:text-primary dark:text-white"
+                      >
+                        {category.title}
+                      </Link>
+                      <Link
+                        href={category.href}
+                        className="mt-2 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 sm:text-xs sm:tracking-[0.2em] dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
+                      >
+                        <span>{buttonLabel}</span>
+                        <ArrowRight className="size-3" aria-hidden="true" />
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {imageFillTopHalf ? (
+                      <div className="overflow-hidden rounded-2xl border border-border/60 bg-white">
+                        <div
+                          className={`relative w-full ${topImageHeightClass}`}
+                        >
+                          <CardTopImage
+                            title={category.title}
+                            logo={category.logo}
+                            logoSlides={category.logoSlides}
+                            topImageContain={topImageContain}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="h-[68px] w-[68px]">
+                        <Image
+                          src={category.logo}
+                          alt={`${category.title} logo`}
+                          width={68}
+                          height={68}
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                    )}
                     <Link
                       href={category.href}
-                      className="text-lg font-semibold leading-snug text-foreground transition-colors line-clamp-2 hover:text-primary dark:text-white"
+                      className="mt-5 min-h-[3.25rem] text-lg font-semibold leading-snug text-foreground transition-colors line-clamp-2 hover:text-primary dark:text-white"
                     >
                       {category.title}
                     </Link>
                     <Link
                       href={category.href}
-                      className="mt-2 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 sm:text-xs sm:tracking-[0.2em] dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
+                      className="mt-3 mb-1 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 sm:text-xs sm:tracking-[0.2em] dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
                     >
                       <span>{buttonLabel}</span>
                       <ArrowRight className="size-3" aria-hidden="true" />
                     </Link>
-                  </div>
-                </>
-              ) : (
-                <>
-                  {imageFillTopHalf ? (
-                    <div className="overflow-hidden rounded-2xl border border-border/60 bg-white">
-                      <div className={`relative w-full ${topImageHeightClass}`}>
-                        <CardTopImage
-                          title={category.title}
-                          logo={category.logo}
-                          logoSlides={category.logoSlides}
-                          topImageContain={topImageContain}
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="h-[68px] w-[68px]">
-                      <Image
-                        src={category.logo}
-                        alt={`${category.title} logo`}
-                        width={68}
-                        height={68}
-                        className="h-full w-full object-contain"
-                      />
-                    </div>
-                  )}
-                  <Link
-                    href={category.href}
-                    className="mt-5 min-h-[3.25rem] text-lg font-semibold leading-snug text-foreground transition-colors line-clamp-2 hover:text-primary dark:text-white"
-                  >
-                    {category.title}
-                  </Link>
-                  <Link
-                    href={category.href}
-                    className="mt-3 mb-1 inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-300 hover:border-primary hover:bg-primary/10 sm:text-xs sm:tracking-[0.2em] dark:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white/10"
-                  >
-                    <span>{buttonLabel}</span>
-                    <ArrowRight className="size-3" aria-hidden="true" />
-                  </Link>
-                </>
-              )}
+                  </>
+                )}
               </GlowCard>
             </div>
           </Reveal>

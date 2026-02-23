@@ -40,7 +40,7 @@ export function HeroImageRotator({
             src={current.src}
             alt={current.alt}
             fill
-            className="object-cover object-center"
+            className="object-contain object-center"
             priority
           />
         </motion.div>

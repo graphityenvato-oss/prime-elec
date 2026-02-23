@@ -25,6 +25,10 @@ export default function FileUpload03({ className }: FileUpload03Props) {
   const [projectName, setProjectName] = React.useState("");
   const [notes, setNotes] = React.useState("");
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [website, setWebsite] = React.useState("");
+  const [formStartedAt, setFormStartedAt] = React.useState<number>(() =>
+    Date.now(),
+  );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     maxFiles: 1,
     maxSize: 2 * 1024 * 1024,
@@ -91,6 +95,8 @@ export default function FileUpload03({ className }: FileUpload03Props) {
       formData.append("phone", phone.trim());
       formData.append("projectName", projectName.trim());
       formData.append("notes", notes.trim());
+      formData.append("website", website.trim());
+      formData.append("startedAt", String(formStartedAt));
 
       const response = await fetch("/api/boq", {
         method: "POST",
@@ -107,6 +113,8 @@ export default function FileUpload03({ className }: FileUpload03Props) {
       setPhone("");
       setProjectName("");
       setNotes("");
+      setWebsite("");
+      setFormStartedAt(Date.now());
       document
         .querySelector<HTMLButtonElement>('[data-dialog-close="boq"]')
         ?.click();
@@ -123,6 +131,15 @@ export default function FileUpload03({ className }: FileUpload03Props) {
         Upload your BOQ file and we will review it shortly.
       </p>
       <form className="mt-6" onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
+          value={website}
+          onChange={(event) => setWebsite(event.target.value)}
+        />
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-6">
           <div className="col-span-full sm:col-span-3">
             <Label htmlFor="contact-name" className="font-medium">
@@ -218,7 +235,7 @@ export default function FileUpload03({ className }: FileUpload03Props) {
               </div>
             </div>
             <p className="text-pretty mt-2 text-sm leading-5 text-muted-foreground sm:flex sm:items-center sm:justify-between">
-              <span>All file types are allowed to upload.</span>
+              <span>Allowed: PDF, XLS, XLSX, CSV.</span>
               <span className="pl-1 sm:pl-0">Max. size per file: 2MB</span>
             </p>
             {filesList.length > 0 && (

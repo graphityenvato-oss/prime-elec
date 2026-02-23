@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CookieIcon } from "lucide-react";
 import Link from "next/link";
@@ -20,14 +20,11 @@ export function CookieConsent({
   onAcceptCallback = () => {},
   onDeclineCallback = () => {},
 }: CookieConsentProps) {
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
+  const [open, setOpen] = useState(() => {
+    if (typeof document === "undefined") return false;
     const hasConsent = document.cookie.includes("cookieConsent=true");
-    if (!hasConsent || mode) {
-      setOpen(true);
-    }
-  }, [mode]);
+    return !hasConsent || mode;
+  });
 
   const accept = () => {
     document.cookie =
@@ -48,7 +45,7 @@ export function CookieConsent({
     <AnimatePresence>
       {open ? (
         <motion.div
-          className={`fixed bottom-0 left-0 right-0 z-[200] w-full p-4 sm:bottom-4 sm:left-4 sm:right-auto sm:p-0 ${wrapperMaxWidth}`}
+          className={`fixed bottom-0 left-0 right-0 z-200 w-full p-4 sm:bottom-4 sm:left-4 sm:right-auto sm:p-0 ${wrapperMaxWidth}`}
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 24 }}
@@ -102,8 +99,8 @@ export function CookieConsent({
               <div className="p-3 -mt-2">
                 <p className="text-left text-xs text-muted-foreground sm:text-sm">
                   We use cookies to ensure you get the best experience on our
-                  website. For more information on how we use cookies, please see
-                  our cookie policy.{" "}
+                  website. For more information on how we use cookies, please
+                  see our cookie policy.{" "}
                   <Link href="/cookie-policy" className="underline">
                     Learn more
                   </Link>

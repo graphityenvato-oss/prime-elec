@@ -38,6 +38,8 @@ export default function CartPage() {
   const [projectNotes, setProjectNotes] = useState("");
   const [needsConsultation, setNeedsConsultation] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [honeypotWebsite, setHoneypotWebsite] = useState("");
+  const [formStartedAt, setFormStartedAt] = useState<number>(() => Date.now());
 
   useEffect(() => {
     const sync = () => {
@@ -98,6 +100,8 @@ export default function CartPage() {
           phone: phone.trim() || null,
           projectNotes: projectNotes.trim() || null,
           needsConsultation,
+          website: honeypotWebsite.trim(),
+          startedAt: formStartedAt,
           cartItems: items.map((item) => ({
             id: item.id,
             name: item.name,
@@ -123,6 +127,8 @@ export default function CartPage() {
       setPhone("");
       setProjectNotes("");
       setNeedsConsultation(false);
+      setHoneypotWebsite("");
+      setFormStartedAt(Date.now());
       toast.success("Quotation request sent.");
     } catch (error) {
       toast.error(
@@ -256,6 +262,20 @@ export default function CartPage() {
         <aside className="lg:sticky lg:top-24 lg:self-start h-fit rounded-2xl border border-border/60 bg-background p-6 shadow-[0_18px_40px_rgba(12,28,60,0.08)]">
           <h2 className="text-base font-semibold">Request details</h2>
           <div className="mt-4 space-y-3">
+            <div className="space-y-2">
+              <label className="sr-only" htmlFor="company-website">
+                Website
+              </label>
+              <Input
+                id="company-website"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                value={honeypotWebsite}
+                onChange={(event) => setHoneypotWebsite(event.target.value)}
+              />
+            </div>
             <div className="space-y-2">
               <label className="text-xs font-medium text-muted-foreground">
                 Full name

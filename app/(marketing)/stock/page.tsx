@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 
 import {
@@ -97,7 +98,9 @@ export default async function StockPage() {
       </p>
 
       {categories.length ? (
-        <StockCategoriesPageClient categories={categories} />
+        <Suspense fallback={<div className="mt-8 h-24" />}>
+          <StockCategoriesPageClient categories={categories} />
+        </Suspense>
       ) : (
         <div className="mt-8 rounded-2xl border border-border/60 bg-muted/10 p-6 text-sm text-muted-foreground">
           No stock categories found.

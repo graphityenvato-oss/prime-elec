@@ -9,7 +9,10 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { RelatedProductsResultsClient } from "@/components/related-products-results-client";
-import { getProductById as getFallbackProductById, products as fallbackProducts } from "@/lib/products";
+import {
+  getProductById as getFallbackProductById,
+  products as fallbackProducts,
+} from "@/lib/products";
 import {
   getStockProductByIdDb,
   getStockProductsDb,

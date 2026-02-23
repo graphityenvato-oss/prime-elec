@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 
 import {
@@ -42,7 +43,9 @@ export default async function IndustriesPage() {
           Browse Industries
         </h1>
 
-        <IndustriesPageClient industries={cards} />
+        <Suspense fallback={<div className="mt-10 h-24" />}>
+          <IndustriesPageClient industries={cards} />
+        </Suspense>
       </div>
     </section>
   );

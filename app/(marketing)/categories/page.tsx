@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 
 import {
@@ -42,7 +43,9 @@ export default async function CategoriesPage() {
           Browse Main Categories
         </h1>
 
-        <CategoriesPageClient categories={cards} />
+        <Suspense fallback={<div className="mt-10 h-24" />}>
+          <CategoriesPageClient categories={cards} />
+        </Suspense>
       </div>
     </section>
   );
