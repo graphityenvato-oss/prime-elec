@@ -143,9 +143,9 @@ export function SubcategoryPageClient({ items }: SubcategoryPageClientProps) {
               <div className="h-full">
                 <HoverCard
                   className="h-full p-4 text-foreground dark:text-white sm:p-5"
-                  contentClassName="flex h-full min-h-[120px] flex-col items-center gap-3 text-center sm:flex-row sm:items-center sm:gap-4 sm:text-left"
+                  contentClassName="flex h-full min-h-[132px] flex-col items-center gap-3 text-center sm:flex-row sm:items-center sm:gap-4 sm:text-left"
                 >
-                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white">
+                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white sm:h-28 sm:w-28">
                     <Image
                       src={item.image ?? "/images/placeholder/imageholder.webp"}
                       alt={`${item.title} product`}

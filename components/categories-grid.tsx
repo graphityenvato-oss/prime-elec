@@ -37,6 +37,7 @@ type CategoriesGridProps = {
   itemsPerPage?: number;
   topImageContain?: boolean;
   topImageHeightClass?: string;
+  iconBoxClass?: string;
   pagination?: boolean;
   stateKey?: string;
 };
@@ -124,6 +125,7 @@ export function CategoriesGrid({
   itemsPerPage = ITEMS_PER_PAGE,
   topImageContain = true,
   topImageHeightClass = "h-32",
+  iconBoxClass = "h-[68px] w-[68px]",
   pagination = true,
   stateKey = "cg",
 }: CategoriesGridProps) {
@@ -220,13 +222,13 @@ export function CategoriesGrid({
                 className="h-full min-h-[14rem] p-6 text-foreground dark:text-white"
                 contentClassName={
                   cardLayout === "image-left"
-                    ? "grid h-full grid-cols-1 items-center gap-4 sm:grid-cols-[96px_minmax(0,1fr)]"
+                    ? "grid h-full grid-cols-1 items-center gap-4 sm:grid-cols-[120px_minmax(0,1fr)]"
                     : "flex h-full flex-col justify-between pb-2"
                 }
               >
                 {cardLayout === "image-left" ? (
                   <>
-                    <div className="relative mx-auto h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white sm:mx-0">
+                    <div className="relative mx-auto h-28 w-28 shrink-0 overflow-hidden rounded-xl border border-border/60 bg-white sm:mx-0 sm:h-[7.5rem] sm:w-[7.5rem]">
                       <CardTopImage
                         title={category.title}
                         logo={category.logo}
@@ -266,12 +268,12 @@ export function CategoriesGrid({
                         </div>
                       </div>
                     ) : (
-                      <div className="h-[68px] w-[68px]">
+                      <div className={iconBoxClass}>
                         <Image
                           src={category.logo}
                           alt={`${category.title} logo`}
-                          width={68}
-                          height={68}
+                          width={96}
+                          height={96}
                           className="h-full w-full object-contain"
                         />
                       </div>

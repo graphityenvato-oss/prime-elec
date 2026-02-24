@@ -43,6 +43,7 @@ export function CategoryBrandsPageClient({
           key={query}
           categories={filtered}
           buttonLabel="View Subcategories"
+          iconBoxClass="h-[88px] w-[88px] sm:h-[96px] sm:w-[96px]"
         />
       ) : (
         <div className="mt-10 rounded-2xl border border-border/60 bg-muted/10 p-6 text-sm text-muted-foreground">
