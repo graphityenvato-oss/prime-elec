@@ -93,13 +93,13 @@ export function ProductCard({
         </div>
         {showBrandTopRight && brand ? (
           brandLogo ? (
-            <div className="flex h-10 w-28 items-center justify-end">
+            <div className="flex h-12 w-32 items-center justify-end sm:h-14 sm:w-36">
               <Image
                 src={brandLogo}
                 alt={`${brand} logo`}
-                width={112}
-                height={32}
-                className="h-8 w-auto object-contain"
+                width={144}
+                height={40}
+                className="h-10 w-auto object-contain sm:h-11"
               />
             </div>
           ) : (

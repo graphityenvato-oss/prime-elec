@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { TablePagination } from "@/components/admin/table-pagination";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PrimeCard } from "@/components/ui/prime-card";
@@ -15,6 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { supabaseClient } from "@/lib/supabase/client";
+import { AddProductDialog } from "@/components/admin/add-product-dialog";
 
 type ProductRow = {
   id: string;
@@ -26,6 +29,7 @@ type ProductRow = {
   title: string;
   description: string;
   created_at: string;
+  details?: Record<string, string>;
 };
 
 type Summary = {
@@ -43,6 +47,10 @@ export default function AdminProductsPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const pageSize = 20;
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [createMessage, setCreateMessage] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -106,7 +114,7 @@ export default function AdminProductsPage() {
     return () => {
       isMounted = false;
     };
-  }, [router, token]);
+  }, [router, token, refreshKey]);
 
   const filteredRows = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -127,6 +135,13 @@ export default function AdminProductsPage() {
     );
   }, [rows, search]);
 
+  const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const pageRows = filteredRows.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
+  );
+
   if (!checked) return null;
 
   return (
@@ -139,7 +154,7 @@ export default function AdminProductsPage() {
           Stock Products
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          View and search imported stock products.
+          Add, view, and search stock products.
         </p>
       </section>
 
@@ -178,18 +193,42 @@ export default function AdminProductsPage() {
             placeholder="Search stock products"
             className="w-full sm:max-w-md"
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setPage(1);
+            }}
           />
-          <Button
-            variant="outline"
-            className="rounded-full"
-            onClick={() => router.push("/admin/products/import")}
-          >
-            Import Stock
-          </Button>
+          <div className="flex flex-wrap items-center gap-2">
+            <AddProductDialog
+              token={token}
+              rows={rows}
+              disabled={loading}
+              onCreated={() => {
+                setCreateMessage("Product added successfully.");
+                setSearch("");
+                setPage(1);
+                setRefreshKey((value) => value + 1);
+              }}
+            />
+            <Button
+              variant="outline"
+              className="rounded-full"
+              onClick={() => router.push("/admin/products/import")}
+            >
+              Import Stock
+            </Button>
+          </div>
         </div>
 
         <div className="mt-6">
+          {createMessage ? (
+            <div
+              role="status"
+              className="mb-4 rounded-2xl border border-border/60 bg-muted/10 px-4 py-3 text-sm"
+            >
+              {createMessage}
+            </div>
+          ) : null}
           {error ? (
             <div className="mb-4 rounded-2xl border border-destructive/40 bg-destructive/5 px-4 py-3 text-sm text-destructive">
               {error}
@@ -214,7 +253,7 @@ export default function AdminProductsPage() {
                   </TableCell>
                 </TableRow>
               ) : filteredRows.length ? (
-                filteredRows.map((row) => (
+                pageRows.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell>{row.brand}</TableCell>
                     <TableCell>{row.category}</TableCell>
@@ -235,6 +274,14 @@ export default function AdminProductsPage() {
               )}
             </TableBody>
           </Table>
+          {!loading ? (
+            <TablePagination
+              totalRows={filteredRows.length}
+              page={currentPage}
+              pageSize={pageSize}
+              onPageChange={setPage}
+            />
+          ) : null}
         </div>
       </PrimeCard>
     </>

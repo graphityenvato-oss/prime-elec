@@ -72,6 +72,14 @@ export default function CartPage() {
     }
     addExternalItemToQuoteCart(trimmed);
     setExternalInput("");
+  };  
+
+  const getClickableUrl = (value: string) => {  
+    const trimmed = value.trim();
+    if (!trimmed) return null;
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    if (/^www\./i.test(trimmed)) return `https://${trimmed}`;
+    return null;
   };
 
   const handleSubmitQuote = async () => {
@@ -214,7 +222,19 @@ export default function CartPage() {
                             ? "External Request | "
                             : "Stock | Order#"}
                           <span className="block break-all font-semibold text-foreground">
-                            {item.partNumber}
+                            {item.source === "external" &&
+                            getClickableUrl(item.partNumber) ? (
+                              <a
+                                href={getClickableUrl(item.partNumber)!}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline underline-offset-2 hover:text-primary"
+                              >
+                                {item.partNumber}
+                              </a>
+                            ) : (
+                              item.partNumber
+                            )}
                           </span>
                         </div>
                       </div>

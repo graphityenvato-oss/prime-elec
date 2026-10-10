@@ -2,10 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+import { TablePagination } from "@/components/admin/table-pagination";
 
 import { Button } from "@/components/ui/button";
 import { ConfirmationAlert } from "@/components/ui/confirmation-alert";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { PrimeCard } from "@/components/ui/prime-card";
 import {
   Dialog,
@@ -40,6 +44,8 @@ export default function AdminIndustriesPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const pageSize = 20;
   const [activeEdit, setActiveEdit] = useState<IndustryRow | null>(null);
   const [editName, setEditName] = useState("");
   const [editDescription, setEditDescription] = useState("");
@@ -48,7 +54,25 @@ export default function AdminIndustriesPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
   const [clearMessage, setClearMessage] = useState<string | null>(null);
+  const [createOpen, setCreateOpen] = useState(false);
+  const [createName, setCreateName] = useState("");
+  const [createDescription, setCreateDescription] = useState("");
+  const [createImage, setCreateImage] = useState<File | null>(null);
+  const [createPreview, setCreatePreview] = useState<string | null>(null);
+  const [createError, setCreateError] = useState<string | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
+  const [createMessage, setCreateMessage] = useState<string | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    if (!createImage) {
+      setCreatePreview(null);
+      return;
+    }
+    const url = URL.createObjectURL(createImage);
+    setCreatePreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [createImage]);
 
   useEffect(() => {
     let isMounted = true;
@@ -128,6 +152,13 @@ export default function AdminIndustriesPage() {
     });
   }, [rows, search]);
 
+  const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const pageRows = filteredRows.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
+  );
+
   if (!checked) {
     return null;
   }
@@ -152,9 +183,26 @@ export default function AdminIndustriesPage() {
             placeholder="Search industries"
             className="w-full sm:max-w-md"
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setPage(1);
+            }}
           />
           <div className="flex flex-wrap items-center gap-2">
+            <Button
+              className="rounded-full"
+              disabled={loading || isClearing}
+              onClick={() => {
+                setCreateName("");
+                setCreateDescription("");
+                setCreateImage(null);
+                setCreateError(null);
+                setCreateMessage(null);
+                setCreateOpen(true);
+              }}
+            >
+              Add Industry
+            </Button>
             <Button
               variant="outline"
               className="rounded-full"
@@ -213,6 +261,14 @@ export default function AdminIndustriesPage() {
         </div>
 
         <div className="mt-6">
+          {createMessage ? (
+            <div
+              role="status"
+              className="mb-4 rounded-2xl border border-border/60 bg-muted/10 px-4 py-3 text-sm"
+            >
+              {createMessage}
+            </div>
+          ) : null}
           {clearMessage ? (
             <div className="mb-4 rounded-2xl border border-border/60 bg-muted/10 px-4 py-3 text-sm text-foreground">
               {clearMessage}
@@ -241,7 +297,7 @@ export default function AdminIndustriesPage() {
                   </TableCell>
                 </TableRow>
               ) : filteredRows.length ? (
-                filteredRows.map((row) => (
+                pageRows.map((row) => (
                   <TableRow key={row.id}>
                     <TableCell className="font-medium">{row.name}</TableCell>
                     <TableCell className="max-w-96 truncate">
@@ -291,8 +347,190 @@ export default function AdminIndustriesPage() {
               )}
             </TableBody>
           </Table>
+          {!loading ? (
+            <TablePagination
+              totalRows={filteredRows.length}
+              page={currentPage}
+              pageSize={pageSize}
+              onPageChange={setPage}
+            />
+          ) : null}
         </div>
       </PrimeCard>
+
+      <Dialog
+        open={createOpen}
+        onOpenChange={(open) => {
+          if (!isCreating) setCreateOpen(open);
+        }}
+      >
+        <DialogContent className="max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Add industry</DialogTitle>
+          </DialogHeader>
+          <form
+            className="grid gap-4"
+            onSubmit={async (event) => {
+              event.preventDefault();
+              if (!token || isCreating) return;
+              setCreateError(null);
+              if (
+                !createName.trim() ||
+                !createDescription.trim() ||
+                !createImage
+              ) {
+                setCreateError(
+                  "Industry name, description, and image are required.",
+                );
+                return;
+              }
+              setIsCreating(true);
+              try {
+                const form = new FormData();
+                form.append("name", createName.trim());
+                form.append("description", createDescription.trim());
+                form.append("image", createImage);
+                const response = await fetch("/api/admin/industries", {
+                  method: "POST",
+                  headers: { Authorization: `Bearer ${token}` },
+                  body: form,
+                });
+                const result = (await response.json()) as {
+                  industry?: IndustryRow;
+                  message?: string;
+                };
+                if (!response.ok || !result.industry) {
+                  throw new Error(
+                    result.message || "Failed to create industry.",
+                  );
+                }
+                const industry = result.industry;
+                setRows((current) =>
+                  [...current, industry].sort((a, b) =>
+                    a.name.localeCompare(b.name),
+                  ),
+                );
+                setSearch("");
+                setPage(1);
+                setCreateMessage(`${industry.name} added successfully.`);
+                setCreateOpen(false);
+                setCreateImage(null);
+              } catch (err) {
+                setCreateError(
+                  err instanceof Error
+                    ? err.message
+                    : "Failed to create industry.",
+                );
+              } finally {
+                setIsCreating(false);
+              }
+            }}
+          >
+            {createError ? (
+              <p role="alert" className="text-sm text-destructive">
+                {createError}
+              </p>
+            ) : null}
+            <fieldset disabled={isCreating} className="grid gap-4">
+              <div className="grid gap-2">
+                <label htmlFor="industry-name" className="text-sm font-medium">
+                  Industry name
+                </label>
+                <Input
+                  id="industry-name"
+                  required
+                  value={createName}
+                  onChange={(event) => setCreateName(event.target.value)}
+                  placeholder="e.g. Manufacturing"
+                />
+              </div>
+              <div className="grid gap-2">
+                <label
+                  htmlFor="industry-description"
+                  className="text-sm font-medium"
+                >
+                  Description
+                </label>
+                <Textarea
+                  id="industry-description"
+                  required
+                  rows={4}
+                  value={createDescription}
+                  onChange={(event) => setCreateDescription(event.target.value)}
+                  placeholder="Describe this industry"
+                />
+              </div>
+              <div className="grid gap-2">
+                <label htmlFor="industry-image" className="text-sm font-medium">
+                  Image
+                </label>
+                <Input
+                  id="industry-image"
+                  type="file"
+                  required
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0] ?? null;
+                    setCreateImage(null);
+                    setCreateError(null);
+                    if (
+                      file &&
+                      (!/\.(jpg|jpeg|png|webp|gif)$/i.test(file.name) ||
+                        ![
+                          "image/jpeg",
+                          "image/png",
+                          "image/webp",
+                          "image/gif",
+                        ].includes(file.type))
+                    ) {
+                      setCreateError("Choose a JPG, PNG, WEBP, or GIF image.");
+                      event.target.value = "";
+                      return;
+                    }
+                    if (file && file.size > 3 * 1024 * 1024) {
+                      setCreateError("Image must be 3 MB or smaller.");
+                      event.target.value = "";
+                      return;
+                    }
+                    setCreateImage(file);
+                  }}
+                />
+                <p className="text-xs text-muted-foreground">
+                  JPG, PNG, WEBP, or GIF. Maximum 3 MB.
+                </p>
+                {createPreview ? (
+                  <div className="relative h-44 overflow-hidden rounded-xl border">
+                    <Image
+                      src={createPreview}
+                      alt="Industry image preview"
+                      fill
+                      unoptimized
+                      className="object-contain"
+                    />
+                  </div>
+                ) : null}
+              </div>
+            </fieldset>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                disabled={isCreating}
+                onClick={() => setCreateOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                disabled={isCreating || !token}
+                className="rounded-full"
+              >
+                {isCreating ? "Saving..." : "Add Industry"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       <Dialog
         open={Boolean(activeEdit)}

@@ -22,16 +22,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNext,
-  PaginationNumbers,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import { TablePagination } from "@/components/admin/table-pagination";
 import { supabaseClient } from "@/lib/supabase/client";
 import { ActionsMenu } from "@/components/admin/actions-menu";
+import { AddCategoryDialog } from "@/components/admin/add-category-dialog";
 
 type SubcategoryRow = {
   id: string;
@@ -69,6 +63,8 @@ export default function AdminCategoriesPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
   const [clearMessage, setClearMessage] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [createMessage, setCreateMessage] = useState<string | null>(null);
   const pageSize = 20;
   const router = useRouter();
 
@@ -142,7 +138,7 @@ export default function AdminCategoriesPage() {
     return () => {
       isMounted = false;
     };
-  }, [router, token]);
+  }, [router, token, refreshKey]);
 
   const filteredRows = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -160,11 +156,11 @@ export default function AdminCategoriesPage() {
   }, [rows, search]);
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / pageSize));
-  const pageRows = filteredRows.slice((page - 1) * pageSize, page * pageSize);
-
-  useEffect(() => {
-    setPage(1);
-  }, [search]);
+  const currentPage = Math.min(page, totalPages);
+  const pageRows = filteredRows.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
+  );
 
   if (!checked) {
     return null;
@@ -180,7 +176,7 @@ export default function AdminCategoriesPage() {
           Categories
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          View the imported catalog categories, brands, and subcategories.
+          Manage catalog categories, brands, and subcategories.
         </p>
       </section>
 
@@ -218,9 +214,22 @@ export default function AdminCategoriesPage() {
             placeholder="Search category, brand, or subcategory"
             className="w-full sm:max-w-md"
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setPage(1);
+            }}
           />
           <div className="flex flex-wrap items-center gap-2">
+            <AddCategoryDialog
+              token={token}
+              disabled={loading || isClearing}
+              onCreated={() => {
+                setCreateMessage("Category item added successfully.");
+                setSearch("");
+                setPage(1);
+                setRefreshKey((value) => value + 1);
+              }}
+            />
             <Button
               variant="outline"
               className="rounded-full"
@@ -285,6 +294,14 @@ export default function AdminCategoriesPage() {
         </div>
 
         <div className="mt-6">
+          {createMessage ? (
+            <div
+              role="status"
+              className="mb-4 rounded-2xl border border-border/60 bg-muted/10 px-4 py-3 text-sm"
+            >
+              {createMessage}
+            </div>
+          ) : null}
           {clearMessage ? (
             <div className="mb-4 rounded-2xl border border-border/60 bg-muted/10 px-4 py-3 text-sm text-foreground">
               {clearMessage}
@@ -372,49 +389,13 @@ export default function AdminCategoriesPage() {
             </TableBody>
           </Table>
 
-          {filteredRows.length > pageSize ? (
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <span className="text-xs text-muted-foreground">
-                Showing {(page - 1) * pageSize + 1}-
-                {Math.min(page * pageSize, filteredRows.length)} of{" "}
-                {filteredRows.length}
-              </span>
-              <Pagination className="sm:mx-0 sm:w-auto">
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      href="#top"
-                      className={
-                        page === 1 ? "pointer-events-none opacity-40" : ""
-                      }
-                      onClick={(event) => {
-                        event.preventDefault();
-                        setPage((prev) => Math.max(1, prev - 1));
-                      }}
-                    />
-                  </PaginationItem>
-                  <PaginationNumbers
-                    totalPages={totalPages}
-                    currentPage={page}
-                    onPageChange={setPage}
-                  />
-                  <PaginationItem>
-                    <PaginationNext
-                      href="#top"
-                      className={
-                        page >= totalPages
-                          ? "pointer-events-none opacity-40"
-                          : ""
-                      }
-                      onClick={(event) => {
-                        event.preventDefault();
-                        setPage((prev) => Math.min(totalPages, prev + 1));
-                      }}
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            </div>
+          {!loading ? (
+            <TablePagination
+              totalRows={filteredRows.length}
+              page={currentPage}
+              pageSize={pageSize}
+              onPageChange={setPage}
+            />
           ) : null}
         </div>
       </PrimeCard>
